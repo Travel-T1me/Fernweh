@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "noEmit": true,
+    "noEmit": false,
+    "outDir": "./dist",
     "noImplicitAny": true,
     "module": "ES2020",
     "target": "es5",
@@ -8,5 +9,9 @@
     "allowJs": false,
     "moduleResolution": "node",
     "lib": ["DOM"]
-  }
+  },
+  "include": [
+    "./src/**/*",
+    "./server/server.ts"
+  ]
 }
