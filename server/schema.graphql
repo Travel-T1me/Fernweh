@@ -1,0 +1,19 @@
+interface Node {
+  id: ID!
+}
+
+type Itinerary implements Node {
+  id: ID!
+  text: String
+}
+
+type Request implements Node {
+  id: ID!
+  text: String
+}
+
+type Query {
+  node(id: ID!): Node
+  itinerary(id: ID!): Itinerary
+  request(id: ID!): Request
+}

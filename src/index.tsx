@@ -1,20 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createRoot } from 'react-dom/client';
+import * as React from "react";
+import * as ReactDOM from "react-dom/client";
 
-const domNode = document.getElementById('root');
-const root = createRoot(domNode);
+import App from "./components/App";
 
-
-const App: React.FC = () => {
-  console.log(`testing, 1, 2, 3, 4`);
-  return (
-    <>
-      <div></div>
-    </>
-  )
-    
-    
+function Routes() {
+  return <App />;
 }
 
-root.render(<App />);
+const root = ReactDOM.createRoot(document.getElementById("app"));
+root.render(<Routes />);
