@@ -21,7 +21,7 @@ export default function DataFetchCheck({}) {
   return (
     <div className="itinerary">
       {itinerary}
-      {"TEXT"}
+      { "TEXT"}
     </div>
   );
 }
