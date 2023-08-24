@@ -3,12 +3,13 @@
     "noEmit": false,
     "outDir": "./dist",
     "noImplicitAny": true,
-    "module": "ES2020",
-    "target": "es5",
+    "module": "ESNext",
+    "target": "ESNext",
     "jsx": "preserve",
     "allowJs": false,
     "moduleResolution": "node",
-    "lib": ["DOM"]
+    "lib": ["DOM"],
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "./src/**/*",

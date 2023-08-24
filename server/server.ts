@@ -1,41 +1,30 @@
-// Reference used for boilerplate code below: https://docs.aws.amazon.com/documentdb/latest/developerguide/connect_programmatically.html
+import * as dotenv from 'dotenv';
+dotenv.config();
+import express, { Request, Response, NextFunction, Application } from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
 
-import { MongoClient, Db, Collection } from 'mongodb';
+const app: Application = express();
 
-// Create a MongoDB client, open a connection to DocDB; as a replica set,
-// and specify the read preference as secondary preferred
+app.use(express.json());
+app.use(cors());
 
-const uri: string = 'mongodb://<sample-user>:<password>@sample-cluster.node.us-east-1.docdb.amazonaws.com:27017/sample-database?tls=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false';
-const client: MongoClient = new MongoClient(uri, {
-    tlsCAFile: 'global-bundle.pem' // Specify the Amazon DocumentDB cert
+// Unknown route handler
+app.use((req: Request, res: Response) => res.status(404).send('This is not the page you\'re looking for...'));
+
+// Global error handler
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 500,
+    message: { err: 'An error occurred' },
+  };
+  const errorObj = { ...defaultErr, ...err };
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
 });
 
-const main = async (): Promise<void> => {
-  try {
-      await client.connect();
-
-      // Specify the database to be used
-      const db: Db = client.db('sample-database');
-
-      // Specify the collection to be used
-      const col: Collection = db.collection('sample-collection');
-
-      // Insert a single document
-      const insertResult: any = await col.insertOne({ 'hello': 'Amazon DocumentDB' });
-      
-      // Find the document that was previously written
-      const findResult: any = await col.findOne({ 'hello': 'DocDB;' });
-
-      //Print the result to the screen
-      console.log("Inserted result --> ", insertResult);
-      console.log("Found result --> ", findResult);
-
-  } catch (err) {
-      console.error('Error occurred:', err);
-  } finally {
-      //Close the connection
-      await client.close();
-  }
-}
-
-main();
+mongoose.connect(process.env.MONGODB_URI!).then(() => {
+    console.log('Starting on port 8080');
+    app.listen(8080);    
+});
