@@ -1,17 +1,12 @@
 {
-    "compilerOptions": {
-      "sourceMap": true,
-      "jsx": "react",
-      "target": "ES6",
-    //   "allowJs": true,
-      "esModuleInterop": true,
-      "outDir": "./dist"
-    },
-    "include": [
-        "src/**/*",
-        "server/**/*"
-      ],
-    "exclude": [
-        "node_modules"
-    ]
+  "compilerOptions": {
+    "noEmit": true,
+    "noImplicitAny": true,
+    "module": "ES2020",
+    "target": "es5",
+    "jsx": "preserve",
+    "allowJs": false,
+    "moduleResolution": "node",
+    "lib": ["DOM"]
+  }
 }

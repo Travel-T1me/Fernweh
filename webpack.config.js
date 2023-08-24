@@ -1,56 +1,55 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: './src/index.tsx',
-    mode: 'development',
-    output: {
-        path: path.resolve(__dirname, './dist'),
-        filename: 'index_bundle.js',
-        publicPath: '/',
-        clean: true,
+  mode: "development",
+  entry: {
+    index: "./src/index.tsx",
+  },
+  output: {
+    filename: "[name].bundle.js",
+    path: path.resolve(__dirname, "dist"),
+    clean: true,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: "babel-loader",
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js", ".css"],
+  },
+  plugins: [new HtmlWebpackPlugin(
+    {
+      template: './src/index.ejs',  // Replace with the path to your .ejs file
+      filename: 'index.html',              // Output filename
+      inject: true                         // Will inject the main bundle to the end of the body tag
+   }
+  ), new MiniCssExtractPlugin()],
+  devServer: {
+    static: [
+      {
+        directory: path.join(__dirname, "dist"),
+      },
+      {
+        directory: path.join(__dirname, "assets"),
+        publicPath: "/assets",
+      },
+    ],
+    proxy: {
+      "/": "http://localhost:4000",
     },
-    plugins: [new HtmlWebpackPlugin({
-    //   title: 'Webpack App',
-    //   filename: 'index.html',
-      template: path.join(__dirname, './public/index.html')
-    //   'src/template.html',
-    })],
-    devServer: {
-        port: '3000',
-        static: {
-            directory: path.join(__dirname, 'public'),
-        },
-        open: true,
-        hot: true,
-        liveReload: true,
-        historyApiFallback: true,
-    },
-    module: {
-        rules: [
-            {
-                test: /\.m?js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [
-                            ['@babel/preset-env', { targets: "defaults" }]
-                        ]
-                },
-            },
-            },
-            { 
-                test: /\.tsx?$/, 
-                loader: 'ts-loader' },
-            {
-                test: /\.css$/i,
-                use: ["style-loader", "css-loader"],
-            },
-        ]
-    },
-    resolve: {
-      extensions: ['.*', '.js', '.jsx', '.ts', '.tsx'],
-    },
-}
-
+    port: 3000,
+    historyApiFallback: true,
+  },
+  devtool: "inline-source-map",
+};
