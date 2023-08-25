@@ -33,7 +33,7 @@ module.exports = {
       template: './src/index.ejs',  // Replace with the path to your .ejs file
       filename: 'index.html',              // Output filename
       inject: true                         // Will inject the main bundle to the end of the body tag
-   }
+  }
   ), new MiniCssExtractPlugin()],
   devServer: {
     static: [
@@ -46,7 +46,10 @@ module.exports = {
       },
     ],
     proxy: {
-      "/": "http://localhost:4000",
+      "/api": {
+        target: "http://localhost:4000",
+        secure: false,
+      } 
     },
     port: 3000,
     historyApiFallback: true,

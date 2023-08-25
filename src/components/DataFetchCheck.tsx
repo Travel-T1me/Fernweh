@@ -3,6 +3,7 @@ import { graphql } from "relay-runtime";
 import { useLazyLoadQuery } from "react-relay";
 import type {DataFetchCheckQuery} from "./__generated__/DataFetchCheckQuery.graphql";
 
+
 const DataFetchCheckQuery = graphql`
   query DataFetchCheckQuery {
     itinerary(id: "SXRpbmVyYXJ5OjE=") {
@@ -21,7 +22,7 @@ export default function DataFetchCheck({}) {
   return (
     <div className="itinerary">
       {itinerary}
-      {"TEXT"}
+      { "TEXT"}
     </div>
   );
 }
