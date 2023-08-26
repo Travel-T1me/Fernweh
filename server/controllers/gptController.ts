@@ -28,26 +28,3 @@ export const getCompletion = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "An error occurred while processing your request" });
   }
 };
-
-{/* 
-Testing in Postman
-
-POST: http://localhost:4000/api/gpt/complete
-
-BODY:
-{
-  "prompt": "Translate the following English text to French: 'Hello, world!'"
-}
-
-RESPONSE:
-[
-    {
-        "index": 0,
-        "message": {
-            "role": "assistant",
-            "content": "Bonjour, monde !"
-        },
-        "finish_reason": "stop"
-    }
-]
-*/}
