@@ -2,7 +2,7 @@
   "name": "travel-t1me",
   "version": "1.0.0",
   "description": "",
-  "type": "module.cjs",
+  "type": "module",
   "scripts": {
     "build": "webpack",
     "tsc": "tsc",
@@ -28,6 +28,7 @@
   "homepage": "https://github.com/Travel-T1me/travel-t1me#readme",
   "dependencies": {
     "@apollo/server": "^4.9.1",
+    "@types/styled-components": "^5.1.26",
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -61,8 +62,10 @@
     "babel-loader": "^9.1.3",
     "babel-plugin-macros": "^3.1.0",
     "babel-plugin-relay": "^15.0.0",
+    "babel-plugin-styled-components": "^2.1.4",
     "concurrently": "^8.2.1",
     "css-loader": "^6.8.1",
+    "file-loader": "^6.2.0",
     "graphql": "^16.8.0",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
