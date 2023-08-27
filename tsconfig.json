@@ -9,7 +9,7 @@
     "allowJs": false,
     "moduleResolution": "node",
     "lib": ["DOM"],
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
   },
   "include": [
     "./src/**/*",
