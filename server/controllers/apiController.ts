@@ -18,7 +18,7 @@ export const apiController = {
           units: 'metric'
         },
         headers: {
-          'X-RapidAPI-Key': 'b4341bfe9cmsh3eaa6be94a4c5aep1671d2jsn895e11f5ed10',
+          'X-RapidAPI-Key': process.env.RAPID_API,
           'X-RapidAPI-Host': 'tomorrow-io1.p.rapidapi.com'
         }
       };
