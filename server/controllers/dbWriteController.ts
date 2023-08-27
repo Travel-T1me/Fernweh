@@ -18,6 +18,10 @@ export const dbWriteController = {
     console.log('Doc saved');
     const docID = saved._id;
     res.locals.docID = docID;
+    const document = await RequestText.findById(docID).exec();
+    console.log(document);
+    console.log('docID?', res.locals.docID);
+    return next();
   } catch (err) {
     return next(err);
   }
