@@ -2,7 +2,7 @@
   "name": "travel-t1me",
   "version": "1.0.0",
   "description": "",
-  "type": "module.cjs",
+  "type": "module",
   "scripts": {
     "build": "webpack",
     "tsc": "tsc",
@@ -40,6 +40,9 @@
     "react-relay": "^15.0.0",
     "react-router": "^6.15.0",
     "react-router-dom": "^6.15.0",
+    "react-transition-group": "^4.4.5",
+    "styled-components": "^6.0.7",
+    "uuid": "^9.0.0",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
