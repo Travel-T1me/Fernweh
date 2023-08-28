@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 const Card = styled.div`
     border:solid;
     border-radius:25px;
-    background-color:red;
+    background-color: red;
     width:50%;
     height:100%;
     padding:20px;
@@ -26,8 +26,14 @@ const Card = styled.div`
 const Buttons = styled.section`
     background-color: blue;
     margin: 20px;
+    display: flex;
+    space-between: 10px;
+    justify-content: center;
 `
 
+const IndividualButton = styled.section`
+    margin: 10px;
+`
 
 
 const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: QuestionCardType) => {
@@ -60,14 +66,18 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     </span>
                     <br />
                     <Buttons>
-                        {!questionStates[el+1] && el < questionStates.length - 1 && <button onClick={() => handleClick(true)}>Submit</button>}
-                        {el !== 0 && !questionStates[el + 1] && <button onClick={() => handleClick(false)}>Go Back</button>}
-                    <br />   
+                        <IndividualButton>
+                            {!questionStates[el+1] && el < questionStates.length - 1 && <button onClick={() => handleClick(true)}>Submit</button>}
+                        </IndividualButton>
+                        <IndividualButton>
+                            {el !== 0 && !questionStates[el + 1] && <button onClick={() => handleClick(false)}>Go Back</button>}
+                        </IndividualButton>
+                        <IndividualButton>
+                            {el === questionStates.length - 1 && <Link to={`/results`}> <button>Get your itinerary</button></Link>}
+                        </IndividualButton> 
                     </Buttons>
                 </div>
-                {el === questionStates.length - 1 && <Link to={`/results`}> <button>Get your itinerary</button></Link>}
             </Card>
-            
         </Wrapper>
     )
 }

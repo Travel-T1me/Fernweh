@@ -1,9 +1,27 @@
 import React from 'react'
+import Navbar from '../components/Navbar';
+import Features from '../components/Features';
+import HeroSection from '../components/HeroSection';
+import GetStartedSection from '../components/GetStartedSection';
+import Footer from '../components/Footer';
+
 
 const Homepage = () => {
+  
+  const isNavbarVisible = false;
+
   return (
     <>
-      <h1>Welcome to your next adventure</h1>
+      <Navbar visible={isNavbarVisible}/>
+      
+      <HeroSection />
+      
+      <Features />
+      <br/>
+      <br/>
+      <GetStartedSection />
+      <br/>
+      <Footer />
     </>
   )
 }

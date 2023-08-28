@@ -1,16 +1,14 @@
 // import { create } from "zustand";
+// import { StoreState } from "../types";
 
 // // import types
 
-// // interface for store
 
-// interface StoreState {
-
-// }
-
-// const useStore = create<StoreState>((set) => {
+// const useStore = create((set) => ({
 //   // set initial state here
-  
+//   questionStates: [true, false, false, false],
+//   moveToNextQuestion: (index) => set((state) => ({questionStates: state.questionStates[index] = true})),
+
 
 //   // login functionality
 
@@ -25,4 +23,6 @@
 //     // use axios to fetch form the database
 
 //   // itinerary generated?
-// })
+// }))
+
+// export default useStore

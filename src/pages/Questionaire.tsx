@@ -2,19 +2,24 @@ import React, { useState } from 'react';
 import QuestionCard from '../components/QuestionCard';
 import { QuestionCardType } from '../../types'
 import { styled } from 'styled-components'
+// import useStore from '../store'
 
 interface WrapperProps {
   $show?: boolean;
+  $focus?: boolean;
 }
 
 const Wrapper = styled.div<WrapperProps>`
+  background-color: transparent;
   opacity: ${props => (props.$show ? 1 : 0)};
-  transition: opacity 1s;
+  transition: color 1s, opacity 1s;
+  color: ${props => (props.$focus ? "black": "transparent")};
+  text-shadow: ${props => (props.$focus ? "0 0 0px" : "0 0 5px rgba(0,0,0,0.5)")};
 `;
+
 
 const Questionaire = () => {
 
-  const [currentQuestion, setCurrentQuestion] = useState(0);
   const [questionStates, setQuestionStates] = useState([true, false, false, false])
 
   const questionList = [
@@ -39,7 +44,7 @@ const Questionaire = () => {
 
   const questionComponents = questionList.map((obj, index) => (
 
-      <Wrapper $show={questionStates[index]}>
+      <Wrapper $show={questionStates[index]} $focus={!questionStates[index+1] || index === questionStates.length - 1}>
         <QuestionCard
         key={index} 
         el={index} 

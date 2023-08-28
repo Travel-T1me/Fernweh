@@ -5,3 +5,9 @@ export type QuestionCardType = {
     setQuestionStates: React.Dispatch<React.SetStateAction<boolean[]>>,
     questionStates: boolean[]
 };
+
+export type StoreState = {
+    questionStates: boolean[],
+    moveToNextQuestion: (index: number) => void
+
+}
