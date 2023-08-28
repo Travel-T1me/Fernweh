@@ -41,33 +41,33 @@ const CardsContainer = styled.div`
 const FeaturesCards: FeatureCardProps[] = [
   {
     iconSrc: budgetIcon,
-    title: 'Budget your trip',
-    description: 'Give your range of budget, we will curate an itinerary that fits your needs.'
+    title: 'Budget-Friendly Adventures',
+    description: `Tailor your journey by sharing your budget range; we'll handcraft an itinerary that aligns with your financial preferences.`
   },
   {
     iconSrc: mapsIcon,
-    title: 'Choose your destination',
-    description: 'Wide selection of activities in any location that you want to visit.'
+    title: 'Dream Destination Explorer',
+    description: 'Uncover a plethora of activities across any desired location you have in mind, making your travel aspirations a reality.'
   },
   {
     iconSrc: menuIcon,
-    title: 'Food recommendations',
-    description: 'Taste the top local cuisine based on your preferences.'
+    title: 'Culinary Delights',
+    description: 'Indulge in exquisite local flavors tailored to your taste, as we present you with the finest culinary recommendations.'
   },
   {
     iconSrc: weatherIcon,
-    title: 'Weather report',
-    description: 'Be ready with your wardrobe with an up to date weather report.'
+    title: 'Weather Insights',
+    description: 'Stay prepared for any climate with real-time weather updates, ensuring your wardrobe matches the conditions.'
   },
   {
     iconSrc: travelGroupIcon,
-    title: 'Plan for the whole group',
-    description: 'Activities that will accommodate your entire travel group.'
+    title: 'Group Fun',
+    description: 'Whether a couple or a crowd, discover activities perfect for your whole travel party to enjoy together.'
   },
   {
     iconSrc: itineraryIcon,
-    title: 'Custom itinerary',
-    description: 'Let us curate a variety of activites and help you plan your next adventure!'
+    title: 'Tailored Adventure Planner',
+    description: 'Embark on a unique journey designed just for you, with a handpicked selection of activities to craft your ultimate travel experience.'
   },
 ]
 

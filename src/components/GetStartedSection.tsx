@@ -26,6 +26,7 @@ const ParallaxSection = styled.div`
 
 const ParallaxContent = styled.div`
   display: flex;
+  justify-content: center;
   text-align: center;
   background-color: darkcyan;
   color: white;
@@ -60,7 +61,7 @@ const GetStartedSection = () => {
         <ParallaxContent>
           <StyledLink to="/questionaire">
             <ContentText>
-              Welcome to your next adventure!
+              Start your next adventure!
             </ContentText>
           </StyledLink>
         </ParallaxContent>
