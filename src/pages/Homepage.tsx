@@ -1,8 +1,9 @@
 import React from 'react'
-import { styled } from 'styled-components';
 import Navbar from '../components/Navbar';
 import Features from '../components/Features';
 import HeroSection from '../components/HeroSection';
+import GetStartedSection from '../components/GetStartedSection';
+import Footer from '../components/Footer';
 
 
 const Homepage = () => {
@@ -14,12 +15,13 @@ const Homepage = () => {
       <Navbar visible={isNavbarVisible}/>
       
       <HeroSection />
-      <br/>
-      <br/>
+      
       <Features />
       <br/>
       <br/>
-      <Features />
+      <GetStartedSection />
+      <br/>
+      <Footer />
     </>
   )
 }

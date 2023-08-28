@@ -24,19 +24,19 @@ const NavbarContainer = styled.div<NavbarContainerProps>`
 
 const LoginButton = styled(Button)`
   background-color: white;
-  border-color: hsl(240, 100%, 50%);
-  color: blue;
+  border-color: darkcyan;
+  color: darkcyan;
   &:hover {
-    background-color: hsl(240, 50%, 85%);
+    background-color: hsl(180, 50%, 85%);
   }
 `;
 
 const SignUpButton = styled(Button)`
-  background-color: hsl(240, 100%, 60%);;
+  background-color: hsl(180, 100%, 27.3%);;
   border-style: none;
   color: white;
   &:hover {
-    background-color: hsl(240, 75%, 25%);
+    background-color: hsl(180, 75%, 40%);
   }
 `;
 
@@ -62,7 +62,7 @@ const Navbar: React.FC<NavbarContainerProps> = ({ visible }) => {
 
   return (
     <NavbarContainer visible={isNavbarVisible}>
-      <p>Hello inside Navbar</p>
+      <h2>Travel Time</h2>
       <div>
         <LoginButton>Login</LoginButton>
         <SignUpButton>Sign Up</SignUpButton>

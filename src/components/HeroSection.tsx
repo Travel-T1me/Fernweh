@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import travelPic from '../assets/travel-pic1.jpg';
+import travelPic from '../assets/travel-pic3.jpg';
+import laptopPic from '../assets/whth-pic.png';
 
 const HeroContainer = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  background-color: darkcyan;
+  background-image: url(${travelPic});
+  background-size: cover;
+  background-position: center;
+  z-index: 5;
 `;
 
 const ParallaxSection = styled.div`
   height: 100vh;
-  width: 100vh;
-  background-image: url(${travelPic});
-  background-size: cover;
-  background-position: center;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,23 +25,19 @@ const ParallaxSection = styled.div`
 
 const ParallaxContent = styled.div`
   display: flex;
-  
-  text-align: center;
-  background-color: slategray;
-  color: white;
-  height: 5rem;
-  width: 20rem;
-  border-radius: 10px;
+  justify-content: center;
+  height: 50vh;
+  width: 100vw;
   padding: 1rem;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
 `;
 
-const ContentText = styled.h1`
-  font-size: 1.5rem;
-  line-height: 1.2;
-  margin: 0;
+const Image = styled.img`
+  max-width: 80%;
+  height: auto;
 `;
 
+// this style scrolls the item upwards at half a pixel per scroll
+// style={{ backgroundPositionY: -scrollPosition * 0.5 + 'px' }}
 
 const HeroSection = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -57,11 +53,20 @@ const HeroSection = () => {
     };
   }, []);
 
+  // Calculate the maximum translateY value based on ParallaxSection height
+  const maxTranslateY = 100 - 50; // Content height - ParallaxSection height
+
+  // Calculate the translateY value based on scroll position
+  const translateY = scrollPosition * 0.5;
+  const translatedY = translateY < maxTranslateY ? maxTranslateY : translateY;
+
   return (
     <HeroContainer>
-      <ParallaxSection style={{ backgroundPositionY: -scrollPosition * 0.5 + 'px' }}>
-        <ParallaxContent>
-          <ContentText>Welcome to your next adventure!</ContentText>  
+      <ParallaxSection>
+        <ParallaxContent style={{ 
+          transform : `translateY(${translatedY}px)`
+          }}>
+          <Image src={laptopPic} alt="Laptop"></Image>
         </ParallaxContent>
       </ParallaxSection>
     </HeroContainer>
