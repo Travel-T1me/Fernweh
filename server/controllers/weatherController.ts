@@ -12,7 +12,7 @@ export const apiController = {
         params: {
           startTime: 'now',
           location: '42.13, 82,11',
-          fields: ['temperature', 'precipitation'],
+          fields: ['temperature', 'precipitationProbability', 'humidity'],
           endTime: 'nowPlus3h',
           timesteps: '1h,1d',
           units: 'metric'
@@ -24,15 +24,15 @@ export const apiController = {
       };
       console.log('reqbody?', req.body);
 
-      const startDate = DateTime.fromObject({year: req.body.startYear, month: req.body.startMonth, day: req.body.startDay, hour: req.body.startHour})
-      const endDate = DateTime.fromObject({year: req.body.endYear, month: req.body.endMonth, day: req.body.endDay, hour: req.body.endHour})
-      // console.log('start?', startDate);
-      // console.log('end?', endDate);
-      const location = req.body.location;
-      options.params.location = location
+      const startDate = DateTime.fromFormat(req.body.startDate, 'D')
+      const endDate = DateTime.fromFormat(req.body.endDate, 'D')
+      console.log('start?', startDate);
+      console.log('end?', endDate);
+      const latLong = req.body.latLong as string;
+      options.params.location = latLong
       options.params.startTime = startDate.toISO()
       options.params.endTime = endDate.toISO();
-      // console.log('Options?', options);
+      console.log('Options?', options);
       const response = await axios.request(options);
       // console.log(JSON.stringify(response.data, null, 2));
       res.locals.forecast = response.data;

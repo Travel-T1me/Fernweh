@@ -3,34 +3,46 @@ import axios from 'axios';
 import axiosInstance from '../axiosInstance'
 
 const Homepage = () => {
-  const sendBudget = {
-    high: 400,
-    low: 100,
+  const initialSend = {
+    budget: `$$`,
+    number: 4,
   }
-  const sendWeather = {
-    startYear: 2023,
-    startMonth: 8,
-    startDay: 27,
-    startHour: 0,
-    endYear: 2023,
-    endMonth: 8,
-    endDay: 30,
-    endHour: 0,
-    location: '42.2968, 71.2924'
+
+  const sendWeather = { //send destination as lat long + string
+    startDate: '8/29/2023',
+    endDate: '9/2/2023',
+    destination: 'London',
+    latLong: '51.5072, 0.1276'
   }
-  let mongoId;
-  React.useEffect(() =>
-  {
-    console.log('hi')
-    // axiosInstance.post('/budget', sendBudget).then(response => {
-    //   console.log(response.data);
-    //   mongoId = response.data;
-    // })
-    axiosInstance.post('/weather/64eb395580d09f959954c47a', sendWeather).then(response => {
-      console.log(response.data);
-    })
+
+  const notes = {
+    additionalNotes: ''
   }
-  )
+
+  let mongoId: string;
+
+  React.useEffect(() => {
+    const fetch = async () => {
+      try {
+        console.log('hi');
+        const initialRes = await axiosInstance.post('/initial', initialSend);
+        const mongoID = initialRes.data;
+        const weatherRes = await axiosInstance.post(`/weather/${mongoID}`, sendWeather);
+        const restaurantRes = await axiosInstance.post(`/yelp/${mongoID}`)
+        const notesRes = await axiosInstance.post(`/notes/${mongoID}`, {
+          notes: `We are celebrating the birthday of a friend turning 30 on Sep 3, 2023.`
+        })
+        const gptRes = await axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID});
+        console.log(gptRes.data);
+
+      } catch(err) {
+        console.error('Err:', err);
+      }
+    }
+
+    fetch();
+  })
+
   return (
     <>
       <h1>Welcome to your next adventure</h1>
