@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import QuestionCard from '../components/QuestionCard';
 import { QuestionCardType } from '../../types'
 import { styled } from 'styled-components'
+import NavBar from '../components/Navbar'
 // import useStore from '../store'
 
 interface WrapperProps {
@@ -19,6 +20,7 @@ const Wrapper = styled.div<WrapperProps>`
 
 
 const Questionaire = () => {
+
 
   const [questionStates, setQuestionStates] = useState([true, false, false, false, false, false])
 
@@ -51,11 +53,14 @@ const Questionaire = () => {
     }
   ]
 
+  const refsArray = questionList.map(() => React.createRef());
 
   const questionComponents = questionList.map((obj, index) => (
-
+    <>
+      <NavBar visible={true}/>
       <Wrapper $show={questionStates[index]} $focus={!questionStates[index+1] || index === questionStates.length - 1}>
         <QuestionCard
+        ref={refsArray[index + 1]}
         key={index} 
         el={index} 
         question={obj.question} 
@@ -65,6 +70,8 @@ const Questionaire = () => {
         max={obj.max}
         min={obj.min} />
       </Wrapper>
+    </>
+
 
 
   ))
