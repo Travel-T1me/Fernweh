@@ -12,7 +12,7 @@ export const apiController = {
         params: {
           startTime: 'now',
           location: '42.13, 82,11',
-          fields: 'windSpeed',
+          fields: ['temperature', 'precipitation'],
           endTime: 'nowPlus3h',
           timesteps: '1h,1d',
           units: 'metric'
@@ -26,14 +26,15 @@ export const apiController = {
 
       const startDate = DateTime.fromObject({year: req.body.startYear, month: req.body.startMonth, day: req.body.startDay, hour: req.body.startHour})
       const endDate = DateTime.fromObject({year: req.body.endYear, month: req.body.endMonth, day: req.body.endDay, hour: req.body.endHour})
-      console.log('start?', startDate);
-      console.log('end?', endDate);
+      // console.log('start?', startDate);
+      // console.log('end?', endDate);
       const location = req.body.location;
       options.params.location = location
-      options.params.startTime = startDate.toISO();
+      options.params.startTime = startDate.toISO()
       options.params.endTime = endDate.toISO();
-      console.log('Options?', options);
+      // console.log('Options?', options);
       const response = await axios.request(options);
+      // console.log(JSON.stringify(response.data, null, 2));
       res.locals.forecast = response.data;
       return next();
     } catch (error) {

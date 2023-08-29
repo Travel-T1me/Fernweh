@@ -2,23 +2,23 @@ import mongoose from "mongoose";
 
 const requestTextSchema = new mongoose.Schema({
   Budget: {
-    Low: Number,
-    High: Number
+    low: Number,
+    high: Number
   },
   Location: {
-      Location: String,
-      Start: Date,
-      End: Date
+      location: String,
+      start: Date,
+      end: Date
   },
   Travellers: Number,
   Restaurant: [{
     name: String,
-    location: String
+    location: String,
   }],
   Forecast: [{ //this should come from an api
-      High: Number,
-      Low: Number,
-      Precipitation: String
+      temp: Number,
+      humidity: Number,
+      precipitation: String
   }],
   AdditionalNotes: String
 });
