@@ -5,7 +5,7 @@ import { NextFunction, Request, Response } from "express";
 import RequestText from '../mongoSchema.js';
 
 const openai = new OpenAI({
-  apiKey: `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`
+  apiKey: process.env.OPEN_API_KEY
 });
 
 // https://github.com/openai/openai-node/blob/master/README.md
