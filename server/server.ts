@@ -4,12 +4,17 @@ console.log(result);
 import express, { Request, Response, NextFunction, Application } from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import gptRouter from "./routers/gptRouter.js";
+import yelpRouter from "./routers/yelpRouter.js";
 import { router } from './routers/apiRouter.js'
 
 const app: Application = express();
 
 app.use(express.json());
 app.use(cors());
+
+app.use("/api/gpt", gptRouter);
+app.use("/api/yelp", yelpRouter)
 
 app.use("/api", router);
 
