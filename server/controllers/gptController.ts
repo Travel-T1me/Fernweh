@@ -5,7 +5,7 @@ import { NextFunction, Request, Response } from "express";
 import RequestText from '../mongoSchema.js';
 
 const openai = new OpenAI({
-  apiKey: `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`
+  apiKey: `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`
 });
 
 // https://github.com/openai/openai-node/blob/master/README.md
@@ -71,7 +71,7 @@ ${doc.Restaurants}
     });
 
     // return res.json(completion.choices);
-    res.locals.response = completion.choices;
+    res.locals.response = completion.choices[0].message.content;
     return next();
   } catch (err) {
 
