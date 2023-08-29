@@ -36,7 +36,7 @@ const IndividualButton = styled.section`
 `
 
 
-const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: QuestionCardType) => {
+const QuestionCard = ({question, type, el, setQuestionStates, questionStates, min, max}: QuestionCardType) => {
     const [answer, setAnswer] = useState("");
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -55,15 +55,20 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
 
     })
 
+    let inputField;
+
+    if (type === 'number' && min){
+        inputField = <input type={type} min={min} max={max} onChange={handleChange} />
+    } else {
+        inputField = <input type={type} onChange={handleChange}/>
+    }
+
     return (
         <Wrapper>
             <Card>
                 <div>
                     <h1>{question}</h1>
-                    <span>
-                        <p>Your answer: </p>
-                        <input type={type} onChange={handleChange}/>
-                    </span>
+                        {inputField}
                     <br />
                     <Buttons>
                         <IndividualButton>

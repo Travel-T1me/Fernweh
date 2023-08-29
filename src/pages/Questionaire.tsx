@@ -20,24 +20,34 @@ const Wrapper = styled.div<WrapperProps>`
 
 const Questionaire = () => {
 
-  const [questionStates, setQuestionStates] = useState([true, false, false, false])
+  const [questionStates, setQuestionStates] = useState([true, false, false, false, false, false])
 
   const questionList = [
     {
-      question: "Departing City",
+      question: "What is your next destination?",
       type: 'text'
     },
     {
-      question: "Where do you want to go?",
-      type: 'text' 
+      question: "When do you want to arrive there?",
+      type: 'date' 
     },
     {
-      question: "How many adults are going?",
-      type: 'number'
+      question: "When do you have to leave?",
+      type: 'date'
     },
     {
-      question: "How many children are going?",
+      question: "How many people are going?",
       type:'number'
+    },
+    {
+      question: "On a scale of 1 to 4, with 1 being frugal and 4 being lavish, what is your travel budget?",
+      type:'number',
+      min: "1",
+      max: "4"
+    },
+    {
+      question: "Anything else we should know? (example: It's my spouse's birthday during this trip.)",
+      type:'text'
     }
   ]
 
@@ -51,7 +61,9 @@ const Questionaire = () => {
         question={obj.question} 
         type={obj.type} 
         setQuestionStates={setQuestionStates}
-        questionStates={questionStates} />
+        questionStates={questionStates}
+        max={obj.max}
+        min={obj.min} />
       </Wrapper>
 
 
