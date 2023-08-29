@@ -17,10 +17,9 @@ const Homepage = () => {
       <HeroSection />
       
       <Features />
-      <br/>
-      <br/>
+      
       <GetStartedSection />
-      <br/>
+      
       <Footer />
     </>
   )
