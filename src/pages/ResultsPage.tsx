@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import FullItinerary from '../components/FullItinerary';
+import Itinerary from '../components/Itinerary';
 import Restaurants from '../components/Restaurants';
 import Weather from '../components/Weather';
 
@@ -45,8 +45,9 @@ const SecondColumn = styled.section`
 const ResultsPage = () => {
   return (
     <ResultsContainer>
+      
       <FirstColumn>
-          <FullItinerary />
+          <Itinerary />
       </FirstColumn>
       
       <SecondColumn>

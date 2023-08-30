@@ -12,10 +12,17 @@ const ItineraryContainer = styled.div`
   background-color: ivory;
   min-height: 700px;
   min-width: 400px;
+  overflow-y: auto;
+  flex-wrap: wrap;
 
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
-const FullItinerary = () => {
+const Itinerary = () => {
 
   return (
     <ItineraryContainer>
@@ -24,4 +31,4 @@ const FullItinerary = () => {
   )
 };
 
-export default FullItinerary;
+export default Itinerary;
