@@ -1,28 +1,74 @@
-// import { create } from "zustand";
-// import { StoreState } from "../types";
+import { create } from "zustand";
+import { 
+  setNumberOfTravellers, 
+  infoForWeather,
 
-// // import types
-
-
-// const useStore = create((set) => ({
-//   // set initial state here
-//   questionStates: [true, false, false, false],
-//   moveToNextQuestion: (index) => set((state) => ({questionStates: state.questionStates[index] = true})),
+} from "../types";
 
 
-//   // login functionality
+interface StoreState {
+  numOfTravellers: string,
+  setNumberOfTravellers: setNumberOfTravellers,
+  infoForWeather: infoForWeather,
+  setInfoForWeather: (arrival:string, depart:string, destination:string, latLong:string) => void,
+  yelpBudget: string,
+  setYelpBudget: (budget: string) => void,
+  locationAsString: string,
+  setLocationAsString: (location:string) => void
+}
 
-//   // inputs/answers from user?
 
-//   // feed of trips from all users
-//     // how do we grab all of the trips from the database?
-//     // use axios to fetch from the database
+const questionaireStore = create<StoreState>((set) => ({
 
-//   // feed of saved trips from logged in user
-//     // how do we grab all of the trips from logged in user?
-//     // use axios to fetch form the database
+  // number of travellers
+    numOfTravellers: '',
+    setNumberOfTravellers: (num:string) => set(() => ({
+        numOfTravellers: num
+    })),
 
-//   // itinerary generated?
-// }))
+  // weather state
+  // information for weather (location and dates)
+    infoForWeather: {
+        startDate: '',
+        endDate: '',
+        destination: '',
+        latLong: ''
+    },
+    setInfoForWeather: (arrival:string, depart:string, destination:string, latLong:string) => set(() => ({
+        infoForWeather: {
+            startDate: arrival,
+            endDate: depart,
+            destination: destination,
+            latLong: latLong
+        }
+    })),
+  // information for yelp
+  // location as a string
 
-// export default useStore
+    yelpBudget: '',
+    setYelpBudget: (budget: string) => (() => {
+        yelpBudget: budget
+    }),
+
+    // destination needs
+    // location as lat / long (coordinates)
+    locationAsString: '',
+    setLocationAsString: (location: string) => (() => {
+        locationAsString: location
+    })
+  
+  
+  // departure date "string"
+
+  // feed of trips from all users
+    // how do we grab all of the trips from the database?
+    // use axios to fetch from the database
+
+  // feed of saved trips from logged in user
+    // how do we grab all of the trips from logged in user?
+    // use axios to fetch form the database
+
+  // itinerary generated?
+}))
+
+export default questionaireStore

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
 import { BaseButtonStyle } from '../GlobalStyles';
-import { NavbarContainerProps } from '../types';
+import { NavbarContainerProps } from '../../types';
 
 const Button = styled.button`${BaseButtonStyle}`;
 

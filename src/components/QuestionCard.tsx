@@ -78,7 +78,9 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, mi
     const [answer, setAnswer] = useState("");
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log('this is what we get when we answer the question', typeof e.target.value, e.target.value)
         setAnswer(e.target.value);
+    
     }
 
     const handleClick = ((boo: boolean) => {
@@ -100,6 +102,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, mi
     let inputField;
 
     if (type === 'number' && min){
+        // need to add edge case for when user manually inputs a value higher than 4
         inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center' }} type={type} min={min} max={max} onChange={handleChange} />
     } else {
         inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center' }} type={type} onChange={handleChange}/>

@@ -22,6 +22,8 @@ const Wrapper = styled.div<WrapperProps>`
 const Questionaire = () => {
 
 
+  // dates come back as string in yyyy-mm-dd format
+  // 
   const [questionStates, setQuestionStates] = useState([true, false, false, false, false, false])
 
   const questionList = [
