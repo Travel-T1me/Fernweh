@@ -28,14 +28,9 @@ const router = createBrowserRouter([
 
 export default function App(): React.ReactElement {
   return (
-    <RelayEnvironment>
-      <React.Suspense >
-        <GlobalStyles />
         <div className="app">
             {/* <DataFetchCheck/> */}
             <RouterProvider router={router} />
         </div>
-      </React.Suspense>
-    </RelayEnvironment>
   );
 }
