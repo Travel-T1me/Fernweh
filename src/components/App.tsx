@@ -35,5 +35,7 @@ export default function App(): React.ReactElement {
             {/* <DataFetchCheck/> */}
             <RouterProvider router={router} />
         </div>
+      </React.Suspense >
+    </RelayEnvironment>
   );
 }
