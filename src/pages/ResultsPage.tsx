@@ -7,8 +7,8 @@ import Weather from '../components/Weather';
 const ResultsContainer = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 15px;
-  padding: 15px;
+  column-gap: 50px;
+  padding: 150px;
   height: 100vh;
 `;
 
@@ -22,7 +22,7 @@ const SecondColumn = styled.section`
   display: grid;
   grid-column: 2 / 3;
   grid-template-rows: auto 1fr;
-  row-gap: 15px;
+  row-gap: 100px;
 `;
 
 // const WeatherContainer = styled.section`
