@@ -4,6 +4,11 @@ import { useState } from "react";
 import { QuestionCardType } from "../../types";
 import { Link } from "react-router-dom";
 import { BaseButtonStyle } from "../GlobalStyles";
+import useStore from '../store';
+import {
+    PartialStore
+} from '../../types';
+
 
 const Button = styled.button`${BaseButtonStyle}`;
 
@@ -76,31 +81,68 @@ const InputField = styled.section`
 `
 
 const QuestionCard = ({question, type, el, setQuestionStates, questionStates, min, max, ref}: QuestionCardType) => {
+    const {
+        setNumberOfTravellers,
+        setInfoForWeather,
+        setYelpBudget,
+        setLocationAsString,
+        setAdditionalNotes
+    } : PartialStore = useStore();
+    
+
+    const arrOfReducers = [
+        setNumberOfTravellers, 
+        setInfoForWeather, 
+        setYelpBudget,
+        setLocationAsString,
+        setAdditionalNotes
+    ]
+    
+    
     const [answer, setAnswer] = useState("");
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log('this is what we get when we answer the question', typeof e.target.value, e.target.value)
         setAnswer(e.target.value);
+    
     }
 
-    const handleClick = ((boo: boolean) => {
+    const handleClick = ((boo: boolean, index: number) => {
         const newState = [...questionStates]
+        let reducersToUse = [];
+
+        // push the appropriate reducers to use
+        if (index === 0) reducersToUse.push(setLocationAsString, setInfoForWeather)
+        if (index === 1) reducersToUse.push(setInfoForWeather)
+        if (index === 2) reducersToUse.push(setInfoForWeather)
+        if (index === 3) reducersToUse.push(setNumberOfTravellers)
+        if (index === 4) reducersToUse.push(setYelpBudget)
+        if (index === 5) reducersToUse.push(setAdditionalNotes)
+
         if (!boo && el !== 0){
             newState[el] = false;
             setQuestionStates(newState);
         } else if (boo){
+            // call the reducers to set the state, we have access to users inputs in answer
+
+            
+
+            // reveal the next card by changing the state
             newState[el + 1] = true;
             setQuestionStates(newState);
+
+            // scroll to the new card (TODO)
             // THIS IS WHERE I LEFT OFF
             // ref.current.scrollIntoView({
             //     behavior: 'smooth'
             // })
         }
-
     })
 
     let inputField;
 
     if (type === 'number' && min){
+        // need to add edge case for when user manually inputs a value higher than 4
         inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0px 10px 0 0'}} type={type} min={min} max={max} onChange={handleChange} />
     } else {
         inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0' }} type={type} onChange={handleChange}/>
@@ -124,12 +166,12 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, mi
                         </SubmitButton></Link>
                         } 
                         {       
-                        !questionStates[el+1] && el < questionStates.length - 1 && <SubmitButton onClick={() => handleClick(true)}>
+                        !questionStates[el+1] && el < questionStates.length - 1 && <SubmitButton onClick={() => handleClick(true, el)}>
                             Submit
                         </SubmitButton>
                         }
                         {
-                        el !== 0 && !questionStates[el + 1] && <BackButton onClick={() => handleClick(false)}>
+                        el !== 0 && !questionStates[el + 1] && <BackButton onClick={() => handleClick(false, el)}>
                             Go Back
                         </BackButton>
                         }

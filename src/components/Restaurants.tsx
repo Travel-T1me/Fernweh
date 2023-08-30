@@ -7,16 +7,18 @@ const RestaurantContainer = styled.div`
   align-items: center;
   border-radius: 20px;
   border: 1px solid black;
-  height: calc(50vh - 22.5px);
-  width: 50vw;
+  height: calc(50vh - 150px);
+  width: 100%;
   background-color: DarkSeaGreen;
+  min-height: 300px;
+  min-width: 300px;
 `;
 
 const Restaurants = () => {
 
   return (
     <RestaurantContainer>
-      <h1>At our local pizza restaurant you can eat dirt cheap. But who wants to eat dirt?</h1>
+      <h1>Hello Foodie Container</h1>
     </RestaurantContainer>
   )
 };

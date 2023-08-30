@@ -9,7 +9,7 @@
     "allowJs": false,
     "moduleResolution": "node",
     "lib": ["DOM"],
-    "allowSyntheticDefaultImports": true,,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
     "typeRoots": ["./typings", "./node_modules/@types"], // added this config to recognize declaration files
   },

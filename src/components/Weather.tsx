@@ -7,9 +7,11 @@ const WeatherContainer = styled.div`
     align-items: center;
     border-radius: 20px;
     border: 1px solid black;
-    height: calc(50vh - 22.5px);
-    width: 50vw;
+    height: calc(50vh - 150px);
+    width: 100%;
     background-color: lightpink;
+    min-height: 300px;
+    min-width: 300px;
 `;
 
 const ScrollEffect = styled.div`
@@ -23,7 +25,7 @@ const Weather = () => {
 
   return (
     <WeatherContainer>
-      <h1>What do you call a snowman with a six-pack? /nAn abdominal snowman.</h1>
+      <h1>Hello Weather Container</h1>
       <ScrollEffect>
         <div>
             <span>Div1</span>

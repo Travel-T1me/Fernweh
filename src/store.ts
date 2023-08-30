@@ -1,28 +1,81 @@
-// import { create } from "zustand";
-// import { StoreState } from "../types";
+import { create } from "zustand";
+import { 
+  SetNumberOfTravellers, 
+  InfoForWeather,
+  SetInfoForWeather,
+  SetYelpBudget,
+  SetLocationAsString,
+  SetAdditionalNotes
+} from "../types";
 
-// // import types
+interface StoreState {
+  numOfTravellers: string,
+  setNumberOfTravellers: SetNumberOfTravellers,
+
+  infoForWeather: InfoForWeather,
+  setInfoForWeather: SetInfoForWeather,
+
+  yelpBudget: string,
+  setYelpBudget: SetYelpBudget,
+
+  location: string,
+  setLocationAsString: SetLocationAsString,
+
+  additionalNotes: string,
+  setAdditionalNotes: SetAdditionalNotes,
+}
 
 
-// const useStore = create((set) => ({
-//   // set initial state here
-//   questionStates: [true, false, false, false],
-//   moveToNextQuestion: (index) => set((state) => ({questionStates: state.questionStates[index] = true})),
+const useStore = create<StoreState>((set) => ({
+  // number of travellers
+  numOfTravellers: '',
+  setNumberOfTravellers: (numOfTravellers: string) : void => set((state) => ({
+    ...state, numOfTravellers,
+  })),
 
+  // weather state, information for weather (location and dates)
+  infoForWeather: {
+    startDate: '',
+    endDate: '',
+    destination: '',
+    latLong: ''
+  },
+  setInfoForWeather: (startDate:string, endDate:string, destination:string, latLong:string) : void => set((state) => ({
+    infoForWeather: {
+      startDate,
+      endDate,
+      destination,
+      latLong,
+    }
+  })),
 
-//   // login functionality
+  // information for yelp budget
+  yelpBudget: '',
+  setYelpBudget: (yelpBudget: string) : void => set((state) => ({
+    ...state, yelpBudget,
+  })),
 
-//   // inputs/answers from user?
+  // location as a string
+  location: '',
+  setLocationAsString: (location: string) : void => set((state) => ({
+    ...state, location,
+  })),
 
-//   // feed of trips from all users
-//     // how do we grab all of the trips from the database?
-//     // use axios to fetch from the database
+  additionalNotes: '',
+  setAdditionalNotes: (notes:string) : void => set((state) => ({
+    ...state, notes,
+  })),
 
-//   // feed of saved trips from logged in user
-//     // how do we grab all of the trips from logged in user?
-//     // use axios to fetch form the database
+}));
 
-//   // itinerary generated?
-// }))
+export default useStore;
 
-// export default useStore
+  // feed of trips from all users
+    // how do we grab all of the trips from the database?
+    // use axios to fetch from the database
+
+  // feed of saved trips from logged in user
+    // how do we grab all of the trips from logged in user?
+    // use axios to fetch form the database
+
+  // itinerary generated?

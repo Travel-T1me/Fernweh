@@ -3,7 +3,7 @@ import QuestionCard from '../components/QuestionCard';
 import { QuestionCardType } from '../../types'
 import { styled } from 'styled-components'
 import NavBar from '../components/Navbar'
-// import useStore from '../store'
+import useStore from '../store'
 
 interface WrapperProps {
   $show?: boolean;
@@ -22,6 +22,8 @@ const Wrapper = styled.div<WrapperProps>`
 const Questionaire = () => {
 
 
+  // dates come back as string in yyyy-mm-dd format
+  // 
   const [questionStates, setQuestionStates] = useState([true, false, false, false, false, false])
 
   const questionList = [
