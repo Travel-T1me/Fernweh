@@ -1,7 +1,5 @@
-import axios from 'axios';
 import { NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
-import { nextTick } from 'process';
 dotenv.config();
 
 export const getRestaurants = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

@@ -25,14 +25,14 @@ const Homepage = () => {
     const fetch = async () => {
       try {
         console.log('hi');
-        const initialRes = await axiosInstance.post('/initial', initialSend);
+        const initialRes = await axiosInstance.post('/initial', initialSend); //after user inputs num travellers
         const mongoID = initialRes.data;
-        const weatherRes = await axiosInstance.post(`/weather/${mongoID}`, sendWeather);
-        const restaurantRes = await axiosInstance.post(`/yelp/${mongoID}`)
+        const weatherRes = await axiosInstance.post(`/weather/${mongoID}`, sendWeather); //after user inputs destination
+        const restaurantRes = await axiosInstance.post(`/yelp/${mongoID}`) // probably be sent at the same time
         const notesRes = await axiosInstance.post(`/notes/${mongoID}`, {
           notes: `We are celebrating the birthday of a friend turning 30 on Sep 3, 2023.`
-        })
-        const gptRes = await axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID});
+        }) //after notes
+        const gptRes = await axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID}); // final submit
         console.log(gptRes.data);
 
       } catch(err) {

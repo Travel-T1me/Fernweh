@@ -1,11 +1,8 @@
 import * as dotenv from 'dotenv';
-const result = dotenv.config();
-console.log(result);
+dotenv.config();
 import express, { Request, Response, NextFunction, Application } from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import gptRouter from "./routers/gptRouter.js";
-import yelpRouter from "./routers/yelpRouter.js";
 import { router } from './routers/apiRouter.js'
 
 const app: Application = express();
