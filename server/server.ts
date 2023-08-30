@@ -1,4 +1,4 @@
-/// <reference path="../custom-types.d.ts" />
+/// <reference path="../typings/custom-types.d.ts" />
 
 import express, { Application, Request, Response, NextFunction } from 'express';
 import session from 'express-session';

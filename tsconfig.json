@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    // "skipLibCheck": true,
     "noEmit": false,
     "outDir": "./dist",
     "noImplicitAny": true,
@@ -11,10 +10,10 @@
     "moduleResolution": "node",
     "lib": ["DOM"],
     "allowSyntheticDefaultImports": true,
+    "typeRoots": ["./typings", "./node_modules/@types"]
   },
   "include": [
     "./src/**/*",
-    "./server/*",
-    "./server/findorcreate.d.ts",
-    "./custom-types.d.ts"  ]
+    "./server/*"
+  ]
 }
