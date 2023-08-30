@@ -3,18 +3,43 @@ dotenv.config();
 import OpenAI from "openai";
 import { NextFunction, Request, Response } from "express";
 import RequestText from '../mongoSchema.js';
+import mongoose from "mongoose";
 
 const openai = new OpenAI({
   apiKey: process.env.OPEN_API_KEY
 });
 
+interface IRequestText {
+  Budget: string;
+  Location: {
+    location: string;
+    latLong: string;
+    start: Date;
+    end: Date;
+  };
+  Travellers: number;
+  Restaurants: Array<{
+    name: string;
+    rating: number;
+    price_range: string;
+  }>;
+  Forecast: Array<{
+    temp: number;
+    precipitation: number;
+    humidity: number;
+  }>;
+  AdditionalNotes: string;
+  _id: mongoose.Types.ObjectId;
+}
+
 // https://github.com/openai/openai-node/blob/master/README.md
 export const getCompletion = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const doc = await RequestText.findById(`${req.params.id}`);
+    const doc = await RequestText.findById(`${req.params.id}`) as unknown as IRequestText;
+
     const docForecast = doc.Forecast.map((forecast, index) => {
       return `--Day${index+1}: (temp: ${forecast.temp} C, precipitation: ${forecast.precipitation}%, humidity: ${forecast.humidity}%)`
-    })
+    });
 
     const api_prompt: string = `
 ---START TEMPLATE---
