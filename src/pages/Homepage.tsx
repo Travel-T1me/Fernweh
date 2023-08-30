@@ -1,12 +1,12 @@
 import React from 'react'
+import axios from 'axios';
+import axiosInstance from '../axiosInstance'
 import Navbar from '../components/Navbar';
 import Features from '../components/Features';
 import HeroSection from '../components/HeroSection';
 import GetStartedSection from '../components/GetStartedSection';
 import Footer from '../components/Footer';
 
-import axios from 'axios';
-import axiosInstance from '../axiosInstance'
 
 const Homepage = () => {
   const initialSend = {
