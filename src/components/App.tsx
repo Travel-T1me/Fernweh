@@ -2,7 +2,7 @@ import * as React from "react";
 import RelayEnvironment from "../relay/RelayEnvironment";
 import DataFetchCheck from "./DataFetchCheck";
 
-import { 
+import {
   createBrowserRouter,
   RouterProvider
 } from "react-router-dom"
@@ -28,13 +28,9 @@ const router = createBrowserRouter([
 
 export default function App(): React.ReactElement {
   return (
-    <RelayEnvironment>
-      <React.Suspense >
         <div className="app">
             {/* <DataFetchCheck/> */}
             <RouterProvider router={router} />
         </div>
-      </React.Suspense>
-    </RelayEnvironment>
   );
 }
