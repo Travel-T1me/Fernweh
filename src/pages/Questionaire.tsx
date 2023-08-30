@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import QuestionCard from '../components/QuestionCard';
 import { QuestionCardType } from '../../types'
 import { styled } from 'styled-components'
@@ -27,7 +27,7 @@ const Questionaire = () => {
   const questionList = [
     {
       question: "What is your next destination?",
-      type: 'text'
+      type: 'text',
     },
     {
       question: "When do you want to arrive there?",
@@ -53,14 +53,14 @@ const Questionaire = () => {
     }
   ]
 
-  const refsArray = questionList.map(() => React.createRef());
+  const refsArray = questionList.map(() => useRef(0));
 
   const questionComponents = questionList.map((obj, index) => (
     <>
       <NavBar visible={true}/>
       <Wrapper $show={questionStates[index]} $focus={!questionStates[index+1] || index === questionStates.length - 1}>
         <QuestionCard
-        ref={refsArray[index + 1]}
+        ref={refsArray[index]}
         key={index} 
         el={index} 
         question={obj.question} 

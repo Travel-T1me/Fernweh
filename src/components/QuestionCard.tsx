@@ -90,9 +90,9 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, mi
             newState[el + 1] = true;
             setQuestionStates(newState);
             // THIS IS WHERE I LEFT OFF
-            ref.current.scrollIntoView({
-                behavior: 'smooth'
-            })
+            // ref.current.scrollIntoView({
+            //     behavior: 'smooth'
+            // })
         }
 
     })
@@ -117,6 +117,11 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, mi
                     </InputField>
                     <br />
                     <Buttons>
+                        {
+                        el === questionStates.length - 1 && <Link to={`/results`}><SubmitButton>
+                            Get your itinerary
+                        </SubmitButton></Link>
+                        } 
                         {       
                         !questionStates[el+1] && el < questionStates.length - 1 && <SubmitButton onClick={() => handleClick(true)}>
                             Submit
@@ -127,11 +132,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, mi
                             Go Back
                         </BackButton>
                         }
-                        {
-                        el === questionStates.length - 1 && <Link to={`/results`}><SubmitButton>
-                            Get your itinerary
-                        </SubmitButton></Link>
-                        } 
+ 
                     </Buttons>
                 </Card>
             </CardContainer>
