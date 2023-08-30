@@ -109,7 +109,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, mi
 
     const handleClick = ((boo: boolean, index: number) => {
         const newState = [...questionStates]
-        let reducersToUse = [];
+        let reducersToUse:any = [];
 
         // push the appropriate reducers to use
         if (index === 0) reducersToUse.push(setLocationAsString, setInfoForWeather)
