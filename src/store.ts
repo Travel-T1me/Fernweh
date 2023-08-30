@@ -1,64 +1,74 @@
 import { create } from "zustand";
 import { 
-  setNumberOfTravellers, 
-  infoForWeather,
-
+  SetNumberOfTravellers, 
+  InfoForWeather,
+  SetInfoForWeather,
+  SetYelpBudget,
+  SetLocationAsString,
+  SetAdditionalNotes
 } from "../types";
-
 
 interface StoreState {
   numOfTravellers: string,
-  setNumberOfTravellers: setNumberOfTravellers,
-  infoForWeather: infoForWeather,
-  setInfoForWeather: (arrival:string, depart:string, destination:string, latLong:string) => void,
+  setNumberOfTravellers: SetNumberOfTravellers,
+
+  infoForWeather: InfoForWeather,
+  setInfoForWeather: SetInfoForWeather,
+
   yelpBudget: string,
-  setYelpBudget: (budget: string) => void,
-  locationAsString: string,
-  setLocationAsString: (location:string) => void
+  setYelpBudget: SetYelpBudget,
+
+  location: string,
+  setLocationAsString: SetLocationAsString,
+
+  additionalNotes: string,
+  setAdditionalNotes: SetAdditionalNotes,
 }
 
 
-const questionaireStore = create<StoreState>((set) => ({
-
+const useStore = create<StoreState>((set) => ({
   // number of travellers
-    numOfTravellers: '',
-    setNumberOfTravellers: (num:string) => set(() => ({
-        numOfTravellers: num
-    })),
+  numOfTravellers: '',
+  setNumberOfTravellers: (numOfTravellers: string) : void => set((state) => ({
+    ...state, numOfTravellers,
+  })),
 
-  // weather state
-  // information for weather (location and dates)
+  // weather state, information for weather (location and dates)
+  infoForWeather: {
+    startDate: '',
+    endDate: '',
+    destination: '',
+    latLong: ''
+  },
+  setInfoForWeather: (startDate:string, endDate:string, destination:string, latLong:string) : void => set((state) => ({
     infoForWeather: {
-        startDate: '',
-        endDate: '',
-        destination: '',
-        latLong: ''
-    },
-    setInfoForWeather: (arrival:string, depart:string, destination:string, latLong:string) => set(() => ({
-        infoForWeather: {
-            startDate: arrival,
-            endDate: depart,
-            destination: destination,
-            latLong: latLong
-        }
-    })),
-  // information for yelp
+      startDate,
+      endDate,
+      destination,
+      latLong,
+    }
+  })),
+
+  // information for yelp budget
+  yelpBudget: '',
+  setYelpBudget: (yelpBudget: string) : void => set((state) => ({
+    ...state, yelpBudget,
+  })),
+
   // location as a string
+  location: '',
+  setLocationAsString: (location: string) : void => set((state) => ({
+    ...state, location,
+  })),
 
-    yelpBudget: '',
-    setYelpBudget: (budget: string) => (() => {
-        yelpBudget: budget
-    }),
+  additionalNotes: '',
+  setAdditionalNotes: (notes:string) : void => set((state) => ({
+    ...state, notes,
+  })),
 
-    // destination needs
-    // location as lat / long (coordinates)
-    locationAsString: '',
-    setLocationAsString: (location: string) => (() => {
-        locationAsString: location
-    })
-  
-  
-  // departure date "string"
+}));
+
+export default useStore;
 
   // feed of trips from all users
     // how do we grab all of the trips from the database?
@@ -69,6 +79,3 @@ const questionaireStore = create<StoreState>((set) => ({
     // use axios to fetch form the database
 
   // itinerary generated?
-}))
-
-export default questionaireStore

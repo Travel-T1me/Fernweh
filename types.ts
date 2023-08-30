@@ -1,3 +1,22 @@
+
+export interface PartialStore {
+    numOfTravellers?: string;
+    setNumberOfTravellers?: SetNumberOfTravellers;
+
+    infoForWeather?: InfoForWeather;
+    setInfoForWeather?: SetInfoForWeather;
+
+    yelpBudget?: string;
+    setYelpBudget?: SetYelpBudget;
+
+    location?: string;
+    setLocationAsString?: SetLocationAsString;
+
+    additionalNotes?: string;
+    setAdditionalNotes?: SetAdditionalNotes;
+};
+
+
 export type QuestionCardType = {
     el: number,
     question: string,
@@ -9,40 +28,35 @@ export type QuestionCardType = {
     ref: any
 };
 
-
 export interface NavbarContainerProps {
     visible: boolean;
-  }
-  
-  export interface ButtonProps {
+}
+
+export interface ButtonProps {
     onClick: () => void;
     label: string;
-  }
-  
-  export interface FeatureCardProps {
+}
+
+export interface FeatureCardProps {
     iconSrc: string;
     title: string;
     description: string;
-  }
-  
-  export type setNumberOfTravellers = (num: string) => void;
-  
-  export type infoForWeather = {
+}
+
+export interface InfoForWeather {
     startDate: string,
     endDate: string,
     destination: string,
     latLong: string
-  };
-  
-  
-  export interface StoreTypes {
-    numOfTravellers: number,
-    setNumberOfTravellers: setNumberOfTravellers,
-    infoForWeather: infoForWeather,
-    setInfoForWeather: (arrival:string, depart:string, destination:string, latLong:string) => void,
-    yelpBudget: string,
-    setYelpBudget: (budget: string) => void,
-    locationAsString: string,
-    setLocationAsString: (location:string) => void
-  }
-  
+};
+
+export type SetNumberOfTravellers = (numOfTravellers: string) => void;
+
+export type SetInfoForWeather = (startDate: string, endDate: string, destination: string, latLong: string) => void;
+
+export type SetYelpBudget = (yelpBudget: string) => void;
+
+export type SetLocationAsString = (location: string) => void;
+
+export type SetAdditionalNotes = (notes: string) => void;
+

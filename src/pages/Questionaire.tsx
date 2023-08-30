@@ -3,7 +3,7 @@ import QuestionCard from '../components/QuestionCard';
 import { QuestionCardType } from '../../types'
 import { styled } from 'styled-components'
 import NavBar from '../components/Navbar'
-// import useStore from '../store'
+import useStore from '../store'
 
 interface WrapperProps {
   $show?: boolean;
