@@ -14,3 +14,6 @@ export interface FeatureCardProps {
   description: string;
 }
 
+export interface StoreTypes {
+  
+}
