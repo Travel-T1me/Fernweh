@@ -27,6 +27,7 @@
   "homepage": "https://github.com/Travel-T1me/travel-t1me#readme",
   "dependencies": {
     "@apollo/server": "^4.9.1",
+    "@types/lodash": "^4.14.197",
     "@types/memory-cache": "^0.2.3",
     "axios": "^1.5.0",
     "bcryptjs": "^2.4.3",
@@ -34,6 +35,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "lodash": "^4.17.21",
     "luxon": "^3.4.2",
     "memory-cache": "^0.2.0",
     "mongodb": "^5.8.1",

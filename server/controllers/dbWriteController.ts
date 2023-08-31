@@ -68,6 +68,14 @@ export const dbWriteController = {
         windSpeed: interval.values.windSpeed,
       }
     })
+
+    // const foreCastArr = [{
+    //   temp: 95,
+    //   precipitation: 55,
+    //   humidity: 55,
+    //   windSpeed: 4.2
+    // }]
+
     console.log('LOGGING NEW DOCUMENT');
     console.log('FORECASTARR?', foreCastArr);
     console.log('LOCATION?', location);

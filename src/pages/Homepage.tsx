@@ -2,6 +2,8 @@ import React from 'react'
 import axios from 'axios';
 import axiosInstance from '../axiosInstance'
 import AutoComplete from '../components/AutoComplete';
+import { useState } from 'react';
+import { initial } from 'lodash';
 
 const Homepage = () => {
   const initialSend = {
@@ -20,20 +22,29 @@ const Homepage = () => {
     additionalNotes: ''
   }
 
-  let mongoId: string;
+  const [mongoID, setMongoId] = useState('');
+
+  const resend = async () => {
+    console.log('mongoId?', mongoID)
+    const gptRes = await axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID}); // final submit
+    console.log('refetched response:', gptRes.data)
+  }
 
   React.useEffect(() => {
     const fetch = async () => {
       try {
         console.log('hi');
         const initialRes = await axiosInstance.post('/initial', initialSend); //after user inputs num travellers
-        const mongoID = initialRes.data;
-        const weatherRes = await axiosInstance.post(`/weather/${mongoID}`, sendWeather); //after user inputs destination
-        const restaurantRes = await axiosInstance.post(`/yelp/${mongoID}`) // probably be sent at the same time
-        const notesRes = await axiosInstance.post(`/notes/${mongoID}`, {
+        console.log('DATA?', initialRes.data)
+        setMongoId(initialRes.data);
+        const newId = initialRes.data
+        console.log('mongoId', mongoID)
+        const weatherRes = await axiosInstance.post(`/weather/${newId}`, sendWeather); //after user inputs destination
+        const restaurantRes = await axiosInstance.post(`/yelp/${newId}`) // probably be sent at the same time
+        const notesRes = await axiosInstance.post(`/notes/${newId}`, {
           notes: `We are celebrating the birthday of a friend turning 30 on Sep 3, 2023.`
         }) //after notes
-        const gptRes = await axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID}); // final submit
+        const gptRes = await axiosInstance.post(`/llm/${newId}`, {docID: newId}); // final submit
         console.log(gptRes.data);
 
       } catch(err) {
@@ -42,12 +53,13 @@ const Homepage = () => {
     }
 
     fetch();
-  })
+  }, [])
 
   return (
     <>
       <h1>Welcome to your next adventure</h1>
       <AutoComplete/>
+      <button onClick={resend}>RE-SEND</button>
     </>
   )
 }
