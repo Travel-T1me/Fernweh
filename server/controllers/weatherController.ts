@@ -23,7 +23,7 @@ export const apiController = {
           'X-RapidAPI-Host': 'tomorrow-io1.p.rapidapi.com'
         }
       };
-      // console.log('reqbody?', req.body);
+      console.log('reqbody?', req.body);
 
       const startDate = DateTime.fromFormat(req.body.startDate, 'D')
       const endDate = DateTime.fromFormat(req.body.endDate, 'D')

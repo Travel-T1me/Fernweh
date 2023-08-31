@@ -8,7 +8,7 @@ import {
   SetLocationAsString,
   SetAdditionalNotes,
   SetArrivalDate,
-  SetLeavingDate
+  SetEndDate
 } from "../types";
 
 interface StoreState {
@@ -18,8 +18,8 @@ interface StoreState {
   arrivalDate: string,
   setArrivalDate: SetArrivalDate,
 
-  leavingDate: string,
-  setLeavingDate: SetLeavingDate,
+  endDate: string,
+  setEndDate: SetEndDate,
 
   infoForWeather: InfoForWeather,
   setInfoForWeather: SetInfoForWeather,
@@ -60,23 +60,23 @@ const useStore = create<StoreState>((set) => ({
     arrivalDate,
   })),
 
-  leavingDate: '',
-  setLeavingDate: (leavingDate: string): void => set((state) => ({
-    leavingDate,
+  endDate: '',
+  setEndDate: (endDate: string): void => set((state) => ({
+    endDate,
   })),
 
 
   // weather state, information for weather (location and dates)
   infoForWeather: {
     startDate: '',
-    leavingDate: '',
+    endDate: '',
     destination: '',
     latLong: ''
   },
-  setInfoForWeather: (startDate:string, leavingDate:string, destination:string, latLong:string) : void => set((state) => ({
+  setInfoForWeather: (startDate:string, endDate:string, destination:string, latLong:string) : void => set((state) => ({
     infoForWeather: {
       startDate,
-      leavingDate,
+      endDate,
       destination,
       latLong,
     }

@@ -6,8 +6,8 @@ export interface PartialStore {
     arrivalDate: string,
     setArrivalDate: SetArrivalDate,
   
-    leavingDate: string,
-    setLeavingDate: SetLeavingDate,
+    endDate: string,
+    setEndDate: SetEndDate,
   
     infoForWeather: InfoForWeather,
     setInfoForWeather: SetInfoForWeather,
@@ -45,7 +45,7 @@ export type QuestionCardType = {
 };
 
 export interface NavbarContainerProps {
-    visible: string;
+    visible: boolean;
 }
 
 export interface ButtonProps {
@@ -61,14 +61,14 @@ export interface FeatureCardProps {
 
 export interface InfoForWeather {
     startDate: string,
-    leavingDate: string,
+    endDate: string,
     destination: string,
     latLong: string
 };
 
 export type SetNumberOfTravellers = (numOfTravellers: string) => void;
 
-export type SetInfoForWeather = (startDate: string, leavingDate: string, destination: string, latLong: string) => void;
+export type SetInfoForWeather = (startDate: string, endDate: string, destination: string, latLong: string) => void;
 
 export type SetYelpBudget = (yelpBudget: string) => void;
 
@@ -78,4 +78,4 @@ export type SetAdditionalNotes = (notes: string) => void;
 
 export type SetArrivalDate = (date: string) => void;
 
-export type SetLeavingDate = (date: string) => void;
+export type SetEndDate = (date: string) => void;

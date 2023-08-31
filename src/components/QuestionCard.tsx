@@ -95,8 +95,8 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
         setNumberOfTravellers,
         arrivalDate,
         setArrivalDate,
-        leavingDate,
-        setLeavingDate,
+        endDate,
+        setEndDate,
         infoForWeather,
         setInfoForWeather,
         yelpBudget,
@@ -116,9 +116,20 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
     // state for user inputs
     const [answer, setAnswer] = useState("");
 
+    // Function to format the date in 'MM/DD/YYYY' format
+    function formatDate(dateString: string): string {
+        console.log(dateString)
+        const [year, month, day] = dateString.split("-");
+        return `${month}/${day}/${year}`;
+    }
+    
     // handleChange to update answer
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         setAnswer(e.target.value);
+        console.log(answer, 'line 129')
+        if (type === 'date'){
+            setAnswer(formatDate(answer))
+        }
     }
 
     const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>): void => {
@@ -151,6 +162,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                             console.error('Err:', err)
                         }}
                     const initialResponse = await initialRes()
+                    console.log(initialResponse.data)
                     setMongoID(initialResponse.data);
                     break;
                 case 2:
@@ -158,26 +170,21 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     break;
                 case 3:
                     setArrivalDate(answer);
-                    const arrival = useStore.getState().arrivalDate;
-                    console.log(arrival);
                     break;
                 case 4:
-                    setLeavingDate(answer);
-                    // setInfoForWeather(arrivalDate, leavingDate, location, '40.7128, 74.0060');
-                    const userLeavingDate = useStore.getState().leavingDate
-                    console.log(userLeavingDate)
-                    setInfoForWeather(arrivalDate, userLeavingDate, location, '40.7138, 74.0060')
-                    console.log(useStore.getState().infoForWeather)
-                    // const weatherCall = async () => {
-                    //     try{
-                    //         const data = await axiosInstance.post(`weather/${mongoID}`, {startDate: '8/29/2023', endDate: '9/2/2023', destination: 'London', latLong: '51.5072, 0.1276'});
-                    //         console.log(`weather post request: ${data.data}`);
-                    //         return data
-                    //     } catch (err) {
-                    //         console.error('Err:', err)
-                    //     }}
-                    // const weatherResponse = await weatherCall();
-                    // console.log(weatherResponse)
+                    setEndDate(answer);
+                    const userEndDate = useStore.getState().endDate
+                    setInfoForWeather(arrivalDate, userEndDate, location, '40.7138, 74.0060')
+                    let currentInformationForWeather = useStore.getState().infoForWeather
+                    const weatherCall = async () => {
+                        try{
+                            const data = await axiosInstance.post(`weather/${mongoID}`, currentInformationForWeather);
+                            return data
+                        } catch (err) {
+                            console.error('Err:', err);
+                        }}
+                    const weatherResponse = await weatherCall();
+                    console.log(weatherResponse)
                     // commented out to save calls
                     // const restaurantCall = async () => {
                     //     try {
@@ -219,6 +226,8 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
         console.log(gptResponse)
     }
 
+    
+
     let inputField;
 
     if (type === 'select'){
@@ -229,9 +238,11 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
             <option value='$$$'>3</option>
             <option value='$$$$'>4</option>
         </select>
-        // need to add edge case for when user manually inputs a value higher than 4
-        // inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0px 10px 0 0'}} type={type} min={min} max={max} onChange={handleChange} />
-    } else {
+    } else if (type === 'date'){
+        inputField = 
+        <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0' }} type={type} onChange={handleChange}/>
+
+    }{
         inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0' }} type={type} onChange={handleChange}/>
     }
 

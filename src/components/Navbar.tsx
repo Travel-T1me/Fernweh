@@ -52,9 +52,9 @@ const Navbar: React.FC<NavbarContainerProps> = ({ visible }) => {
 
     const handleScroll = () => {
       if (window.scrollY > 75) {
-        setIsNavbarVisible('true');
+        setIsNavbarVisible(true);
       } else {
-        setIsNavbarVisible('false');
+        setIsNavbarVisible(false);
       }
     };
 
