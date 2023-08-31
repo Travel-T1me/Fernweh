@@ -72,6 +72,7 @@ ${doc.Restaurants}
 
     // return res.json(completion.choices);
     res.locals.response = completion.choices[0].message.content;
+    console.log(res.locals.response)
     return next();
   } catch (err) {
 

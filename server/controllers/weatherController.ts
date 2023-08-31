@@ -22,7 +22,7 @@ export const apiController = {
           'X-RapidAPI-Host': 'tomorrow-io1.p.rapidapi.com'
         }
       };
-      console.log('reqbody?', req.body);
+      //console.log('reqbody?', req.body);
 
       const startDate = DateTime.fromFormat(req.body.startDate, 'D')
       const endDate = DateTime.fromFormat(req.body.endDate, 'D')
@@ -36,9 +36,11 @@ export const apiController = {
       const response = await axios.request(options);
       // console.log(JSON.stringify(response.data, null, 2));
       res.locals.forecast = response.data;
+
+      console.log('After all declared reqs from FE: reqbody?', req.body);
       return next();
     } catch (error) {
-      console.error(error);
+      console.error('Error making weather API request: ', error);
     }
   }
 }

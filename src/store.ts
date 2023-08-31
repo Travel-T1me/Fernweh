@@ -39,8 +39,8 @@ interface StoreState {
   },
   setInitialData: (budget:string, number:number) => void,
 
-  mongoID: number,
-  setMongoID: (num: number) => void,
+  mongoID: string,
+  setMongoID: (id: string) => void,
 
   gptResponse: any,
   setGptResponse: (res: any) => void
@@ -55,28 +55,28 @@ const useStore = create<StoreState>((set) => ({
   })),
 
   // modularized state for weather
-  arrivalDate: 'test from store',
+  arrivalDate: '',
   setArrivalDate: (arrivalDate: string): void => set((state) => ({
     arrivalDate,
   })),
 
   leavingDate: '',
-  setLeavingDate: (date: string): void => set(() => ({
-    leavingDate: date
+  setLeavingDate: (leavingDate: string): void => set((state) => ({
+    leavingDate,
   })),
 
 
   // weather state, information for weather (location and dates)
   infoForWeather: {
     startDate: '',
-    endDate: '',
+    leavingDate: '',
     destination: '',
     latLong: ''
   },
-  setInfoForWeather: (startDate:string, endDate:string, destination:string, latLong:string) : void => set((state) => ({
+  setInfoForWeather: (startDate:string, leavingDate:string, destination:string, latLong:string) : void => set((state) => ({
     infoForWeather: {
       startDate,
-      endDate,
+      leavingDate,
       destination,
       latLong,
     }
@@ -109,9 +109,9 @@ const useStore = create<StoreState>((set) => ({
       number
     }
   })),
-  mongoID: 0,
-  setMongoID: (num: number): void => set((state) => ({
-    mongoID: num
+  mongoID: '',
+  setMongoID: (id: string): void => set((state) => ({
+    mongoID: id
   })),
 
   gptResponse: '',

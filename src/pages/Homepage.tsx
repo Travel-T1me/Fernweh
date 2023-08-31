@@ -27,34 +27,34 @@ const Homepage = () => {
 
   let mongoId: string;
 
-  React.useEffect(() => {
-    const fetch = async () => {
-      try {
-        console.log('hi');
-        const initialRes = await axiosInstance.post('/initial', initialSend); //after user inputs num travellers
-        const mongoID = initialRes.data;
-        const weatherRes = await axiosInstance.post(`/weather/${mongoID}`, sendWeather); //after user inputs destination
-        const restaurantRes = await axiosInstance.post(`/yelp/${mongoID}`) // probably be sent at the same time
-        const notesRes = await axiosInstance.post(`/notes/${mongoID}`, {
-          notes: `We are celebrating the birthday of a friend turning 30 on Sep 3, 2023.`
-        }) //after notes
-        const gptRes = await axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID}); // final submit
-        console.log(gptRes.data);
+  // React.useEffect(() => {
+  //   const fetch = async () => {
+  //     try {
+  //       console.log('hi');
+  //       const initialRes = await axiosInstance.post('/initial', initialSend); //after user inputs num travellers
+  //       const mongoID = initialRes.data;
+  //       const weatherRes = await axiosInstance.post(`/weather/${mongoID}`, sendWeather); //after user inputs destination
+  //       const restaurantRes = await axiosInstance.post(`/yelp/${mongoID}`) // probably be sent at the same time
+  //       const notesRes = await axiosInstance.post(`/notes/${mongoID}`, {
+  //         notes: `We are celebrating the birthday of a friend turning 30 on Sep 3, 2023.`
+  //       }) //after notes
+  //       const gptRes = await axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID}); // final submit
+  //       console.log(gptRes.data);
 
-      } catch(err) {
-        console.error('Err:', err);
-      }
-    }
+  //     } catch(err) {
+  //       console.error('Err:', err);
+  //     }
+  //   }
 
-    fetch();
-  })
+  //   fetch();
+  // })
 
   
   const isNavbarVisible = false;
 
   return (
     <>
-      <Navbar visible={isNavbarVisible}/>
+      <Navbar visible={isNavbarVisible.toString()}/>
       
       <HeroSection />
       

@@ -43,14 +43,14 @@ const SignUpButton = styled(Button)`
 
 const Navbar: React.FC<NavbarContainerProps> = ({ visible }) => {
   // hook to handle navbar visibility
-  const [isNavbarVisible, setIsNavbarVisible] = useState(false);
+  const [isNavbarVisible, setIsNavbarVisible] = useState('false');
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 75) {
-        setIsNavbarVisible(true);
+        setIsNavbarVisible('true');
       } else {
-        setIsNavbarVisible(false);
+        setIsNavbarVisible('false');
       }
     };
 

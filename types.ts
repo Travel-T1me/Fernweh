@@ -27,8 +27,8 @@ export interface PartialStore {
     },
 
     setInitialData: (budget:string, number:number) => void,
-    mongoID: number,
-    setMongoID: (num: number) => void,
+    mongoID: string,
+    setMongoID: (id: string) => void,
     gptResponse: any,
     setGptResponse: (res: any) => void
 
@@ -41,13 +41,11 @@ export type QuestionCardType = {
     type: string,
     setQuestionStates: React.Dispatch<React.SetStateAction<boolean[]>>,
     questionStates: boolean[],
-    min: string | undefined,
-    max: string | undefined,
     // ref: any
 };
 
 export interface NavbarContainerProps {
-    visible: boolean;
+    visible: string;
 }
 
 export interface ButtonProps {
@@ -63,14 +61,14 @@ export interface FeatureCardProps {
 
 export interface InfoForWeather {
     startDate: string,
-    endDate: string,
+    leavingDate: string,
     destination: string,
     latLong: string
 };
 
 export type SetNumberOfTravellers = (numOfTravellers: string) => void;
 
-export type SetInfoForWeather = (startDate: string, endDate: string, destination: string, latLong: string) => void;
+export type SetInfoForWeather = (startDate: string, leavingDate: string, destination: string, latLong: string) => void;
 
 export type SetYelpBudget = (yelpBudget: string) => void;
 

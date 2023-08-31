@@ -34,9 +34,7 @@ const Questionaire = () => {
     },    
     {
       question: "On a scale of 1 to 4, with 1 being frugal and 4 being lavish, what is your travel budget?",
-      type:'number',
-      min: "1",
-      max: "4",
+      type:'select',
     },
     {
       question: "Where would you like to go?",
@@ -60,7 +58,7 @@ const Questionaire = () => {
 
   const questionComponents = questionList.map((obj, index) => (
     <>
-      <NavBar visible={true}/>
+      <NavBar visible={true.toString()}/>
       <Wrapper $show={questionStates[index]} $focus={!questionStates[index+1] || index === questionStates.length - 1}>
         <QuestionCard
         // ref={refsArray[index]}
@@ -70,8 +68,7 @@ const Questionaire = () => {
         type={obj.type} 
         setQuestionStates={setQuestionStates}
         questionStates={questionStates}
-        max={obj.max}
-        min={obj.min} />
+         />
       </Wrapper>
     </>
 

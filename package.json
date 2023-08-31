@@ -12,7 +12,7 @@
     "relay": "relay-compiler",
     "watch-relay": "relay-compiler --watch",
     "watch-webpack": "webpack server",
-    "dev": "concurrently npm:watch-* -c auto",
+    "dev": "concurrently npm:watch-* -c auto nodemon server/server.ts",
     "start": "node --loader ts-node/esm ./server/server.ts"
   },
   "repository": {
