@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
 import { BaseButtonStyle } from '../GlobalStyles';
 import { NavbarContainerProps } from '../../types';
+import axios from 'axios';
 
 const Button = styled.button`${BaseButtonStyle}`;
 
@@ -31,21 +32,24 @@ const LoginButton = styled(Button)`
   }
 `;
 
-const SignUpButton = styled(Button)`
-  background-color: hsl(180, 100%, 27.3%);;
-  border-style: none;
-  color: white;
-  &:hover {
-    background-color: hsl(180, 75%, 40%);
-  }
-`;
-
+// const SignUpButton = styled(Button)`
+//   background-color: hsl(180, 100%, 27.3%);;
+//   border-style: none;
+//   color: white;
+//   &:hover {
+//     background-color: hsl(180, 75%, 40%);
+//   }
+// `;
 
 const Navbar: React.FC<NavbarContainerProps> = ({ visible }) => {
   // hook to handle navbar visibility
-  const [isNavbarVisible, setIsNavbarVisible] = useState('false');
+  const [isNavbarVisible, setIsNavbarVisible] = useState(false);
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
+    fetchUserData();
+    // console.log("Current user data: ", userData);
+
     const handleScroll = () => {
       if (window.scrollY > 75) {
         setIsNavbarVisible('true');
@@ -60,12 +64,30 @@ const Navbar: React.FC<NavbarContainerProps> = ({ visible }) => {
     };
   }, []);
 
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/isAuthenticated", {withCredentials: true});
+      // console.log("Fetched user data:", response.data);
+      if (response.data) setUserData(response.data);
+    } catch (err) {
+      console.log("Error fetching user data: ", err);
+    }
+  }
+
   return (
     <NavbarContainer visible={isNavbarVisible}>
       <h2>Travel Time</h2>
       <div>
-        <LoginButton>Login</LoginButton>
-        <SignUpButton>Sign Up</SignUpButton>
+        {Object.keys(userData).length > 0 ? (
+          <a href="http://localhost:4000/logout">
+            <LoginButton>Logout</LoginButton>
+          </a>
+        ) : (
+          <a href="http://localhost:4000/auth/google">
+            <LoginButton>Login</LoginButton>
+          </a>
+        )}
+        {/* <SignUpButton>Sign Up</SignUpButton> */}
       </div>
     </NavbarContainer>
   );

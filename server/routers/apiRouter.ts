@@ -3,11 +3,12 @@ import { dbWriteController } from "../controllers/dbWriteController.js";
 import { apiController } from "../controllers/weatherController.js";
 import * as yelpController from '../controllers/yelpController.js';
 import * as gptController from "../controllers/gptController.js";
+import * as pexelsController from "../controllers/pexelsController.js";
 
 export const router = express.Router();
 
 router.post('/initial', dbWriteController.writeInitial, (req, res) => {
-  console.log('Initial write successful');
+  // console.log('Initial write successful');
   res.send(res.locals.docID); //id for mongoDoc
 })
 
@@ -23,12 +24,12 @@ router.post('/yelp/:id', yelpController.getRestaurants, dbWriteController.writeR
 })
 
 router.post('/notes/:id', dbWriteController.writeNotes, (req, res) => {
-  console.log("DOC???", res.locals.doc)
+  // console.log("DOC???", res.locals.doc)
   res.send(res.locals.doc);
 })
-
-
 
 router.post('/llm/:id', gptController.getCompletion, (req, res) => {
   res.send(res.locals.response);
 })
+
+router.get('/pexels', pexelsController.searchPhotos);

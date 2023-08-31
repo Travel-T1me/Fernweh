@@ -7,6 +7,8 @@ import HeroSection from '../components/HeroSection';
 import GetStartedSection from '../components/GetStartedSection';
 import Footer from '../components/Footer';
 
+import AutoComplete from '../components/AutoComplete';
+import { useState } from 'react';
 
 const Homepage = () => {
   const initialSend = {
@@ -15,7 +17,7 @@ const Homepage = () => {
   }
 
   const sendWeather = { //send destination as lat long + string
-    startDate: '8/29/2023',
+    startDate: '8/31/2023',
     endDate: '9/2/2023',
     destination: 'London',
     latLong: '51.5072, 0.1276'
@@ -25,7 +27,13 @@ const Homepage = () => {
     additionalNotes: ''
   }
 
-  let mongoId: string;
+  const [mongoID, setMongoId] = useState('');
+
+  const resend = async () => {
+    console.log('mongoId?', mongoID)
+    const gptRes = await axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID}); // final submit
+    console.log('refetched response:', gptRes.data)
+  }
 
   // React.useEffect(() => {
   //   const fetch = async () => {
@@ -49,20 +57,22 @@ const Homepage = () => {
   //   fetch();
   // })
 
-  
+
   const isNavbarVisible = false;
 
   return (
     <>
-      <Navbar visible={isNavbarVisible.toString()}/>
-      
+      <Navbar visible={isNavbarVisible}/>
+
       <HeroSection />
-      
+
       <Features />
-      
+
       <GetStartedSection />
-      
+
       <Footer />
+      <AutoComplete/>
+      <button onClick={resend}>RE-SEND</button>
     </>
   )
 }
