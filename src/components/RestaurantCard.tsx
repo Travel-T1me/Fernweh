@@ -47,10 +47,21 @@ const RestaurantImg = styled.img`
 const CardTitle = styled.h2`
   margin-bottom: 10px;
   text-decoration: underline;
+  z-index: 2;
 `;
 
 const InfoParagraph = styled.p`
   margin-bottom: 10px;
+  z-index: 2;
+`;
+
+const TextShadow = styled.div`
+  border-radius: 20px;
+  background-color: whitesmoke;
+  z-index: 1;
+  padding: 15px;
+  
+  
 `;
 
 
@@ -82,23 +93,46 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({ restaurant }) => {
     <>
       
         <RestaurantCardContainer>
+
           <ImgContainer>
               <RestaurantImg src={restaurant.photo} alt={restaurant.name} />
             </ImgContainer>
+
           <InnerCardContainer>
-            
-            <CardTitle>{restaurant.name}</CardTitle>
-            <InfoParagraph>Address: {restaurant.address}</InfoParagraph>
-            <InfoParagraph>Rating: {restaurant.rating} stars</InfoParagraph>
-            <InfoParagraph>Price Range: {restaurant.price_range}</InfoParagraph>
-            <InfoParagraph>Phone: {restaurant.phone}</InfoParagraph>
-            <InfoParagraph>
-              Website: <a href={restaurant.business_page_link}>Learn more here!</a>
-            </InfoParagraph>
-            <InfoParagraph>
-              Additional Photos: <a href={restaurant.photos_page_link}>Feast your eyes here!</a>
-            </InfoParagraph>
-            
+            <TextShadow>
+
+              <CardTitle>{restaurant.name}</CardTitle>
+
+              <InfoParagraph>
+                <strong>Address:</strong> {restaurant.address}
+              </InfoParagraph>
+
+              <InfoParagraph>
+                <strong>Rating:</strong> {restaurant.rating} stars
+              </InfoParagraph>
+
+              <InfoParagraph>
+                <strong>Review Count:</strong> {restaurant.review_count} total reviews
+              </InfoParagraph>
+
+              <InfoParagraph>
+                <strong>Price Range:</strong> {restaurant.price_range}
+              </InfoParagraph>
+
+              <InfoParagraph>
+                <strong>Phone:</strong> {restaurant.phone}
+              </InfoParagraph>
+
+              <InfoParagraph>
+                <strong>Website:</strong> <a href={restaurant.business_page_link}>Learn more here!</a>
+              </InfoParagraph>
+
+              <InfoParagraph>
+                <strong>Additional Photos:</strong> <a href={restaurant.photos_page_link}>Feast your eyes here!</a>
+              </InfoParagraph>
+              
+            </TextShadow>
+        
           </InnerCardContainer>
         </RestaurantCardContainer>
         
