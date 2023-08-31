@@ -88,7 +88,7 @@ ${doc.Restaurants}
     //   return res.status(400).json({ error: "Prompt is required" });
     // }
 
-    console.log(`PROMPT???`, api_prompt);
+    // console.log(`PROMPT???`, api_prompt);
 
     const completion = await openai.chat.completions.create({
       messages: [{ role: "user", content: api_prompt }],

@@ -13,7 +13,8 @@
     "watch-relay": "relay-compiler --watch",
     "watch-webpack": "webpack server",
     "dev": "concurrently npm:watch-* -c auto",
-    "start": "node --loader ts-node/esm ./server/server.ts"
+    "start": "node --loader ts-node/esm ./server/server.ts",
+    "start-all": "concurrently \"npm run watch-webpack\" \"npm run start\""
   },
   "repository": {
     "type": "git",
@@ -37,7 +38,6 @@
     "luxon": "^3.4.2",
     "mongodb": "^5.8.1",
     "mongoose": "^7.5.0",
-    "mongoose-findorcreate": "^4.0.0",
     "openai": "^4.2.0",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
