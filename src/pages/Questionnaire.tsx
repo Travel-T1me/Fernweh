@@ -19,7 +19,7 @@ const Wrapper = styled.div<WrapperProps>`
 `;
 
 
-const Questionaire = () => {
+const Questionnaire = () => {
 
 
   // dates come back as string in yyyy-mm-dd format
@@ -87,4 +87,4 @@ const Questionaire = () => {
 }
 
 
-export default Questionaire;
+export default Questionnaire;

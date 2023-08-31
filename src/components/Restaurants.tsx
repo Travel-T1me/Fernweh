@@ -55,7 +55,7 @@ const Restaurants = () => {
   const [restaurants, setRestaurants] = useState([]);
   
   const slideshowProperties = {
-    autoplay: true, // 
+    autoplay: false, // 
     duration: 5000, // Set to 0 to turn off auto slide
     transitionDuration: 500,
     indicators: true,
@@ -77,23 +77,24 @@ const Restaurants = () => {
   // }, []);
 
   return (
-    <RestaurantContainer>
+      <RestaurantContainer>
       
-      {/* {restaurantData.map((restaurant, index) => (
-        <RestaurantCard key={restaurant.id} restaurant={restaurant} />
-      ))} */}
-      {/* <OutterCardContainer scrollOffset={scrollOffset}> */}
-      <SlideshowContainer>
-        <Slide easing="ease" {...slideshowProperties}>
-          {data.map((restaurant) => (
-            <RestaurantCard key={restaurant.id} restaurant={restaurant} />
-          ))}
-        </Slide>
-      </SlideshowContainer>
-        
-      {/* </OutterCardContainer> */}
-        
-    </RestaurantContainer>
+        {/* {restaurantData.map((restaurant, index) => (
+          <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+        ))} */}
+        {/* <OutterCardContainer scrollOffset={scrollOffset}> */}
+        <SlideshowContainer>
+          <Slide easing="ease" {...slideshowProperties}>
+            {data.map((restaurant) => (
+              <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+            ))}
+          </Slide>
+        </SlideshowContainer>
+          
+        {/* </OutterCardContainer> */}
+          
+      </RestaurantContainer>
+    
   )
 };
 
