@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axiosInstance from '../axiosInstance';
 import RestaurantCard from './RestaurantCard';
-import NavButton from './NavButton';
 import MockData from './MockData';
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
 
-
-type ScrollWidth = number;
 
 const data = MockData;
 
+type ScrollWidth = number;
 
 const RestaurantContainer = styled.div`
   display: flex;
@@ -23,6 +23,7 @@ const RestaurantContainer = styled.div`
   background-color: DarkSeaGreen;
   min-height: 300px;
   min-width: 300px;
+  overflow: hidden;
 
   transition: transform 0.3s ease-in-out;
 
@@ -31,28 +32,35 @@ const RestaurantContainer = styled.div`
   }
 `;
 
-const CardContainer = styled.div<{ scrollOffset: number}>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+// const OutterCardContainer = styled.div<{ scrollOffset: number}>`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   width: 100%;
+//   min-height: 300px;
+//   min-width: 300px;
+
+// `;
+
+const SlideshowContainer = styled.div`
   width: 100%;
+  height: 100%;
   min-height: 300px;
   min-width: 300px;
-
-  transition: transform 0.3s ease-in-out;
-  transform: translateX(${({ scrollOffset }) => scrollOffset}px);
+  margin: 0 auto;
 `;
 
 
 const Restaurants = () => {
   const [restaurants, setRestaurants] = useState([]);
-  const [scrollOffset, setScrollOffset] = useState(0);
-
-  const handleScroll = (scrollWidth: ScrollWidth) => {
-    setScrollOffset((prevOffset) => {
-      const newOffset = prevOffset + scrollWidth;
-      return Math.max(0, Math.min(newOffset, (data.length - 1) * -300));
-    });
+  
+  const slideshowProperties = {
+    autoplay: true, // 
+    duration: 5000, // Set to 0 to turn off auto slide
+    transitionDuration: 500,
+    indicators: true,
+    infinite: true,
+    canSwipe: true,
   };
 
   // useEffect(() => {
@@ -74,14 +82,17 @@ const Restaurants = () => {
       {/* {restaurantData.map((restaurant, index) => (
         <RestaurantCard key={restaurant.id} restaurant={restaurant} />
       ))} */}
-      <CardContainer scrollOffset={scrollOffset}>
-        <NavButton onClick={() => handleScroll(-300)}>{"<"}</NavButton>
-        {data.map((restaurant, index) => (
-          <RestaurantCard key={restaurant.id} restaurant={restaurant} />
-        ))}
-        <NavButton onClick={() => handleScroll(300)}>{">"}</NavButton>
-      </CardContainer>
-
+      {/* <OutterCardContainer scrollOffset={scrollOffset}> */}
+      <SlideshowContainer>
+        <Slide easing="ease" {...slideshowProperties}>
+          {data.map((restaurant) => (
+            <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+          ))}
+        </Slide>
+      </SlideshowContainer>
+        
+      {/* </OutterCardContainer> */}
+        
     </RestaurantContainer>
   )
 };

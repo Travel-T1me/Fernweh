@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import NavButton from './NavButton';
 
 const RestaurantCardContainer = styled.div`
-  border: 1px solid black;
-  background-color: papayawhip;
+  border-radius: 20px;
+  background-color: skyblue;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   min-height: 300px;
-  min-width: 300px;
+  min-width: 400px;
 `;
+// border: 1px solid black;  Even out edges on cards
 
-const CardContainer = styled.div`
+const InnerCardContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  transition: transform 0.3s ease-in-out;
 `;
 
 interface Restaurant {
@@ -41,21 +43,34 @@ interface RestaurantCardProps {
   restaurant: Restaurant;
 }
 
-//height: calc(50vh - 150px);
-//{ restaurant }
 
 const RestaurantCard: React.FC<RestaurantCardProps> = ({ restaurant }) => {
+  
+
   return (
-    <RestaurantCardContainer>
-      <CardContainer>
-        <h3>Single Restaurant Info Here</h3>
-        <h3>{restaurant.name}</h3>
-        <p>Address: {restaurant.address}</p>
-        <p>Rating: {restaurant.rating}</p>
-      </CardContainer>
+    <>
       
-    </RestaurantCardContainer>
+        <RestaurantCardContainer>
+          <InnerCardContainer>
+            
+            <h3>{restaurant.name}</h3>
+            <p>Address: {restaurant.address}</p>
+            <p>Rating: {restaurant.rating}</p>
+            
+          </InnerCardContainer>
+        </RestaurantCardContainer>
+      
+    </>
   )
 };
 
 export default RestaurantCard;
+
+
+
+// const [scrollOffset, setScrollOffset] = useState(0);
+//   const handleScroll: (scrollWidth: ScrollWidth) => void = (scrollWidth) => {
+//     setScrollOffset((prevOffset) => Math.min(scrollWidth, prevOffset + 400));
+//   };
+{/* <NavButton onClick={() => handleScroll(-300)}>{"<"}</NavButton> */}
+{/* <NavButton onClick={() => handleScroll(300)}>{">"}</NavButton> */}
