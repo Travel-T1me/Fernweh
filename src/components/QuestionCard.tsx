@@ -28,9 +28,10 @@ const CardContainer = styled.div`
 
 const Card = styled.div`
     border:solid;
+    border-color: darkcyan;
     border-radius:25px;
     background-color: ivory;
-    width:auto;
+    width:450px;
     height:auto;
     padding:100px;
     margin:100px;
@@ -39,7 +40,7 @@ const Card = styled.div`
 `
 
 const Buttons = styled.section`
-    margin: 20px;
+    margin: 0px;
     display: flex;
     justify-content: space-evenly;
 `
@@ -108,7 +109,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, mi
 
     const handleClick = ((boo: boolean, index: number) => {
         const newState = [...questionStates]
-        let reducersToUse = [];
+        let reducersToUse:any = [];
 
         // push the appropriate reducers to use
         if (index === 0) reducersToUse.push(setLocationAsString, setInfoForWeather)
@@ -142,9 +143,9 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, mi
 
     if (type === 'number' && min){
         // need to add edge case for when user manually inputs a value higher than 4
-        inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center' }} type={type} min={min} max={max} onChange={handleChange} />
+        inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0px 10px 0 0'}} type={type} min={min} max={max} onChange={handleChange} />
     } else {
-        inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center' }} type={type} onChange={handleChange}/>
+        inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0' }} type={type} onChange={handleChange}/>
     }
 
     return (

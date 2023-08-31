@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import dotenv from 'dotenv';
-dotenv.config();
+import { RAPIDAPI_KEY } from '../config.js';
 
 export const getRestaurants = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   // const { location } = req.query;
@@ -20,7 +19,7 @@ export const getRestaurants = async (req: Request, res: Response, next: NextFunc
   //     yelp_domain: 'yelp.com'
   //   },
   //   headers: {
-  //     'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
+  //     'X-RapidAPI-Key': RAPIDAPI_KEY,
   //     'X-RapidAPI-Host': 'yelp-reviews.p.rapidapi.com'
   //   }
   // };

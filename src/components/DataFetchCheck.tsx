@@ -15,9 +15,9 @@ const DataFetchCheckQuery = graphql`
 export default function DataFetchCheck({}) {
   const data = useLazyLoadQuery<DataFetchCheckQuery>
   (DataFetchCheckQuery, {},);
-  console.log('data?', data);
+  // console.log('data?', data);
   const itinerary = data?.itinerary?.text;
-  console.log("itinerary?", itinerary);
+  // console.log("itinerary?", itinerary);
   // As before:
   return (
     <div className="itinerary">

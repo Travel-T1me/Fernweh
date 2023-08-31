@@ -23,8 +23,8 @@ export type QuestionCardType = {
     type: string,
     setQuestionStates: React.Dispatch<React.SetStateAction<boolean[]>>,
     questionStates: boolean[],
-    min: string,
-    max: string,
+    min: string | undefined,
+    max: string | undefined,
     ref: any
 };
 
