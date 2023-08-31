@@ -17,7 +17,8 @@ const requestTextSchema = new mongoose.Schema({
   Forecast: [{ //this should come from an api
       temp: Number,
       precipitation: Number,
-      humidity: Number
+      humidity: Number,
+      windSpeed: Number,
   }],
   AdditionalNotes: String
 });
