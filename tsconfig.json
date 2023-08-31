@@ -10,6 +10,8 @@
     "moduleResolution": "node",
     "lib": ["DOM"],
     "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
+    "typeRoots": ["./typings", "./node_modules/@types"], // added this config to recognize declaration files
   },
   "include": [
     "./src/**/*",
