@@ -27,6 +27,7 @@ interface IRequestText {
     temp: number;
     precipitation: number;
     humidity: number;
+    windSpeed: number;
   }>;
   AdditionalNotes: string;
   _id: mongoose.Types.ObjectId;
@@ -38,7 +39,7 @@ export const getCompletion = async (req: Request, res: Response, next: NextFunct
     const doc = await RequestText.findById(`${req.params.id}`) as unknown as IRequestText;
 
     const docForecast = doc.Forecast.map((forecast, index) => {
-      return `--Day${index+1}: (temp: ${forecast.temp} C, precipitation: ${forecast.precipitation}%, humidity: ${forecast.humidity}%)`
+      return `--Day${index+1}: (temp: ${forecast.temp} C, precipitation: ${forecast.precipitation}%, humidity: ${forecast.humidity}%, windSpeed: ${forecast.windSpeed} meters/second )`
     });
 
     const api_prompt: string = `

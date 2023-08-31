@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios';
 import axiosInstance from '../axiosInstance'
+import AutoComplete from '../components/AutoComplete';
 
 const Homepage = () => {
   const initialSend = {
@@ -9,7 +10,7 @@ const Homepage = () => {
   }
 
   const sendWeather = { //send destination as lat long + string
-    startDate: '8/29/2023',
+    startDate: '8/31/2023',
     endDate: '9/2/2023',
     destination: 'London',
     latLong: '51.5072, 0.1276'
@@ -46,6 +47,7 @@ const Homepage = () => {
   return (
     <>
       <h1>Welcome to your next adventure</h1>
+      <AutoComplete/>
     </>
   )
 }

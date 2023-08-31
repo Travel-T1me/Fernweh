@@ -2,6 +2,30 @@ import { notStrictEqual } from "assert";
 import RequestText from "../mongoSchema.js";
 import { Request, Response, NextFunction } from "express";
 
+interface Restaurant {
+  id: string,
+  alias: string,
+  name: string,
+  address: string,
+  latitude: number,
+  longitude: number,
+  business_page_link: string,
+  rating: number
+  review_count: number,
+  price_range: string,
+  photo: string,
+  photos_page_link: string,
+  phone: string,
+  country: string
+}
+
+interface WeatherInterval {
+  temp: number,
+  precipitation: number,
+  humidity: number,
+  windSpeed: number,
+}
+
 export const dbWriteController = {
  writeInitial: async (req: Request, res: Response, next: NextFunction) => {
   console.log('IN INITIAL WRITE');
@@ -41,6 +65,7 @@ export const dbWriteController = {
         temp: interval.values.temperature,
         precipitation: interval.values.precipitationProbability,
         humidity: interval.values.humidity,
+        windSpeed: interval.values.windSpeed,
       }
     })
     console.log('LOGGING NEW DOCUMENT');
@@ -63,7 +88,7 @@ export const dbWriteController = {
 
 writeRestaurants: async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const restaurants = res.locals.restaurants.map((restaurant: any) => {
+    const restaurants = res.locals.restaurants.map((restaurant: Restaurant) => {
       return {
         name: restaurant.name,
         rating: restaurant.rating,

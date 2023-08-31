@@ -12,7 +12,7 @@ export const apiController = {
         params: {
           startTime: 'now',
           location: '42.13, 82,11',
-          fields: ['temperature', 'precipitationProbability', 'humidity'],
+          fields: ['temperature', 'precipitationProbability', 'humidity', 'windSpeed'],
           endTime: 'nowPlus3h',
           timesteps: '1h,1d',
           units: 'metric'
