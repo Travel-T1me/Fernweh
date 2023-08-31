@@ -3,18 +3,51 @@ dotenv.config();
 import OpenAI from "openai";
 import { NextFunction, Request, Response } from "express";
 import RequestText from '../mongoSchema.js';
+import mongoose from "mongoose";
+import { cacheRead, cacheWrite } from './cacheController.js'
 
 const openai = new OpenAI({
   apiKey: process.env.OPEN_API_KEY
 });
 
+interface IRequestText {
+  Budget: string;
+  Location: {
+    location: string;
+    latLong: string;
+    start: Date;
+    end: Date;
+  };
+  Travellers: number;
+  Restaurants: Array<{
+    name: string;
+    rating: number;
+    price_range: string;
+  }>;
+  Forecast: Array<{
+    temp: number;
+    precipitation: number;
+    humidity: number;
+    windSpeed: number;
+  }>;
+  AdditionalNotes: string;
+  _id: mongoose.Types.ObjectId;
+}
+
 // https://github.com/openai/openai-node/blob/master/README.md
 export const getCompletion = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const doc = await RequestText.findById(`${req.params.id}`);
+    console.log('ID?', req.params.id)
+    if(cacheRead(req.params.id)) {
+      console.log('READING CACHED RESPONSE')
+      res.locals.response = cacheRead(req.params.id)
+      return next();
+    }
+    const doc = await RequestText.findById(`${req.params.id}`) as unknown as IRequestText;
+
     const docForecast = doc.Forecast.map((forecast, index) => {
-      return `--Day${index+1}: (temp: ${forecast.temp} C, precipitation: ${forecast.precipitation}%, humidity: ${forecast.humidity}%)`
-    })
+      return `--Day${index+1}: (temp: ${forecast.temp} C, precipitation: ${forecast.precipitation}%, humidity: ${forecast.humidity}%, windSpeed: ${forecast.windSpeed} meters/second )`
+    });
 
     const api_prompt: string = `
 ---START TEMPLATE---
@@ -72,6 +105,7 @@ ${doc.Restaurants}
 
     // return res.json(completion.choices);
     res.locals.response = completion.choices[0].message.content;
+    cacheWrite(req.params.id, res.locals.response);
     return next();
   } catch (err) {
 

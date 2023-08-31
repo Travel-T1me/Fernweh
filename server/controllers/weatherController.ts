@@ -11,8 +11,8 @@ export const apiController = {
         url: 'https://tomorrow-io1.p.rapidapi.com/v4/timelines',
         params: {
           startTime: 'now',
-          location: '42.13, 82.11',
-          fields: ['temperature', 'precipitationProbability', 'humidity'],
+          location: '42.13, 82,11',
+          fields: ['temperature', 'precipitationProbability', 'humidity', 'windSpeed'],
           endTime: 'nowPlus3h',
           timesteps: '1h,1d',
           units: 'metric'
