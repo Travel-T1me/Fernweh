@@ -6,7 +6,7 @@ import passport from 'passport';
 import { initializePassportAuthentication } from './passportAuthSetup.js';
 import { SESSION_SECRET, MONGODB_URI } from './config.js';
 import { router } from './routers/apiRouter.js';
-import * as googleAuthController from './controllers/googleAuthController';
+import * as googleAuthController from './controllers/googleAuthController.js';
 
 const app: Application = express();
 

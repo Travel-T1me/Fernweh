@@ -1,13 +1,12 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
 import OpenAI from "openai";
 import { NextFunction, Request, Response } from "express";
 import RequestText from '../mongoSchema.js';
 import mongoose from "mongoose";
 import { cacheRead, cacheWrite } from './cacheController.js'
+import { OPENAI_API_KEY } from '../config.js';
 
 const openai = new OpenAI({
-  apiKey: process.env.OPEN_API_KEY
+  apiKey: OPENAI_API_KEY
 });
 
 interface IRequestText {

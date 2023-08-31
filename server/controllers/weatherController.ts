@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Request, Response, NextFunction } from "express";
 import { DateTime } from "luxon";
+import { RAPIDAPI_KEY } from '../config.js';
 
 export const apiController = {
   retrieveWeatherData: async (req: Request, res: Response, next: NextFunction) => {
@@ -18,7 +19,7 @@ export const apiController = {
           units: 'metric'
         },
         headers: {
-          'X-RapidAPI-Key': process.env.RAPID_API,
+          'X-RapidAPI-Key': RAPIDAPI_KEY,
           'X-RapidAPI-Host': 'tomorrow-io1.p.rapidapi.com'
         }
       };
@@ -38,7 +39,7 @@ export const apiController = {
       res.locals.forecast = response.data;
       return next();
     } catch (error) {
-      // console.error(error);
+      console.error(error);
     }
   }
 }
