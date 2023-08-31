@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
-import dotenv from 'dotenv';
-dotenv.config();
+import { PEXELS_API_KEY } from '../config.js';
 
 interface PexelsPhotoSrc {
   original: string;
@@ -45,8 +44,8 @@ export const searchPhotos = async (req: Request, res: Response) => {
     url: 'https://pexelsdimasv1.p.rapidapi.com/v1/search',
     params: { query, locale, per_page: perPage, page },
     headers: {
-      Authorization: process.env.PEXELS_API_KEY,
-      'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
+      Authorization: PEXELS_API_KEY,
+      'X-RapidAPI-Key': PEXELS_API_KEY,
       'X-RapidAPI-Host': 'PexelsdimasV1.p.rapidapi.com',
     },
   };

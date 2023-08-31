@@ -28,7 +28,7 @@ interface WeatherInterval {
 
 export const dbWriteController = {
  writeInitial: async (req: Request, res: Response, next: NextFunction) => {
-  console.log('IN INITIAL WRITE');
+  // console.log('IN INITIAL WRITE');
   try {
     const newRequest = new RequestText({
       Budget: req.body.budget,
@@ -37,11 +37,11 @@ export const dbWriteController = {
 
     const saved = await newRequest.save()
 
-    console.log('Doc saved');
+    // console.log('Doc saved');
     const docID = saved._id;
     res.locals.docID = docID;
 
-    console.log('docID?', res.locals.docID);
+    // console.log('docID?', res.locals.docID);
 
     return next();
   } catch (err) {
@@ -76,15 +76,15 @@ export const dbWriteController = {
     //   windSpeed: 4.2
     // }]
 
-    console.log('LOGGING NEW DOCUMENT');
-    console.log('FORECASTARR?', foreCastArr);
-    console.log('LOCATION?', location);
+    // console.log('LOGGING NEW DOCUMENT');
+    // console.log('FORECASTARR?', foreCastArr);
+    // console.log('LOCATION?', location);
     const doc = await RequestText.findByIdAndUpdate(req.params.id, {
       Location: location,
       Forecast: foreCastArr
     }, {new: true})
 
-    console.log(doc);
+    // console.log(doc);
 
     res.locals.doc = doc
 
@@ -107,7 +107,7 @@ writeRestaurants: async (req: Request, res: Response, next: NextFunction) => {
     const doc = await RequestText.findByIdAndUpdate(req.params.id, {
       Restaurants: restaurants
     }, {new: true})
-    console.log(doc);
+    // console.log(doc);
     res.locals.doc = doc;
     return next();
   } catch (err) {
@@ -117,7 +117,7 @@ writeRestaurants: async (req: Request, res: Response, next: NextFunction) => {
 
 writeNotes: async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log('IN WRITE NOTES')
+    // console.log('IN WRITE NOTES')
     const notes = req.body.notes;
 
     const doc = await RequestText.findByIdAndUpdate(req.params.id, {
@@ -126,7 +126,7 @@ writeNotes: async (req: Request, res: Response, next: NextFunction) => {
 
     res.locals.doc = doc;
 
-    console.log('DOC?????', res.locals.doc);
+    // console.log('DOC?????', res.locals.doc);
 
     return next()
   } catch (err) {
