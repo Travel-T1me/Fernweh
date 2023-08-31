@@ -1,28 +1,81 @@
-// import { create } from "zustand";
+import { create } from "zustand";
+import { 
+  SetNumberOfTravellers, 
+  InfoForWeather,
+  SetInfoForWeather,
+  SetYelpBudget,
+  SetLocationAsString,
+  SetAdditionalNotes
+} from "../types";
 
-// // import types
+interface StoreState {
+  numOfTravellers: string,
+  setNumberOfTravellers: SetNumberOfTravellers,
 
-// // interface for store
+  infoForWeather: InfoForWeather,
+  setInfoForWeather: SetInfoForWeather,
 
-// interface StoreState {
+  yelpBudget: string,
+  setYelpBudget: SetYelpBudget,
 
-// }
+  location: string,
+  setLocationAsString: SetLocationAsString,
 
-// const useStore = create<StoreState>((set) => {
-//   // set initial state here
-  
+  additionalNotes: string,
+  setAdditionalNotes: SetAdditionalNotes,
+}
 
-//   // login functionality
 
-//   // inputs/answers from user?
+const useStore = create<StoreState>((set) => ({
+  // number of travellers
+  numOfTravellers: '',
+  setNumberOfTravellers: (numOfTravellers: string) : void => set((state) => ({
+    ...state, numOfTravellers,
+  })),
 
-//   // feed of trips from all users
-//     // how do we grab all of the trips from the database?
-//     // use axios to fetch from the database
+  // weather state, information for weather (location and dates)
+  infoForWeather: {
+    startDate: '',
+    endDate: '',
+    destination: '',
+    latLong: ''
+  },
+  setInfoForWeather: (startDate:string, endDate:string, destination:string, latLong:string) : void => set((state) => ({
+    infoForWeather: {
+      startDate,
+      endDate,
+      destination,
+      latLong,
+    }
+  })),
 
-//   // feed of saved trips from logged in user
-//     // how do we grab all of the trips from logged in user?
-//     // use axios to fetch form the database
+  // information for yelp budget
+  yelpBudget: '',
+  setYelpBudget: (yelpBudget: string) : void => set((state) => ({
+    ...state, yelpBudget,
+  })),
 
-//   // itinerary generated?
-// })
+  // location as a string
+  location: '',
+  setLocationAsString: (location: string) : void => set((state) => ({
+    ...state, location,
+  })),
+
+  additionalNotes: '',
+  setAdditionalNotes: (notes:string) : void => set((state) => ({
+    ...state, notes,
+  })),
+
+}));
+
+export default useStore;
+
+  // feed of trips from all users
+    // how do we grab all of the trips from the database?
+    // use axios to fetch from the database
+
+  // feed of saved trips from logged in user
+    // how do we grab all of the trips from logged in user?
+    // use axios to fetch form the database
+
+  // itinerary generated?

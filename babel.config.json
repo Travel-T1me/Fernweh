@@ -1,4 +1,4 @@
 {
   "presets": ["@babel/preset-react", "@babel/preset-typescript"],
-  "plugins": ["relay"]
+  "plugins": ["relay", "babel-plugin-styled-components"]
 }

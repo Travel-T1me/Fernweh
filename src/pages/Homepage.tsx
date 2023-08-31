@@ -1,9 +1,14 @@
 import React from 'react'
 import axios from 'axios';
 import axiosInstance from '../axiosInstance'
+import Navbar from '../components/Navbar';
+import Features from '../components/Features';
+import HeroSection from '../components/HeroSection';
+import GetStartedSection from '../components/GetStartedSection';
+import Footer from '../components/Footer';
+
 import AutoComplete from '../components/AutoComplete';
 import { useState } from 'react';
-import { initial } from 'lodash';
 
 const Homepage = () => {
   const initialSend = {
@@ -55,9 +60,20 @@ const Homepage = () => {
     fetch();
   }, [])
 
+
+  const isNavbarVisible = false;
+
   return (
     <>
-      <h1>Welcome to your next adventure</h1>
+      <Navbar visible={isNavbarVisible}/>
+
+      <HeroSection />
+
+      <Features />
+
+      <GetStartedSection />
+
+      <Footer />
       <AutoComplete/>
       <button onClick={resend}>RE-SEND</button>
     </>
