@@ -23,23 +23,24 @@ const NavbarContainer = styled.div<NavbarContainerProps>`
   z-index: 100;
 `;
 
-const LoginButton = styled(Button)`
-  background-color: white;
-  border-color: darkcyan;
-  color: darkcyan;
-  &:hover {
-    background-color: hsl(180, 50%, 85%);
-  }
-`;
-
-// const SignUpButton = styled(Button)`
-//   background-color: hsl(180, 100%, 27.3%);;
-//   border-style: none;
-//   color: white;
+// save for later
+// const LogOutButton = styled(Button)`
+//   background-color: white;
+//   border-color: darkcyan;
+//   color: darkcyan;
 //   &:hover {
-//     background-color: hsl(180, 75%, 40%);
+//     background-color: hsl(180, 50%, 85%);
 //   }
 // `;
+
+const LoginButton = styled(Button)`
+  background-color: hsl(180, 100%, 27.3%);;
+  border-style: none;
+  color: white;
+  &:hover {
+    background-color: hsl(180, 75%, 40%);
+  }
+`;
 
 const Navbar: React.FC<NavbarContainerProps> = ({ visible }) => {
   // hook to handle navbar visibility
@@ -87,7 +88,6 @@ const Navbar: React.FC<NavbarContainerProps> = ({ visible }) => {
             <LoginButton>Login</LoginButton>
           </a>
         )}
-        {/* <SignUpButton>Sign Up</SignUpButton> */}
       </div>
     </NavbarContainer>
   );
