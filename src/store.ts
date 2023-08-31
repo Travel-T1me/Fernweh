@@ -1,16 +1,25 @@
 import { create } from "zustand";
+import { devtools } from 'zustand/middleware'
 import { 
   SetNumberOfTravellers, 
   InfoForWeather,
   SetInfoForWeather,
   SetYelpBudget,
   SetLocationAsString,
-  SetAdditionalNotes
+  SetAdditionalNotes,
+  SetArrivalDate,
+  SetLeavingDate
 } from "../types";
 
 interface StoreState {
   numOfTravellers: string,
   setNumberOfTravellers: SetNumberOfTravellers,
+
+  arrivalDate: string,
+  setArrivalDate: SetArrivalDate,
+
+  leavingDate: string,
+  setLeavingDate: SetLeavingDate,
 
   infoForWeather: InfoForWeather,
   setInfoForWeather: SetInfoForWeather,
@@ -23,6 +32,18 @@ interface StoreState {
 
   additionalNotes: string,
   setAdditionalNotes: SetAdditionalNotes,
+
+  initialData: {
+    budget:string,
+    number:number
+  },
+  setInitialData: (budget:string, number:number) => void,
+
+  mongoID: number,
+  setMongoID: (num: number) => void,
+
+  gptResponse: any,
+  setGptResponse: (res: any) => void
 }
 
 
@@ -32,6 +53,18 @@ const useStore = create<StoreState>((set) => ({
   setNumberOfTravellers: (numOfTravellers: string) : void => set((state) => ({
     ...state, numOfTravellers,
   })),
+
+  // modularized state for weather
+  arrivalDate: 'test from store',
+  setArrivalDate: (arrivalDate: string): void => set((state) => ({
+    arrivalDate,
+  })),
+
+  leavingDate: '',
+  setLeavingDate: (date: string): void => set(() => ({
+    leavingDate: date
+  })),
+
 
   // weather state, information for weather (location and dates)
   infoForWeather: {
@@ -65,6 +98,26 @@ const useStore = create<StoreState>((set) => ({
   setAdditionalNotes: (notes:string) : void => set((state) => ({
     ...state, notes,
   })),
+
+  initialData: {
+    budget:'',
+    number: 0
+  },
+  setInitialData: (budget: string, number:number) : void => set((state) => ({
+    initialData: {
+      budget,
+      number
+    }
+  })),
+  mongoID: 0,
+  setMongoID: (num: number): void => set((state) => ({
+    mongoID: num
+  })),
+
+  gptResponse: '',
+  setGptResponse: (res: any): void => set((state) => ({
+    gptResponse: res
+  }))
 
 }));
 

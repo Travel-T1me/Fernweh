@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import { styled } from 'styled-components'
 import { useState } from "react";
 import { QuestionCardType } from "../../types";
@@ -8,6 +8,7 @@ import useStore from '../store';
 import {
     PartialStore
 } from '../../types';
+import axiosInstance from '../axiosInstance'
 
 
 const Button = styled.button`${BaseButtonStyle}`;
@@ -80,64 +81,103 @@ const InputField = styled.section`
     border: black;
 `
 
-const QuestionCard = ({question, type, el, setQuestionStates, questionStates, min, max, ref}: QuestionCardType) => {
+const QuestionCard = ({question, type, el, setQuestionStates, questionStates, min, max}: QuestionCardType) => {
+    // const weatherRes = axiosInstance.post(`/weather/${mongoID}`, sendWeather); //after user inputs destination
+    // const restaurantRes = axiosInstance.post(`/yelp/${mongoID}`) // probably be sent at the same time
+    // const notesRes =  axiosInstance.post(`/notes/${mongoID}`, {
+    //     notes: `We are celebrating the birthday of a friend turning 30 on Sep 3, 2023.`
+    //     }) //after notes
+    // const gptRes = axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID}); // final submit
+
+    // store and reducers
     const {
+        numOfTravellers,
         setNumberOfTravellers,
+        arrivalDate,
+        setArrivalDate,
+        leavingDate,
+        setLeavingDate,
+        infoForWeather,
         setInfoForWeather,
+        yelpBudget,
         setYelpBudget,
+        location,
         setLocationAsString,
-        setAdditionalNotes
+        additionalNotes,
+        setAdditionalNotes,
+        initialData,
+        setInitialData,
+        mongoID,
+        setMongoId,
+        gptResponse,
+        setGptResponse
     } : PartialStore = useStore();
     
-
-    const arrOfReducers = [
-        setNumberOfTravellers, 
-        setInfoForWeather, 
-        setYelpBudget,
-        setLocationAsString,
-        setAdditionalNotes
-    ]
-    
-    
+    // state for user inputs
     const [answer, setAnswer] = useState("");
 
+    // handleChange to update answer
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        console.log('this is what we get when we answer the question', typeof e.target.value, e.target.value)
         setAnswer(e.target.value);
-    
     }
 
-    const handleClick = ((boo: boolean, index: number) => {
+    // reducers array to dynamically set state
+    const reducersArr = [setNumberOfTravellers, setYelpBudget, setInitialData, setLocationAsString, setArrivalDate, setLeavingDate, setInfoForWeather, setAdditionalNotes]
+
+    const handleClick = (async (boo: boolean, index: number) => {
+        // copying state to manipulate for fading effects
         const newState = [...questionStates]
-        let reducersToUse:any = [];
 
-        // push the appropriate reducers to use
-        if (index === 0) reducersToUse.push(setLocationAsString, setInfoForWeather)
-        if (index === 1) reducersToUse.push(setInfoForWeather)
-        if (index === 2) reducersToUse.push(setInfoForWeather)
-        if (index === 3) reducersToUse.push(setNumberOfTravellers)
-        if (index === 4) reducersToUse.push(setYelpBudget)
-        if (index === 5) reducersToUse.push(setAdditionalNotes)
-
+        // case if user hits back button
         if (!boo && el !== 0){
             newState[el] = false;
             setQuestionStates(newState);
-        } else if (boo){
-            // call the reducers to set the state, we have access to users inputs in answer
-
-            
+        } 
+        // case if user hits submit button
+        else if (boo){
+            switch (index) {
+                case 0:
+                    setNumberOfTravellers(answer);
+                    break;
+                case 1:
+                    setYelpBudget(answer);
+                    setInitialData(yelpBudget, Number(numOfTravellers));
+                    const initialRes = await axiosInstance.post('/initial', initialData);
+                    setMongoID(initialRes.data)
+                    break;
+                case 2:
+                    setLocationAsString(answer);
+                    break;
+                case 3:
+                    setArrivalDate(answer);
+                case 4:
+                    setLeavingDate(answer);
+                    setInfoForWeather(arrivalDate, leavingDate, location, '40.7128, 74.0060');
+                    const weatherRes = await axiosInstance.post(`weather/${mongoID}`, infoForWeather);
+                    const restaurantRes = await axiosInstance.post(`/yelp/${mongoID}`);
+                case 5:
+                    setAdditionalNotes(answer);
+                    const notesRes = await axiosInstance.post(`/notes/${mongoID}`, { notes: additionalNotes })
+            }
+            // call the reducers to set the state
+            setArrivalDate(answer);
 
             // reveal the next card by changing the state
             newState[el + 1] = true;
             setQuestionStates(newState);
 
             // scroll to the new card (TODO)
-            // THIS IS WHERE I LEFT OFF
-            // ref.current.scrollIntoView({
-            //     behavior: 'smooth'
-            // })
+                // THIS IS WHERE I LEFT OFF
+                // ref.current.scrollIntoView({
+                //     behavior: 'smooth'
+                // })
         }
     })
+
+    const sendToGpt = async () => {
+        const gptRes = await axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID});
+        setGptResponse(gptRes);
+    }
 
     let inputField;
 
@@ -161,7 +201,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, mi
                     <br />
                     <Buttons>
                         {
-                        el === questionStates.length - 1 && <Link to={`/results`}><SubmitButton>
+                        el === questionStates.length - 1 && <Link to={`/results`}><SubmitButton onClick={() => sendToGpt()}>
                             Get your itinerary
                         </SubmitButton></Link>
                         } 

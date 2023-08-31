@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import FullItinerary from '../components/FullItinerary';
 import Restaurants from '../components/Restaurants';
 import Weather from '../components/Weather';
-
+import useStore from '../store';
 const ResultsContainer = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -43,6 +43,8 @@ const SecondColumn = styled.section`
 
 
 const ResultsPage = () => {
+
+  
   return (
     <ResultsContainer>
       <FirstColumn>
