@@ -9,6 +9,7 @@ import {
     PartialStore
 } from '../../types';
 import axiosInstance from '../axiosInstance'
+import AutoComplete from "./AutoComplete";
 
 
 const Button = styled.button`${BaseButtonStyle}`;
@@ -32,7 +33,7 @@ const Card = styled.div`
     border-color: darkcyan;
     border-radius:25px;
     background-color: ivory;
-    width:450px;
+    width:650px;
     height:auto;
     padding:100px;
     margin:100px;
@@ -82,12 +83,6 @@ const InputField = styled.section`
 `
 
 const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: QuestionCardType) => {
-    // const weatherRes = axiosInstance.post(`/weather/${mongoID}`, sendWeather); //after user inputs destination
-    // const restaurantRes = axiosInstance.post(`/yelp/${mongoID}`) // probably be sent at the same time
-    // const notesRes =  axiosInstance.post(`/notes/${mongoID}`, {
-    //     notes: `We are celebrating the birthday of a friend turning 30 on Sep 3, 2023.`
-    //     }) //after notes
-    // const gptRes = axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID}); // final submit
 
     // store and reducers
     const {
@@ -115,26 +110,20 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
     
     // state for user inputs
     const [answer, setAnswer] = useState("");
-
-    // Function to format the date in 'MM/DD/YYYY' format
-    function formatDate(dateString: string): string {
-        console.log(dateString)
-        const [year, month, day] = dateString.split("-");
-        return `${month}/${day}/${year}`;
-    }
     
     // handleChange to update answer
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         setAnswer(e.target.value);
-        console.log(answer, 'line 129')
-        if (type === 'date'){
-            setAnswer(formatDate(answer))
-        }
+        // console.log(answer, 'line 129');
+        // if (type === 'date'){
+        //     setAnswer(formatDate(answer))
+        // }
     }
 
-    const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>): void => {
-        setAnswer(e.target.value);
-    }
+    const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>): void => {
+        setAnswer(event.target.value);
+      };
+      
 
     const handleClick = (async (boo: boolean, index: number) => {
         // copying state to manipulate for fading effects
@@ -153,7 +142,10 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     break;
                 case 1:
                     setYelpBudget(answer);
-                    setInitialData(yelpBudget, Number(numOfTravellers));
+                    const usersYelpBudget = useStore.getState().yelpBudget
+                    const travellers = Number(useStore.getState().numOfTravellers)
+                    
+                    setInitialData(usersYelpBudget, travellers);
                     const initialRes = async () => {
                         try {
                             const data = await axiosInstance.post('/initial', initialData);
@@ -162,30 +154,33 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                             console.error('Err:', err)
                         }}
                     const initialResponse = await initialRes()
-                    console.log(initialResponse.data)
                     setMongoID(initialResponse.data);
                     break;
                 case 2:
-                    setLocationAsString(answer);
+                    console.log(useStore.getState())
                     break;
                 case 3:
                     setArrivalDate(answer);
+                    console.log(useStore.getState())
                     break;
                 case 4:
                     setEndDate(answer);
                     const userEndDate = useStore.getState().endDate
                     setInfoForWeather(arrivalDate, userEndDate, location, '40.7138, 74.0060')
+                    console.log(useStore.getState())
                     let currentInformationForWeather = useStore.getState().infoForWeather
-                    const weatherCall = async () => {
-                        try{
-                            const data = await axiosInstance.post(`weather/${mongoID}`, currentInformationForWeather);
-                            return data
-                        } catch (err) {
-                            console.error('Err:', err);
-                        }}
-                    const weatherResponse = await weatherCall();
-                    console.log(weatherResponse)
-                    // commented out to save calls
+                    // WEATHER DATA - commented out because it's not working atm
+                    // const weatherCall = async () => {
+                    //     try{
+                    //         const data = await axiosInstance.post(`weather/${mongoID}`, currentInformationForWeather);
+                    //         return data
+                    //     } catch (err) {
+                    //         console.error('Err:', err);
+                    //     }}
+                    // const weatherResponse = await weatherCall();
+                    // console.log(weatherResponse)
+
+                    // RESTURANT DATA - commented out to save calls
                     // const restaurantCall = async () => {
                     //     try {
                     //         await axiosInstance.post(`/yelp/${mongoID}`);
@@ -194,11 +189,6 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     //     }}
                     // const restaurantResponse = await restaurantCall()
                     break;
-                // case 5:
-                //     console.log(weatherObject)
-                //     setAdditionalNotes(answer);
-                //     const notesRes = await axiosInstance.post(`/notes/${mongoID}`, { notes: additionalNotes });
-                //     break;
             }
 
             // reveal the next card by changing the state
@@ -213,36 +203,42 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
         }
     })
 
-    const sendToGpt = async () => {
-        setAdditionalNotes(answer);
-        const notesRes = await axiosInstance.post(`/notes/${mongoID}`, { notes: additionalNotes });
-        const gptRes = async () => {
-            try{
-                await axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID});
-            } catch (err){
+    const sendToGpt = async (): Promise<void> => {
+        setAdditionalNotes(answer)
+        console.log(useStore.getState())
+        const notesRes = async () => {
+            try {
+                await axiosInstance.post(`/notes/${mongoID}`, { notes: additionalNotes });
+                } 
+            catch (err){
                 console.error('Err:', err)
             }}
-        setGptResponse(gptRes);
-        console.log(gptResponse)
+        await notesRes();
+        const gptRes = async () => {
+            try{
+                const data = await axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID});
+                return data;
+            } catch (err){
+                console.error('Err:', err)
+            }};
+        const gptResponse = await gptRes()
+        setGptResponse(gptResponse);
     }
-
-    
 
     let inputField;
 
     if (type === 'select'){
         inputField = 
         <select name='budget' style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0' }} onChange={handleSelectChange}>
+            <option value='none' selected disabled hidden>Select a budget</option>
             <option value='$'>1</option>
             <option value='$$'>2</option>
             <option value='$$$'>3</option>
             <option value='$$$$'>4</option>
         </select>
-    } else if (type === 'date'){
-        inputField = 
-        <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0' }} type={type} onChange={handleChange}/>
-
-    }{
+    } else if (type === 'location'){
+        inputField = <AutoComplete />
+    } else {
         inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0' }} type={type} onChange={handleChange}/>
     }
 

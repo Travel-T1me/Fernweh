@@ -8,7 +8,8 @@ import {
   SetLocationAsString,
   SetAdditionalNotes,
   SetArrivalDate,
-  SetEndDate
+  SetEndDate,
+  SetLatLong
 } from "../types";
 
 interface StoreState {
@@ -29,6 +30,9 @@ interface StoreState {
 
   location: string,
   setLocationAsString: SetLocationAsString,
+
+  latLong: string,
+  setLatLong: SetLatLong,
 
   additionalNotes: string,
   setAdditionalNotes: SetAdditionalNotes,
@@ -95,8 +99,8 @@ const useStore = create<StoreState>((set) => ({
   })),
 
   additionalNotes: '',
-  setAdditionalNotes: (notes:string) : void => set((state) => ({
-    ...state, notes,
+  setAdditionalNotes: (additionalNotes:string) : void => set((state) => ({
+    additionalNotes
   })),
 
   initialData: {
@@ -117,8 +121,12 @@ const useStore = create<StoreState>((set) => ({
   gptResponse: '',
   setGptResponse: (res: any): void => set((state) => ({
     gptResponse: res
-  }))
+  })),
 
+  latLong: '',
+  setLatLong: (latLong: string): void => set ((state)  => ({
+    latLong
+  }))
 }));
 
 export default useStore;

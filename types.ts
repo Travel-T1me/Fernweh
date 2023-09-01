@@ -79,3 +79,5 @@ export type SetAdditionalNotes = (notes: string) => void;
 export type SetArrivalDate = (date: string) => void;
 
 export type SetEndDate = (date: string) => void;
+
+export type SetLatLong = (latLong: string) => void;

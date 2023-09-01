@@ -38,7 +38,7 @@ const Questionaire = () => {
     },
     {
       question: "Where would you like to go?",
-      type: 'text',
+      type: 'location',
     },
     {
       question: "When do you want to arrive there?",
@@ -58,7 +58,7 @@ const Questionaire = () => {
 
   const questionComponents = questionList.map((obj, index) => (
     <>
-      <NavBar visible={true.toString()}/>
+      <NavBar visible={true}/>
       <Wrapper $show={questionStates[index]} $focus={!questionStates[index+1] || index === questionStates.length - 1}>
         <QuestionCard
         // ref={refsArray[index]}
