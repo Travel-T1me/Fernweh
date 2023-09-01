@@ -105,7 +105,11 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
         mongoID,
         setMongoID,
         gptResponse,
-        setGptResponse
+        setGptResponse,
+        responseId,
+        setResponseId,
+        restaurants,
+        setRestaurants,
     } : PartialStore = useStore();
     
     // state for user inputs
@@ -152,16 +156,16 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     const travellers = Number(useStore.getState().numOfTravellers)
                     
                     //don't need to set this or mongoId anymore 
-                    setInitialData(usersYelpBudget, travellers);
-                    const initialRes = async () => {
-                        try {
-                            const data = await axiosInstance.post('/initial', initialData);
-                            return data
-                        } catch (err) {
-                            console.error('Err:', err)
-                        }}
-                    const initialResponse = await initialRes()
-                    setMongoID(initialResponse.data);
+                    // setInitialData(usersYelpBudget, travellers);
+                    // const initialRes = async () => {
+                    //     try {
+                    //         const data = await axiosInstance.post('/initial', initialData);
+                    //         return data
+                    //     } catch (err) {
+                    //         console.error('Err:', err)
+                    //     }}
+                    // const initialResponse = await initialRes()
+                    // setMongoID(initialResponse.data);
                     break;
                 case 2:
                     console.log(useStore.getState())
@@ -172,10 +176,9 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     break;
                 case 4:
                     setEndDate(answer);
-                    const userEndDate = useStore.getState().endDate
-                    setInfoForWeather(arrivalDate, userEndDate, location, '40.7138, 74.0060')
-                    console.log(useStore.getState())
-                    let currentInformationForWeather = useStore.getState().infoForWeather
+                    // const userEndDate = useStore.getState().endDate
+                    // setInfoForWeather(arrivalDate, userEndDate, location, '40.7138, 74.0060')
+                    // let currentInformationForWeather = useStore.getState().infoForWeather
                     // WEATHER DATA - commented out because it's not working atm
                     // const weatherCall = async () => {
                     //     try{
@@ -188,13 +191,13 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     // console.log(weatherResponse)
 
                     // RESTURANT DATA - commented out to save calls
-                    // const restaurantCall = async () => {
-                    //     try {
-                    //         await axiosInstance.post(`/yelp/${mongoID}`);
-                    //     } catch (err) {
-                    //         console.error('Err:', err)
-                    //     }}
-                    // const restaurantResponse = await restaurantCall()
+                    const restaurantResponse = await axiosInstance.get(`/yelp/${useStore.getState().location}`) as any
+
+
+                    setRestaurants(restaurantResponse.data);
+                    console.log(useStore.getState())
+
+
                     break;
             }
 
@@ -212,24 +215,41 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
 
     const sendToGpt = async (): Promise<void> => {
         setAdditionalNotes(answer)
-        console.log(useStore.getState())
-        const notesRes = async () => {
-            try {
-                await axiosInstance.post(`/notes/${mongoID}`, { notes: additionalNotes });
-                } 
-            catch (err){
-                console.error('Err:', err)
-            }}
-        await notesRes();
+
+        const restaurants = useStore.getState().restaurants.map(restaurant => {
+            return {
+                address: restaurant.address,
+                name: restaurant.name,
+                rating: restaurant.rating,
+                review_count: restaurant.review_count
+            }
+        })
+
+        const composedRequest = {
+            latLong: useStore.getState().latLong,
+            start: useStore.getState().arrivalDate,
+            end: useStore.getState().endDate,
+            Travellers: useStore.getState().numOfTravellers,
+            Budget: useStore.getState().yelpBudget,
+            AdditionalNotes: useStore.getState().additionalNotes,
+            Restaurants: restaurants,
+        }
+
+        console.log('COMPOSEDREQUEST', composedRequest)
+
         const gptRes = async () => {
             try{
-                const data = await axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID});
+                const data = await axiosInstance.post(`/llm/`, composedRequest);
                 return data;
             } catch (err){
                 console.error('Err:', err)
             }};
         const gptResponse = await gptRes()
-        setGptResponse(gptResponse);
+
+        console.log(`gptResponse`, gptResponse.data.response)
+        setGptResponse(gptResponse.data.response);
+        setResponseId(gptResponse.data.id)
+        console.log('final state', useStore.getState())
     }
 
     let inputField;

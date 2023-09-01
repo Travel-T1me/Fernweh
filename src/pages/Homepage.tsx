@@ -72,7 +72,7 @@ const Homepage = () => {
 
   return (
     <>
-      {/* <Map/> */}
+      <Map/>
       <Navbar visible={isNavbarVisible}/>
       {console.log("DATADAtA", data)}
       <HeroSection />
