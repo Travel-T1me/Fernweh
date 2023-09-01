@@ -1,6 +1,6 @@
 import * as express from "express";
-import { dbWriteController } from "../controllers/dbWriteController.js";
-import { apiController } from "../controllers/weatherController.js";
+// import { dbWriteController } from "../controllers/dbWriteController.js";
+// import { apiController } from "../controllers/weatherController.js";
 import * as yelpController from '../controllers/yelpController.js';
 import * as gptController from "../controllers/gptController.js";
 import * as pexelsController from "../controllers/pexelsController.js";
@@ -19,7 +19,7 @@ export const router = express.Router();
 //   //write to mongoDB doc's forecast field => array of forecast objects {high: , low: , precipitation: }
 // })
 
-router.post('/yelp', yelpController.getRestaurants, dbWriteController.writeRestaurants, (req, res) => {
+router.get('/yelp', yelpController.getRestaurants, (req, res) => {
   res.send(res.locals.restaurants);
 })
 

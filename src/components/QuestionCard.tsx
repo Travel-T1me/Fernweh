@@ -135,6 +135,12 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
             setQuestionStates(newState);
         } 
         // case if user hits submit button
+        //{
+        //numTravellers: 
+        //budget:
+        //arrivalDate;
+        //
+        //}
         else if (boo){
             switch (index) {
                 case 0:
@@ -145,6 +151,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     const usersYelpBudget = useStore.getState().yelpBudget
                     const travellers = Number(useStore.getState().numOfTravellers)
                     
+                    //don't need to set this or mongoId anymore 
                     setInitialData(usersYelpBudget, travellers);
                     const initialRes = async () => {
                         try {

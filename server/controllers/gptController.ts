@@ -37,6 +37,7 @@ interface IRequestText {
 // https://github.com/openai/openai-node/blob/master/README.md
 export const getCompletion = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    console.log("REQBODY?", req.body);
     // console.log('ID?', req.params.id)
     // if(cacheRead(req.params.id)) {
     //   console.log('READING CACHED RESPONSE')
@@ -52,12 +53,12 @@ export const getCompletion = async (req: Request, res: Response, next: NextFunct
     const api_prompt: string = `
 ---START TEMPLATE---
 Assume the role of TravelAgentGPT. Your job is to help the user create a travel itinerary for an upcoming trip. To get started, the user provided the following information:
-1- Destination: ${req.params.latLong} (in latitude and longitude)
-2- Arrival Date: ${req.params.start}
-3- Departure Date: ${req.params.end}
-4- Number of Travelers: ${req.params.Travellers}
-5- Travel Budget (1 to 4 $, where 1 is frugal and 4 is lavish): ${req.params.Budget}
-6- Additional Notes: ${req.params.AdditionalNotes}
+1- Destination: ${req.body.latLong} (in latitude and longitude)
+2- Arrival Date: ${req.body.start}
+3- Departure Date: ${req.body.end}
+4- Number of Travelers: ${req.body.Travellers}
+5- Travel Budget (1 to 4 $, where 1 is frugal and 4 is lavish): ${req.body.Budget}
+6- Additional Notes: ${req.body.AdditionalNotes}
 
 You will respond using the following template. Be descriptive with the activities suggested. Also, try to incorporate at least one (and as many as you see fit) of the 10 restaurants recommended by Yelp:
 // START TEMPLATE
@@ -86,7 +87,7 @@ You will respond using the following template. Be descriptive with the activitie
 
 In addition, your users are experts in AI and ethics, so they already know you're a language model and your capabilities and limitations, so don't remind them of that. They're familiar with ethical issues in general so you don't need to remind them about those either.
 # YELP RECOMMENDED RESTAURANTS
-${req.params.Restaurants}
+${req.body.Restaurants}
 ---END TEMPLATE ---
 `;
     // const prompt = req.body.prompt as string;
