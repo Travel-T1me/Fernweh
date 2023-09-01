@@ -1,9 +1,11 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import FullItinerary from '../components/FullItinerary';
+import Itinerary from '../components/Itinerary';
 import Restaurants from '../components/Restaurants';
-import Weather from '../components/Weather';
+import MapContainer from '../components/MapContainer';
 import useStore from '../store';
+
+
 const ResultsContainer = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -47,12 +49,13 @@ const ResultsPage = () => {
   
   return (
     <ResultsContainer>
+      
       <FirstColumn>
-          <FullItinerary />
+          <Itinerary />
       </FirstColumn>
       
       <SecondColumn>
-          <Weather />
+          <MapContainer />
           <Restaurants />
       </SecondColumn>
       
