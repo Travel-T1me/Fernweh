@@ -19,7 +19,7 @@ export const router = express.Router();
 //   //write to mongoDB doc's forecast field => array of forecast objects {high: , low: , precipitation: }
 // })
 
-router.get('/yelp', yelpController.getRestaurants, (req, res) => {
+router.get('/yelp/:location', yelpController.getRestaurants, (req, res) => {
   res.send(res.locals.restaurants);
 })
 
