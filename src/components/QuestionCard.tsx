@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import { styled } from 'styled-components'
 import { useState } from "react";
 import { QuestionCardType } from "../../types";
@@ -8,6 +8,8 @@ import useStore from '../store';
 import {
     PartialStore
 } from '../../types';
+import axiosInstance from '../axiosInstance'
+import AutoComplete from "./AutoComplete";
 
 
 const Button = styled.button`${BaseButtonStyle}`;
@@ -31,7 +33,7 @@ const Card = styled.div`
     border-color: darkcyan;
     border-radius:25px;
     background-color: ivory;
-    width:450px;
+    width:650px;
     height:auto;
     padding:100px;
     margin:100px;
@@ -80,70 +82,162 @@ const InputField = styled.section`
     border: black;
 `
 
-const QuestionCard = ({question, type, el, setQuestionStates, questionStates, min, max, ref}: QuestionCardType) => {
+const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: QuestionCardType) => {
+
+    // store and reducers
     const {
+        numOfTravellers,
         setNumberOfTravellers,
+        arrivalDate,
+        setArrivalDate,
+        endDate,
+        setEndDate,
+        infoForWeather,
         setInfoForWeather,
+        yelpBudget,
         setYelpBudget,
+        location,
         setLocationAsString,
-        setAdditionalNotes
+        additionalNotes,
+        setAdditionalNotes,
+        initialData,
+        setInitialData,
+        mongoID,
+        setMongoID,
+        gptResponse,
+        setGptResponse
     } : PartialStore = useStore();
     
-
-    const arrOfReducers = [
-        setNumberOfTravellers, 
-        setInfoForWeather, 
-        setYelpBudget,
-        setLocationAsString,
-        setAdditionalNotes
-    ]
-    
-    
+    // state for user inputs
     const [answer, setAnswer] = useState("");
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        console.log('this is what we get when we answer the question', typeof e.target.value, e.target.value)
-        setAnswer(e.target.value);
     
+    // handleChange to update answer
+    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+        setAnswer(e.target.value);
+        // console.log(answer, 'line 129');
+        // if (type === 'date'){
+        //     setAnswer(formatDate(answer))
+        // }
     }
 
-    const handleClick = ((boo: boolean, index: number) => {
+    const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>): void => {
+        setAnswer(event.target.value);
+      };
+      
+
+    const handleClick = (async (boo: boolean, index: number) => {
+        // copying state to manipulate for fading effects
         const newState = [...questionStates]
-        let reducersToUse:any = [];
 
-        // push the appropriate reducers to use
-        if (index === 0) reducersToUse.push(setLocationAsString, setInfoForWeather)
-        if (index === 1) reducersToUse.push(setInfoForWeather)
-        if (index === 2) reducersToUse.push(setInfoForWeather)
-        if (index === 3) reducersToUse.push(setNumberOfTravellers)
-        if (index === 4) reducersToUse.push(setYelpBudget)
-        if (index === 5) reducersToUse.push(setAdditionalNotes)
-
+        // case if user hits back button
         if (!boo && el !== 0){
             newState[el] = false;
             setQuestionStates(newState);
-        } else if (boo){
-            // call the reducers to set the state, we have access to users inputs in answer
+        } 
+        // case if user hits submit button
+        else if (boo){
+            switch (index) {
+                case 0:
+                    setNumberOfTravellers(answer);
+                    break;
+                case 1:
+                    setYelpBudget(answer);
+                    const usersYelpBudget = useStore.getState().yelpBudget
+                    const travellers = Number(useStore.getState().numOfTravellers)
+                    
+                    setInitialData(usersYelpBudget, travellers);
+                    const initialRes = async () => {
+                        try {
+                            const data = await axiosInstance.post('/initial', initialData);
+                            return data
+                        } catch (err) {
+                            console.error('Err:', err)
+                        }}
+                    const initialResponse = await initialRes()
+                    setMongoID(initialResponse.data);
+                    break;
+                case 2:
+                    console.log(useStore.getState())
+                    break;
+                case 3:
+                    setArrivalDate(answer);
+                    console.log(useStore.getState())
+                    break;
+                case 4:
+                    setEndDate(answer);
+                    const userEndDate = useStore.getState().endDate
+                    setInfoForWeather(arrivalDate, userEndDate, location, '40.7138, 74.0060')
+                    console.log(useStore.getState())
+                    let currentInformationForWeather = useStore.getState().infoForWeather
+                    // WEATHER DATA - commented out because it's not working atm
+                    // const weatherCall = async () => {
+                    //     try{
+                    //         const data = await axiosInstance.post(`weather/${mongoID}`, currentInformationForWeather);
+                    //         return data
+                    //     } catch (err) {
+                    //         console.error('Err:', err);
+                    //     }}
+                    // const weatherResponse = await weatherCall();
+                    // console.log(weatherResponse)
 
-            
+                    // RESTURANT DATA - commented out to save calls
+                    // const restaurantCall = async () => {
+                    //     try {
+                    //         await axiosInstance.post(`/yelp/${mongoID}`);
+                    //     } catch (err) {
+                    //         console.error('Err:', err)
+                    //     }}
+                    // const restaurantResponse = await restaurantCall()
+                    break;
+            }
 
             // reveal the next card by changing the state
             newState[el + 1] = true;
             setQuestionStates(newState);
 
             // scroll to the new card (TODO)
-            // THIS IS WHERE I LEFT OFF
-            // ref.current.scrollIntoView({
-            //     behavior: 'smooth'
-            // })
+                // THIS IS WHERE I LEFT OFF
+                // ref.current.scrollIntoView({
+                //     behavior: 'smooth'
+                // })
         }
     })
 
+    const sendToGpt = async (): Promise<void> => {
+        setAdditionalNotes(answer)
+        console.log(useStore.getState())
+        const notesRes = async () => {
+            try {
+                await axiosInstance.post(`/notes/${mongoID}`, { notes: additionalNotes });
+                } 
+            catch (err){
+                console.error('Err:', err)
+            }}
+        await notesRes();
+        const gptRes = async () => {
+            try{
+                const data = await axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID});
+                return data;
+            } catch (err){
+                console.error('Err:', err)
+            }};
+        const gptResponse = await gptRes()
+        setGptResponse(gptResponse);
+    }
+
     let inputField;
 
-    if (type === 'number' && min){
-        // need to add edge case for when user manually inputs a value higher than 4
-        inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0px 10px 0 0'}} type={type} min={min} max={max} onChange={handleChange} />
+    if (type === 'select'){
+        inputField = 
+        <select name='budget' style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0' }} onChange={handleSelectChange}>
+            <option value='none' selected disabled hidden>Select a budget</option>
+            <option value='$'>1</option>
+            <option value='$$'>2</option>
+            <option value='$$$'>3</option>
+            <option value='$$$$'>4</option>
+        </select>
+    } else if (type === 'location'){
+        inputField = <AutoComplete />
     } else {
         inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0' }} type={type} onChange={handleChange}/>
     }
@@ -161,7 +255,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, mi
                     <br />
                     <Buttons>
                         {
-                        el === questionStates.length - 1 && <Link to={`/results`}><SubmitButton>
+                        el === questionStates.length - 1 && <Link to={`/results`}><SubmitButton onClick={() => sendToGpt()}>
                             Get your itinerary
                         </SubmitButton></Link>
                         } 
