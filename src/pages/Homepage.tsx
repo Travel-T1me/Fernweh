@@ -6,6 +6,8 @@ import Features from '../components/Features';
 import HeroSection from '../components/HeroSection';
 import GetStartedSection from '../components/GetStartedSection';
 import Footer from '../components/Footer';
+import ReactWeather, {useOpenWeather} from 'react-open-weather'
+import Map from '../components/Map'
 
 import AutoComplete from '../components/AutoComplete';
 import { useState } from 'react';
@@ -35,22 +37,32 @@ const Homepage = () => {
     console.log('refetched response:', gptRes.data)
   }
 
+  const { data, isLoading, errorMessage } = useOpenWeather({
+    key: 'c617956e0370c6b9301ee51583862993',
+    lat: '48.137154',
+    lon: '11.576124',
+    lang: 'en',
+    unit: 'metric', // values are (metric, standard, imperial)
+  });
+
   React.useEffect(() => {
     const fetch = async () => {
       try {
         console.log('hi');
-        const initialRes = await axiosInstance.post('/initial', initialSend); //after user inputs num travellers
-        console.log('DATA?', initialRes.data)
-        setMongoId(initialRes.data);
-        const newId = initialRes.data
-        console.log('mongoId', mongoID)
-        const weatherRes = await axiosInstance.post(`/weather/${newId}`, sendWeather); //after user inputs destination
-        const restaurantRes = await axiosInstance.post(`/yelp/${newId}`) // probably be sent at the same time
-        const notesRes = await axiosInstance.post(`/notes/${newId}`, {
-          notes: `We are celebrating the birthday of a friend turning 30 on Sep 3, 2023.`
-        }) //after notes
-        const gptRes = await axiosInstance.post(`/llm/${newId}`, {docID: newId}); // final submit
-        console.log(gptRes.data);
+        const response = await axios.get(`https://api.openweathermap.org/data/3.0/onecall/day_summary?lat=48.137154&lon=11.576124&date=2023-09-15&appid=c617956e0370c6b9301ee51583862993`)
+        console.log('HISTORICALRES:', response)
+        // const initialRes = await axiosInstance.post('/initial', initialSend); //after user inputs num travellers
+        // console.log('DATA?', initialRes.data)
+        // setMongoId(initialRes.data);
+        // const newId = initialRes.data
+        // console.log('mongoId', mongoID)
+        // const weatherRes = await axiosInstance.post(`/weather/${newId}`, sendWeather); //after user inputs destination
+        // const restaurantRes = await axiosInstance.post(`/yelp/${newId}`) // probably be sent at the same time
+        // const notesRes = await axiosInstance.post(`/notes/${newId}`, {
+        //   notes: `We are celebrating the birthday of a friend turning 30 on Sep 3, 2023.`
+        // }) //after notes
+        // const gptRes = await axiosInstance.post(`/llm/${newId}`, {docID: newId}); // final submit
+        // console.log(gptRes.data);
 
       } catch(err) {
         console.error('Err:', err);
@@ -65,8 +77,9 @@ const Homepage = () => {
 
   return (
     <>
+      <Map/>
       <Navbar visible={isNavbarVisible}/>
-
+      {console.log("DATADAtA", data)}
       <HeroSection />
 
       <Features />
@@ -74,7 +87,7 @@ const Homepage = () => {
       <GetStartedSection />
 
       <Footer />
-      <AutoComplete/>
+      {/* <AutoComplete/> */}
       <button onClick={resend}>RE-SEND</button>
     </>
   )
