@@ -2,12 +2,14 @@ import { NextFunction, Request, Response } from 'express';
 import { RAPIDAPI_KEY } from '../config.js';
 
 export const getRestaurants = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  // const { location } = req.query;
+  const location = req.params.location;
 
-  // if (!location) {
-  //   res.status(400).send('Location query parameter is required.');
-  //   return;
-  // }
+  console.log('LOCATION?', location)
+
+  if (!location) {
+    res.status(400).send('Location query parameter is required.');
+    return;
+  }
 
   // const options = {
   //   method: 'GET',

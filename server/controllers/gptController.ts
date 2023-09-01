@@ -87,7 +87,7 @@ You will respond using the following template. Be descriptive with the activitie
 
 In addition, your users are experts in AI and ethics, so they already know you're a language model and your capabilities and limitations, so don't remind them of that. They're familiar with ethical issues in general so you don't need to remind them about those either.
 # YELP RECOMMENDED RESTAURANTS
-${req.body.Restaurants}
+${JSON.stringify(req.body.Restaurants)}
 ---END TEMPLATE ---
 `;
     // const prompt = req.body.prompt as string;
@@ -95,7 +95,7 @@ ${req.body.Restaurants}
     //   return res.status(400).json({ error: "Prompt is required" });
     // }
 
-    // console.log(`PROMPT???`, api_prompt);
+    console.log(`PROMPT???`, api_prompt);
 
     const completion = await openai.chat.completions.create({
       messages: [{ role: "user", content: api_prompt }],
