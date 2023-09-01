@@ -1,9 +1,10 @@
 import OpenAI from "openai";
 import { NextFunction, Request, Response } from "express";
-import RequestText from '../mongoSchema.js';
+import ResponseText from '../responseSchema.js';
 import mongoose from "mongoose";
 import { cacheRead, cacheWrite } from './cacheController.js'
 import { OPENAI_API_KEY } from '../config.js';
+
 
 const openai = new OpenAI({
   apiKey: OPENAI_API_KEY
@@ -36,29 +37,28 @@ interface IRequestText {
 // https://github.com/openai/openai-node/blob/master/README.md
 export const getCompletion = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log('ID?', req.params.id)
-    if(cacheRead(req.params.id)) {
-      console.log('READING CACHED RESPONSE')
-      res.locals.response = cacheRead(req.params.id)
-      return next();
-    }
-    const doc = await RequestText.findById(`${req.params.id}`) as unknown as IRequestText;
+    console.log("REQBODY?", req.body);
+    // console.log('ID?', req.params.id)
+    // if(cacheRead(req.params.id)) {
+    //   console.log('READING CACHED RESPONSE')
+    //   res.locals.response = cacheRead(req.params.id)
+    //   return next();
+    // }
+    // const doc = await RequestText.findById(`${req.params.id}`) as unknown as IRequestText;
 
-    const docForecast = doc.Forecast.map((forecast, index) => {
-      return `--Day${index+1}: (temp: ${forecast.temp} C, precipitation: ${forecast.precipitation}%, humidity: ${forecast.humidity}%, windSpeed: ${forecast.windSpeed} meters/second )`
-    });
+    // const docForecast = doc.Forecast.map((forecast, index) => {
+    //   return `--Day${index+1}: (temp: ${forecast.temp} C, precipitation: ${forecast.precipitation}%, humidity: ${forecast.humidity}%, windSpeed: ${forecast.windSpeed} meters/second )`
+    // });
 
     const api_prompt: string = `
 ---START TEMPLATE---
 Assume the role of TravelAgentGPT. Your job is to help the user create a travel itinerary for an upcoming trip. To get started, the user provided the following information:
-1- Destination: ${doc.Location.latLong} (in latitude and longitude)
-2- Arrival Date: ${doc.Location.start}
-3- Departure Date: ${doc.Location.end}
-4- Number of Travelers: ${doc.Travellers}
-5- Travel Budget (1 to 4 $, where 1 is frugal and 4 is lavish): ${doc.Budget}
-6- Additional Notes: ${doc.AdditionalNotes}
-7- Weather Forecast: ${docForecast}
-Note: Be sure to take account of the weather, temperature, and precipitation of the given day as you craft the itinerary and activities.
+1- Destination: ${req.body.latLong} (in latitude and longitude)
+2- Arrival Date: ${req.body.start}
+3- Departure Date: ${req.body.end}
+4- Number of Travelers: ${req.body.Travellers}
+5- Travel Budget (1 to 4 $, where 1 is frugal and 4 is lavish): ${req.body.Budget}
+6- Additional Notes: ${req.body.AdditionalNotes}
 
 You will respond using the following template. Be descriptive with the activities suggested. Also, try to incorporate at least one (and as many as you see fit) of the 10 restaurants recommended by Yelp:
 // START TEMPLATE
@@ -87,7 +87,7 @@ You will respond using the following template. Be descriptive with the activitie
 
 In addition, your users are experts in AI and ethics, so they already know you're a language model and your capabilities and limitations, so don't remind them of that. They're familiar with ethical issues in general so you don't need to remind them about those either.
 # YELP RECOMMENDED RESTAURANTS
-${doc.Restaurants}
+${req.body.Restaurants}
 ---END TEMPLATE ---
 `;
     // const prompt = req.body.prompt as string;
@@ -103,8 +103,18 @@ ${doc.Restaurants}
     });
 
     // return res.json(completion.choices);
-    res.locals.response = completion.choices[0].message.content;
-    cacheWrite(req.params.id, res.locals.response);
+
+    const newResponse = new ResponseText({
+      Response: completion.choices[0].message.content,
+    })
+
+    
+    res.locals.response = {
+      response: completion.choices[0].message.content,
+      id: newResponse._id
+    }
+
+    // cacheWrite(req.params.id, res.locals.response);
     return next();
   } catch (err) {
 
