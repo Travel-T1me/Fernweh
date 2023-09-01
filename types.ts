@@ -21,6 +21,9 @@ export interface PartialStore {
     additionalNotes: string,
     setAdditionalNotes: SetAdditionalNotes,
 
+    restaurants: any[],
+    setRestaurants: SetRestaurants,
+
     initialData: {
         budget: string,
         number: number
@@ -30,7 +33,10 @@ export interface PartialStore {
     mongoID: string,
     setMongoID: (id: string) => void,
     gptResponse: any,
-    setGptResponse: (res: any) => void
+    setGptResponse: (res: any) => void,
+
+    responseId: string,
+    setResponseId: (id: string) => void
 
 };
 
@@ -81,3 +87,5 @@ export type SetArrivalDate = (date: string) => void;
 export type SetEndDate = (date: string) => void;
 
 export type SetLatLong = (latLong: string) => void;
+
+export type SetRestaurants = (restaurants: any[]) => void; 

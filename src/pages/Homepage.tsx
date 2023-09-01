@@ -6,6 +6,8 @@ import Features from '../components/Features';
 import HeroSection from '../components/HeroSection';
 import GetStartedSection from '../components/GetStartedSection';
 import Footer from '../components/Footer';
+import ReactWeather, {useOpenWeather} from 'react-open-weather'
+import Map from '../components/Map'
 
 import AutoComplete from '../components/AutoComplete';
 import { useState } from 'react';
@@ -35,6 +37,14 @@ const Homepage = () => {
     console.log('refetched response:', gptRes.data)
   }
 
+  const { data, isLoading, errorMessage } = useOpenWeather({
+    key: 'c617956e0370c6b9301ee51583862993',
+    lat: '48.137154',
+    lon: '11.576124',
+    lang: 'en',
+    unit: 'metric', // values are (metric, standard, imperial)
+  });
+
   // React.useEffect(() => {
   //   const fetch = async () => {
   //     try {
@@ -62,8 +72,9 @@ const Homepage = () => {
 
   return (
     <>
+      <Map/>
       <Navbar visible={isNavbarVisible}/>
-
+      {console.log("DATADAtA", data)}
       <HeroSection />
 
       <Features />
@@ -71,7 +82,7 @@ const Homepage = () => {
       <GetStartedSection />
 
       <Footer />
-      <AutoComplete/>
+      {/* <AutoComplete/> */}
       <button onClick={resend}>RE-SEND</button>
     </>
   )
