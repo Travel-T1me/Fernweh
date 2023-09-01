@@ -40,16 +40,13 @@ const Homepage = () => {
   //     try {
   //       console.log('hi');
   //       const initialRes = await axiosInstance.post('/initial', initialSend); //after user inputs num travellers
-  //       console.log('DATA?', initialRes.data)
-  //       setMongoId(initialRes.data);
-  //       const newId = initialRes.data
-  //       console.log('mongoId', mongoID)
-  //       const weatherRes = await axiosInstance.post(`/weather/${newId}`, sendWeather); //after user inputs destination
-  //       const restaurantRes = await axiosInstance.post(`/yelp/${newId}`) // probably be sent at the same time
-  //       const notesRes = await axiosInstance.post(`/notes/${newId}`, {
+  //       const mongoID = initialRes.data;
+  //       const weatherRes = await axiosInstance.post(`/weather/${mongoID}`, sendWeather); //after user inputs destination
+  //       const restaurantRes = await axiosInstance.post(`/yelp/${mongoID}`) // probably be sent at the same time
+  //       const notesRes = await axiosInstance.post(`/notes/${mongoID}`, {
   //         notes: `We are celebrating the birthday of a friend turning 30 on Sep 3, 2023.`
   //       }) //after notes
-  //       const gptRes = await axiosInstance.post(`/llm/${newId}`, {docID: newId}); // final submit
+  //       const gptRes = await axiosInstance.post(`/llm/${mongoID}`, {docID: mongoID}); // final submit
   //       console.log(gptRes.data);
 
   //     } catch(err) {
@@ -74,8 +71,7 @@ const Homepage = () => {
       <GetStartedSection />
 
       <Footer />
-      <AutoComplete/>
-      <button onClick={resend}>RE-SEND</button>
+      
     </>
   )
 }

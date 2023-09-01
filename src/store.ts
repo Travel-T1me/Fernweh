@@ -1,16 +1,26 @@
 import { create } from "zustand";
+import { devtools } from 'zustand/middleware'
 import { 
   SetNumberOfTravellers, 
   InfoForWeather,
   SetInfoForWeather,
   SetYelpBudget,
   SetLocationAsString,
-  SetAdditionalNotes
+  SetAdditionalNotes,
+  SetArrivalDate,
+  SetEndDate,
+  SetLatLong
 } from "../types";
 
 interface StoreState {
   numOfTravellers: string,
   setNumberOfTravellers: SetNumberOfTravellers,
+
+  arrivalDate: string,
+  setArrivalDate: SetArrivalDate,
+
+  endDate: string,
+  setEndDate: SetEndDate,
 
   infoForWeather: InfoForWeather,
   setInfoForWeather: SetInfoForWeather,
@@ -21,8 +31,23 @@ interface StoreState {
   location: string,
   setLocationAsString: SetLocationAsString,
 
+  latLong: string,
+  setLatLong: SetLatLong,
+
   additionalNotes: string,
   setAdditionalNotes: SetAdditionalNotes,
+
+  initialData: {
+    budget:string,
+    number:number
+  },
+  setInitialData: (budget:string, number:number) => void,
+
+  mongoID: string,
+  setMongoID: (id: string) => void,
+
+  gptResponse: any,
+  setGptResponse: (res: any) => void
 }
 
 
@@ -32,6 +57,18 @@ const useStore = create<StoreState>((set) => ({
   setNumberOfTravellers: (numOfTravellers: string) : void => set((state) => ({
     ...state, numOfTravellers,
   })),
+
+  // modularized state for weather
+  arrivalDate: '',
+  setArrivalDate: (arrivalDate: string): void => set((state) => ({
+    arrivalDate,
+  })),
+
+  endDate: '',
+  setEndDate: (endDate: string): void => set((state) => ({
+    endDate,
+  })),
+
 
   // weather state, information for weather (location and dates)
   infoForWeather: {
@@ -62,10 +99,34 @@ const useStore = create<StoreState>((set) => ({
   })),
 
   additionalNotes: '',
-  setAdditionalNotes: (notes:string) : void => set((state) => ({
-    ...state, notes,
+  setAdditionalNotes: (additionalNotes:string) : void => set((state) => ({
+    additionalNotes
   })),
 
+  initialData: {
+    budget:'',
+    number: 0
+  },
+  setInitialData: (budget: string, number:number) : void => set((state) => ({
+    initialData: {
+      budget,
+      number
+    }
+  })),
+  mongoID: '',
+  setMongoID: (id: string): void => set((state) => ({
+    mongoID: id
+  })),
+
+  gptResponse: '',
+  setGptResponse: (res: any): void => set((state) => ({
+    gptResponse: res
+  })),
+
+  latLong: '',
+  setLatLong: (latLong: string): void => set ((state)  => ({
+    latLong
+  }))
 }));
 
 export default useStore;

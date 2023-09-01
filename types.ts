@@ -1,19 +1,37 @@
 
 export interface PartialStore {
-    numOfTravellers?: string;
-    setNumberOfTravellers?: SetNumberOfTravellers;
+    numOfTravellers: string,
+    setNumberOfTravellers: SetNumberOfTravellers,
+  
+    arrivalDate: string,
+    setArrivalDate: SetArrivalDate,
+  
+    endDate: string,
+    setEndDate: SetEndDate,
+  
+    infoForWeather: InfoForWeather,
+    setInfoForWeather: SetInfoForWeather,
+  
+    yelpBudget: string,
+    setYelpBudget: SetYelpBudget,
+  
+    location: string,
+    setLocationAsString: SetLocationAsString,
+  
+    additionalNotes: string,
+    setAdditionalNotes: SetAdditionalNotes,
 
-    infoForWeather?: InfoForWeather;
-    setInfoForWeather?: SetInfoForWeather;
+    initialData: {
+        budget: string,
+        number: number
+    },
 
-    yelpBudget?: string;
-    setYelpBudget?: SetYelpBudget;
+    setInitialData: (budget:string, number:number) => void,
+    mongoID: string,
+    setMongoID: (id: string) => void,
+    gptResponse: any,
+    setGptResponse: (res: any) => void
 
-    location?: string;
-    setLocationAsString?: SetLocationAsString;
-
-    additionalNotes?: string;
-    setAdditionalNotes?: SetAdditionalNotes;
 };
 
 
@@ -23,9 +41,7 @@ export type QuestionCardType = {
     type: string,
     setQuestionStates: React.Dispatch<React.SetStateAction<boolean[]>>,
     questionStates: boolean[],
-    min: string | undefined,
-    max: string | undefined,
-    ref: any
+    // ref: any
 };
 
 export interface NavbarContainerProps {
@@ -60,3 +76,8 @@ export type SetLocationAsString = (location: string) => void;
 
 export type SetAdditionalNotes = (notes: string) => void;
 
+export type SetArrivalDate = (date: string) => void;
+
+export type SetEndDate = (date: string) => void;
+
+export type SetLatLong = (latLong: string) => void;
