@@ -6,3 +6,20 @@
   font-family: 'Inter', sans-serif;
   font-family: 'Poppins', sans-serif;
 } */
+
+.map-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  border: 1px solid black;
+  width: 100%;
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden; /* Ensure map doesn't overflow the container */
+}
+
+/* Ensure the Google Map takes up 100% of its container's height */
+.google-map-container {
+  height: 100%;
+  width: 100%;
+}
