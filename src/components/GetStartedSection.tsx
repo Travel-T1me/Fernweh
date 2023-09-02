@@ -59,7 +59,7 @@ const GetStartedSection = () => {
     <GetStartedContainer>
       <ParallaxSection >
         <ParallaxContent>
-          <StyledLink to="/questionaire">
+          <StyledLink to="/questionnaire">
             <ContentText>
               Start your next adventure!
             </ContentText>

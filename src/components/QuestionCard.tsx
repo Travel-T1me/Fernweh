@@ -194,7 +194,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     const restaurantResponse = await axiosInstance.get(`/yelp/${useStore.getState().location}`) as any
 
 
-                    setRestaurants(restaurantResponse.data);
+                    setRestaurants(restaurantResponse.data.data);
                     console.log(useStore.getState())
 
 

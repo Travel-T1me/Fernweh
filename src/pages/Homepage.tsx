@@ -6,28 +6,27 @@ import Features from '../components/Features';
 import HeroSection from '../components/HeroSection';
 import GetStartedSection from '../components/GetStartedSection';
 import Footer from '../components/Footer';
-import ReactWeather, {useOpenWeather} from 'react-open-weather'
-import Map from '../components/Map'
 
-import AutoComplete from '../components/AutoComplete';
+
+
 import { useState } from 'react';
 
 const Homepage = () => {
-  const initialSend = {
-    budget: `$$`,
-    number: 4,
-  }
+  // const initialSend = {
+  //   budget: `$$`,
+  //   number: 4,
+  // }
 
-  const sendWeather = { //send destination as lat long + string
-    startDate: '8/31/2023',
-    endDate: '9/2/2023',
-    destination: 'London',
-    latLong: '51.5072, 0.1276'
-  }
+  // const sendWeather = { //send destination as lat long + string
+  //   startDate: '8/31/2023',
+  //   endDate: '9/2/2023',
+  //   destination: 'London',
+  //   latLong: '51.5072, 0.1276'
+  // }
 
-  const notes = {
-    additionalNotes: ''
-  }
+  // const notes = {
+  //   additionalNotes: ''
+  // }
 
   const [mongoID, setMongoId] = useState('');
 
@@ -37,13 +36,6 @@ const Homepage = () => {
     console.log('refetched response:', gptRes.data)
   }
 
-  const { data, isLoading, errorMessage } = useOpenWeather({
-    key: 'c617956e0370c6b9301ee51583862993',
-    lat: '48.137154',
-    lon: '11.576124',
-    lang: 'en',
-    unit: 'metric', // values are (metric, standard, imperial)
-  });
 
   // React.useEffect(() => {
   //   const fetch = async () => {
@@ -65,16 +57,15 @@ const Homepage = () => {
   //   }
 
   //   fetch();
-  // })
+  // }, [])
 
 
   const isNavbarVisible = false;
 
   return (
     <>
-      <Map/>
       <Navbar visible={isNavbarVisible}/>
-      {console.log("DATADAtA", data)}
+      
       <HeroSection />
 
       <Features />
@@ -88,5 +79,5 @@ const Homepage = () => {
   )
 }
 
-
+//{console.log("DATADAtA", data)}
 export default Homepage;

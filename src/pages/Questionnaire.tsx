@@ -19,7 +19,7 @@ const Wrapper = styled.div<WrapperProps>`
 `;
 
 
-const Questionaire = () => {
+const Questionnaire = () => {
 
 
 
@@ -85,4 +85,4 @@ const Questionaire = () => {
 }
 
 
-export default Questionaire;
+export default Questionnaire;

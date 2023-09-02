@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { FeatureCardProps } from '../types';
+import { FeatureCardProps } from '../../types';
 
 const CardContainer = styled.div`
   position: relative;
