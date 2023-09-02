@@ -55,8 +55,8 @@ const SlideshowContainer = styled.div`
 
 
 const Restaurants = () => {
-  // const [restaurants, setRestaurants] = useState(null);
-  const {restaurants, setRestaurants } : PartialStore = useStore();
+  
+  const {restaurants, setRestaurants} : PartialStore = useStore();
   
   const slideshowProperties = {
     autoplay: false, // 

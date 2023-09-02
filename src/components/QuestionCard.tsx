@@ -5,10 +5,8 @@ import { QuestionCardType } from "../../types";
 import { Link } from "react-router-dom";
 import { BaseButtonStyle } from "../GlobalStyles";
 import useStore from '../store';
-import {
-    PartialStore
-} from '../../types';
-import axiosInstance from '../axiosInstance'
+import { PartialStore } from '../../types';
+import axiosInstance from '../axiosInstance';
 import AutoComplete from "./AutoComplete";
 
 
@@ -86,29 +84,13 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
 
     // store and reducers
     const {
-        numOfTravellers,
         setNumberOfTravellers,
-        arrivalDate,
         setArrivalDate,
-        endDate,
         setEndDate,
-        infoForWeather,
-        setInfoForWeather,
-        yelpBudget,
         setYelpBudget,
-        location,
-        setLocationAsString,
-        additionalNotes,
         setAdditionalNotes,
-        initialData,
-        setInitialData,
-        mongoID,
-        setMongoID,
-        gptResponse,
         setGptResponse,
-        responseId,
         setResponseId,
-        restaurants,
         setRestaurants,
     } : PartialStore = useStore();
     
@@ -197,6 +179,9 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     setRestaurants(restaurantResponse.data.data);
                     console.log(useStore.getState())
 
+                    // send pexel api request
+
+
 
                     break;
             }
@@ -236,6 +221,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
         }
 
         console.log('COMPOSEDREQUEST', composedRequest)
+
 
         const gptRes = async () => {
             try{

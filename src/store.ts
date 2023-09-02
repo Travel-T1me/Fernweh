@@ -10,7 +10,8 @@ import {
   SetArrivalDate,
   SetEndDate,
   SetLatLong,
-  SetRestaurants
+  SetRestaurants,
+  SetPexelPics
 } from "../types";
 
 interface StoreState {
@@ -40,6 +41,9 @@ interface StoreState {
 
   restaurants: any[],
   setRestaurants: SetRestaurants,
+
+  pexelPics: any[],
+  setPexelPics: SetPexelPics,
 
   initialData: {
     budget:string,
@@ -144,7 +148,15 @@ const useStore = create<StoreState>((set) => ({
   latLong: '',
   setLatLong: (latLong: string): void => set ((state)  => ({
     latLong
-  }))
+  })),
+
+  // pexel pics
+  pexelPics: [],
+  setPexelPics: (pexelPics: any[]): void => set((state) => ({
+    ...state,
+    pexelPics,
+  })),
+
 }));
 
 export default useStore;

@@ -1,5 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
+import { PexelPic } from '../../types';
+import useStore from '../store';
+import { PartialStore } from '../../types';
+import axiosInstance from '../axiosInstance';
 
 const ItineraryContainer = styled.div`
   display: flex;
@@ -22,7 +28,7 @@ const ItineraryContainer = styled.div`
   }
 `;
 
-const TripImage = styled.div`
+const TripImagesContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,6 +36,7 @@ const TripImage = styled.div`
   height: 250px;
   position: relative;
 `;
+
 
 const PexelImg = styled.img`
   position: absolute;
@@ -41,17 +48,49 @@ const PexelImg = styled.img`
 `;
 
 
-
-
-
 const Itinerary = () => {
+
+  const {pexelPics, setPexelPics} : PartialStore = useStore();
+
+  const slideshowProperties = {
+    autoplay: true, // 
+    duration: 5000, // Set to 0 to turn off auto slide
+    transitionDuration: 500,
+    indicators: true,
+    infinite: true,
+    canSwipe: true,
+  }
+
+  useEffect(() => {
+    const fetchPexelPics = async () => {
+      try{
+        const pexelsResponse = await axiosInstance.get(`/pexels?query=$(useStore.getState().location}`);
+        // save response data to store
+        setPexelPics(pexelsResponse.data.photos);
+  
+      } catch(error) {
+        console.log(`Error fetching pexel pics: ${error}`);
+      }
+    };
+    fetchPexelPics();
+  }, [])
+  
 
   return (
     <ItineraryContainer>
       
-      <TripImage>
-        <PexelImg src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg" alt="London Bridge"/>
-      </TripImage>
+      <TripImagesContainer>
+        <Slide easing="ease" {...slideshowProperties}>
+          {pexelPics !== null ? (
+            pexelPics.map((pexelPic: PexelPic) => (
+              <PexelImg src={pexelPic.url} alt={pexelPic.alt} />
+            ))
+          ) : (
+            <p>Loading images...</p>
+          )}
+        </Slide>
+        
+      </TripImagesContainer>
 
       <h1>Your next vacation</h1>
 
@@ -60,5 +99,6 @@ const Itinerary = () => {
     </ItineraryContainer>
   )
 };
+
 
 export default Itinerary;

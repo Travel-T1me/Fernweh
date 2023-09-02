@@ -12,6 +12,7 @@ const RestaurantCardContainer = styled.div`
   min-height: 300px;
   min-width: 400px;
 `;
+
 // border: 1px solid black;  Even out edges on cards
 
 const InnerCardContainer = styled.div`
