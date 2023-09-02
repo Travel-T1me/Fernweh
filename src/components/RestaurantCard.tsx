@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import NavButton from './NavButton';
+import { RestaurantCardProps } from '../../types';
 
 const RestaurantCardContainer = styled.div`
   position: relative;
@@ -64,27 +65,6 @@ const TextShadow = styled.div`
   
 `;
 
-
-interface Restaurant {
-  id: string;
-  alias: string;
-  name: string;
-  address: string;
-  latitude: number;
-  longitude: number;
-  business_page_link: string;
-  rating: number;
-  review_count: number;
-  price_range: string;
-  photo: string;
-  photos_page_link: string;
-  phone: string;
-  country: string;
-}
-
-interface RestaurantCardProps {
-  restaurant: Restaurant;
-}
 
 
 const RestaurantCard: React.FC<RestaurantCardProps> = ({ restaurant }) => {

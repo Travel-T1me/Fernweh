@@ -72,6 +72,27 @@ export interface InfoForWeather {
     latLong: string
 };
 
+export interface Restaurant {
+    id: string;
+    alias: string;
+    name: string;
+    address: string;
+    latitude: number;
+    longitude: number;
+    business_page_link: string;
+    rating: number;
+    review_count: number;
+    price_range: string;
+    photo: string;
+    photos_page_link: string;
+    phone: string;
+    country: string;
+    }
+
+export interface RestaurantCardProps {
+    restaurant: Restaurant;
+  }
+
 export type SetNumberOfTravellers = (numOfTravellers: string) => void;
 
 export type SetInfoForWeather = (startDate: string, endDate: string, destination: string, latLong: string) => void;

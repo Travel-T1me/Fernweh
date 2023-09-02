@@ -43,6 +43,7 @@
     "memory-cache": "^0.2.0",
     "mongodb": "^5.8.1",
     "mongoose": "^7.5.0",
+    "node-fetch": "^3.3.2",
     "openai": "^4.2.0",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
