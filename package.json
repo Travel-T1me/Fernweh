@@ -28,6 +28,7 @@
   "homepage": "https://github.com/Travel-T1me/travel-t1me#readme",
   "dependencies": {
     "@apollo/server": "^4.9.1",
+    "@mui/material": "^5.14.7",
     "@react-google-maps/api": "^2.19.2",
     "@types/lodash": "^4.14.197",
     "@types/memory-cache": "^0.2.3",
@@ -38,6 +39,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "google-maps-react-markers": "^1.4.2",
     "lodash": "^4.17.21",
     "luxon": "^3.4.2",
     "memory-cache": "^0.2.0",

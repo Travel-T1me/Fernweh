@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { styled } from 'styled-components';
 import FullItinerary from '../components/FullItinerary';
 import Restaurants from '../components/Restaurants';
 import Weather from '../components/Weather';
 import useStore from '../store';
+import { Marker } from '@react-google-maps/api';
+import Map from '../components/Map'
+
 const ResultsContainer = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -41,15 +44,39 @@ const SecondColumn = styled.section`
   }
 `;
 
+const processLatLng = function(latLngStr: string){
+  const latLngStrArr = latLngStr.split(',');
+
+
+  return {
+    lat: Number(latLngStrArr[0]),
+    lng: Number(latLngStrArr[1])
+  }
+}
+
+const processRestaurants = function(restaurants: any[]){
+  return restaurants.map((restaurant, index) => {
+    return <Marker position={{
+      lat: Number(restaurant.latitude),
+      lng: Number(restaurant.longitude)
+    }}
+    
+    key={'marker' + index}></Marker>
+  })
+}
+
 
 const ResultsPage = () => {
-
+  const center = processLatLng(useStore.getState().latLong);
+  const markers = processRestaurants(useStore.getState().restaurants);
   
   return (
     <ResultsContainer>
       <FirstColumn>
           <FullItinerary />
       </FirstColumn>
+
+      <Map center={center} markers={markers}/>
       
       <SecondColumn>
           <Weather />
