@@ -5,9 +5,12 @@ import RestaurantCard from './RestaurantCard';
 import MockData from './MockData';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
+import { Restaurant } from '../../types';
+import useStore from '../store';
+import { PartialStore } from '../../types';
 
 
-const data = MockData;
+//const data = MockData;
 
 type ScrollWidth = number;
 
@@ -52,7 +55,8 @@ const SlideshowContainer = styled.div`
 
 
 const Restaurants = () => {
-  const [restaurants, setRestaurants] = useState([]);
+  // const [restaurants, setRestaurants] = useState(null);
+  const {restaurants, setRestaurants } : PartialStore = useStore();
   
   const slideshowProperties = {
     autoplay: false, // 
@@ -63,18 +67,20 @@ const Restaurants = () => {
     canSwipe: true,
   };
 
-  // useEffect(() => {
-  //   const fetchRestaurants = async () => {
-  //     try {
-  //       const restuarantRes = await axiosInstance.post(`/yelp/${mongoID}`);
-  //       setRestaurants(restaurantRes.data);
-  //     } catch (error) {
-  //       console.error('Error fetching restaurants: ', error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        const restaurantRes = await axiosInstance.get(`/api/yelp/${location}`);
+        setRestaurants(restaurantRes.data);
+      } catch (error) {
+        console.error('Error fetching restaurants: ', error);
+      }
+    };
 
-  //   fetchRestaurants();
-  // }, []);
+    fetchRestaurants();
+
+    console.log(`Checking restaurants state: ${JSON.stringify(restaurants)}`);
+  }, []);
 
   return (
       <RestaurantContainer>
@@ -85,9 +91,13 @@ const Restaurants = () => {
         {/* <OutterCardContainer scrollOffset={scrollOffset}> */}
         <SlideshowContainer>
           <Slide easing="ease" {...slideshowProperties}>
-            {data.map((restaurant) => (
-              <RestaurantCard key={restaurant.id} restaurant={restaurant} />
-            ))}
+            {restaurants !== null ? (
+              restaurants.map((restaurant: Restaurant) => (
+                <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+              ))
+            ) : (
+              <p>Loading restaurants...</p>
+            )}
           </Slide>
         </SlideshowContainer>
           

@@ -34,7 +34,7 @@ const Card = styled.div`
     border-radius:25px;
     background-color: ivory;
     width:650px;
-    height:auto;
+    height:600px;
     padding:100px;
     margin:100px;
     text-align: center;
@@ -168,7 +168,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
 
                     // RESTURANT DATA - commented out to save calls
                     const restaurantResponse = await axiosInstance.get(`/yelp/${useStore.getState().location}`) as any
-                    setRestaurants(restaurantResponse.data);
+                    setRestaurants(restaurantResponse.data.data);
                     console.log(useStore.getState())
                     break;
             }
@@ -244,12 +244,8 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
         <Wrapper>
             <CardContainer>
                 <Card>
-                    <Question>
-                        {question}
-                    </Question>
-                    <InputField>
-                        {inputField}
-                    </InputField>
+                    <Question>{question}</Question>
+                    <InputField>{inputField}</InputField>
                     <br />
                     <Buttons>
                         {
@@ -271,6 +267,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     </Buttons>
                 </Card>
             </CardContainer>
+        
         </Wrapper>
     )
 }

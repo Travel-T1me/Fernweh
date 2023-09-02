@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import travelPic from '../assets/travel-pic3.jpg';
 import laptopPic from '../assets/whth-pic.png';
+import FernwehBackground from './FernwehBackground';
 
 const HeroContainer = styled.div`
   position: relative;
@@ -14,6 +15,8 @@ const HeroContainer = styled.div`
   background-position: center;
   z-index: 5;
 `;
+
+
 
 const ParallaxSection = styled.div`
   height: 100vh;
@@ -62,13 +65,15 @@ const HeroSection = () => {
 
   return (
     <HeroContainer>
-      <ParallaxSection>
-        <ParallaxContent style={{ 
-          transform : `translateY(${translatedY}px)`
-          }}>
-          <Image src={laptopPic} alt="Laptop"></Image>
-        </ParallaxContent>
-      </ParallaxSection>
+      <FernwehBackground>
+        <ParallaxSection>
+          <ParallaxContent style={{ 
+            transform : `translateY(${translatedY}px)`
+            }}>
+            <Image src={laptopPic} alt="Laptop"></Image>
+          </ParallaxContent>
+        </ParallaxSection>
+      </FernwehBackground>
     </HeroContainer>
   )
 };

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import QuestionCard from '../components/QuestionCard';
 import { QuestionCardType } from '../../types'
 import { styled } from 'styled-components'
@@ -10,6 +10,33 @@ interface WrapperProps {
   $focus?: boolean;
 }
 
+const CardShadow = styled.div`
+  display: inline-block;
+  position: relative;
+  height: 80%;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(
+      to right,
+      rgb(102, 255, 255),
+      rgb(0, 153, 153)
+    );
+    transform: translateY(120px) scale(0.75);
+    filter: blur(16px);
+  }
+  transition: transform 0.2s ease-in-out;
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+  }
+`;
+
 const Wrapper = styled.div<WrapperProps>`
   background-color: transparent;
   opacity: ${props => (props.$show ? 1 : 0)};
@@ -20,12 +47,6 @@ const Wrapper = styled.div<WrapperProps>`
 
 
 const Questionnaire = () => {
-
-
-
-  // dates come back as string in yyyy-mm-dd format
-  // 
-  const [questionStates, setQuestionStates] = useState([true, false, false, false, false, false])
 
   const questionList = [
     {
@@ -52,24 +73,42 @@ const Questionnaire = () => {
       question: "Anything else we should know? (example: It's my spouse's birthday during this trip.)",
       type:'text',
     }
-  ]
+  ];
+
+  // Initialize questionStates so that only the first QuestionCard is initially displayed
+  const initialQuestionStates = questionList.map((_, index) => index === 0);
+
+  // dates come back as string in yyyy-mm-dd format
+  const [questionStates, setQuestionStates] = useState([true, false, false, false, false, false])
+
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
 
   // const refsArray = questionList.map(() => useRef(0));
 
   const questionComponents = questionList.map((obj, index) => (
     <>
       <NavBar key={`${index}` + 'NavBar'} visible={true}/>
-      <Wrapper key={`${index}` + 'Wrapper'} $show={questionStates[index]} $focus={!questionStates[index+1] || index === questionStates.length - 1}>
-        <QuestionCard
-        // ref={refsArray[index]}
-        key={index} 
-        el={index} 
-        question={obj.question} 
-        type={obj.type} 
-        setQuestionStates={setQuestionStates}
-        questionStates={questionStates}
-         />
-      </Wrapper>
+
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+
+        <Wrapper key={`${index}` + 'Wrapper'} $show={questionStates[index]} $focus={!questionStates[index+1] || index === questionStates.length - 1}>
+          <CardShadow>
+            <QuestionCard
+            // ref={refsArray[index]}
+            key={index} 
+            el={index} 
+            question={obj.question} 
+            type={obj.type} 
+            setQuestionStates={setQuestionStates}
+            questionStates={questionStates}
+            />
+          </CardShadow>
+        </Wrapper>
+
+      </div>
     </>
 
 
