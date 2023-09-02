@@ -3,6 +3,7 @@ dotenv.config();
 
 export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID!;
 export const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!;
+export const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY!;
 export const MONGODB_URI = process.env.MONGODB_URI!;
 export const OPENAI_API_KEY = process.env.OPENAI_API_KEY!;
 export const PEXELS_API_KEY = process.env.PEXELS_API_KEY!;
