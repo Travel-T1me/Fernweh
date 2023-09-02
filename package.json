@@ -28,6 +28,9 @@
   "homepage": "https://github.com/Travel-T1me/travel-t1me#readme",
   "dependencies": {
     "@apollo/server": "^4.9.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.7",
     "@react-google-maps/api": "^2.19.2",
     "@types/lodash": "^4.14.197",
     "@types/memory-cache": "^0.2.3",
@@ -35,6 +38,7 @@
     "axios": "^1.5.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "crypto-browserify": "^3.12.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
@@ -45,6 +49,7 @@
     "mongoose": "^7.5.0",
     "node-fetch": "^3.3.2",
     "openai": "^4.2.0",
+    "os-browserify": "^0.3.0",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-local-mongoose": "^8.0.0",
@@ -54,6 +59,7 @@
     "react-router": "^6.15.0",
     "react-router-dom": "^6.15.0",
     "react-slideshow-image": "^4.2.1",
+    "stream-browserify": "^3.0.0",
     "styled-components": "^6.0.7",
     "zustand": "^4.4.1"
   },

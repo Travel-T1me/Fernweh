@@ -6,6 +6,8 @@ import { PexelPic } from '../../types';
 import useStore from '../store';
 import { PartialStore } from '../../types';
 import axiosInstance from '../axiosInstance';
+import parseGPTResponse from '../../utils/parseGPTresponse';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const ItineraryContainer = styled.div`
   display: flex;
@@ -18,9 +20,8 @@ const ItineraryContainer = styled.div`
   background-color: ivory;
   min-height: 700px;
   min-width: 400px;
-  overflow-y: auto;
   flex-wrap: wrap;
-
+  overflow: hidden;
   transition: transform 0.3s ease-in-out;
 
   &:hover {
@@ -46,10 +47,27 @@ const PexelImg = styled.img`
   height: 100%;
   object-fit: cover;
 `;
+const GptResponseContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  max-height: 500px;
+  min-width: 300px;
+  margin: 1rem;
+  padding: 2rem;
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: whitesmoke;
+  padding: 15px;
+  overflow-x: hidden;
+  overflow-y: auto;
+`;
+
+
 
 
 const Itinerary = () => {
-
   const {pexelPics, setPexelPics} : PartialStore = useStore();
 
   const slideshowProperties = {
@@ -74,7 +92,32 @@ const Itinerary = () => {
     };
     fetchPexelPics();
   }, [])
-  
+
+  const [parsedResponse, setParsedResponse] = useState();
+  const { gptResponse } = useStore();
+
+  React.useEffect(() => {
+    setParsedResponse(parseGPTResponse(gptResponse));
+  }, [gptResponse]);
+
+  const groupedItinerary = {};
+
+  if (parsedResponse) {
+    for (const day of Object.keys(parsedResponse)) {
+      for (const timeOfDay of ['Morning', 'Afternoon', 'Evening']) {
+        const activities = parsedResponse[day][timeOfDay];
+        if (activities && activities.length > 0) {
+          if (!groupedItinerary[day]) {
+            groupedItinerary[day] = [];
+          }
+          groupedItinerary[day].push({
+            timeOfDay,
+            activities,
+          });
+        }
+      }
+    }
+  }
 
   return (
     <ItineraryContainer>
@@ -91,8 +134,6 @@ const Itinerary = () => {
         </Slide>
         
       </TripImagesContainer>
-
-      <h1>Your next vacation</h1>
 
       
 

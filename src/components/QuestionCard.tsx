@@ -100,10 +100,6 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
     // handleChange to update answer
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         setAnswer(e.target.value);
-        // console.log(answer, 'line 129');
-        // if (type === 'date'){
-        //     setAnswer(formatDate(answer))
-        // }
     }
 
     const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>): void => {
@@ -120,13 +116,6 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
             newState[el] = false;
             setQuestionStates(newState);
         } 
-        // case if user hits submit button
-        //{
-        //numTravellers: 
-        //budget:
-        //arrivalDate;
-        //
-        //}
         else if (boo){
             switch (index) {
                 case 0:
@@ -158,34 +147,13 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     break;
                 case 4:
                     setEndDate(answer);
-                    // const userEndDate = useStore.getState().endDate
-                    // setInfoForWeather(arrivalDate, userEndDate, location, '40.7138, 74.0060')
-                    // let currentInformationForWeather = useStore.getState().infoForWeather
-                    // WEATHER DATA - commented out because it's not working atm
-                    // const weatherCall = async () => {
-                    //     try{
-                    //         const data = await axiosInstance.post(`weather/${mongoID}`, currentInformationForWeather);
-                    //         return data
-                    //     } catch (err) {
-                    //         console.error('Err:', err);
-                    //     }}
-                    // const weatherResponse = await weatherCall();
-                    // console.log(weatherResponse)
 
                     // RESTURANT DATA - commented out to save calls
                     const restaurantResponse = await axiosInstance.get(`/yelp/${useStore.getState().location}`) as any
-
-
                     setRestaurants(restaurantResponse.data.data);
                     console.log(useStore.getState())
-
-                    // send pexel api request
-
-
-
                     break;
             }
-
             // reveal the next card by changing the state
             newState[el + 1] = true;
             setQuestionStates(newState);
