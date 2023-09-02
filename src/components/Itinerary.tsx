@@ -1,10 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
-import parseGPTResponse from '../../utils/parseGPTresponse'
-import useStore from '../store'
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import parseGPTResponse from '../../utils/parseGPTresponse';
+import useStore from '../store';
 import { Slide } from 'react-slideshow-image';
 import ItineraryCard from './ItineraryCard';
-import 'react-slideshow-image/dist/styles.css'
+import 'react-slideshow-image/dist/styles.css';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const ItineraryContainer = styled.div`
   display: flex;
@@ -17,9 +18,8 @@ const ItineraryContainer = styled.div`
   background-color: ivory;
   min-height: 700px;
   min-width: 400px;
-  overflow-y: auto;
   flex-wrap: wrap;
-
+  overflow: hidden;
   transition: transform 0.3s ease-in-out;
 
   &:hover {
@@ -45,63 +45,85 @@ const PexelImg = styled.img`
   object-fit: cover;
 `;
 
-const SlideshowContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  min-height: 300px;
+const GptResponseContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  max-height: 500px;
   min-width: 300px;
-  margin: 0 auto;
+  margin: 1rem;
+  padding: 2rem;
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: whitesmoke;
+  padding: 15px;
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 const Itinerary = () => {
-  // grab the gptResponse and parse the data
-  const { gptResponse } = useStore()
-  const parsedResponse = parseGPTResponse(gptResponse); 
+  const [parsedResponse, setParsedResponse] = useState();
+  const { gptResponse } = useStore();
 
-  const slideshowProperties = {
-    autoplay: false, // 
-    duration: 5000, // Set to 0 to turn off auto slide
-    transitionDuration: 500,
-    indicators: true,
-    infinite: true,
-    canSwipe: true,
-  };
+  React.useEffect(() => {
+    setParsedResponse(parseGPTResponse(gptResponse));
+  }, [gptResponse]);
 
-  const timeOfDayArray = ['Morning', 'Afternoon', 'Evening']
-  const dayArray = Object.keys(parsedResponse);
-  const arrOfItineraryCards = [];
+  const groupedItinerary = {};
 
-
-  for (const day of dayArray){ //[Day 1, etc.]
-    for (let i = 0; i < timeOfDayArray.length; i++){
-      let timeOfDay = timeOfDayArray[i]
-      let activityForTimeOfDayArray = parsedResponse[day][timeOfDay] //object[Day 1][Morning]
-      for (const activity of activityForTimeOfDayArray){
-        const itineraryCard = <ItineraryCard day={day} timeOfDay={timeOfDay} activity={activity}/>
-        arrOfItineraryCards.push(itineraryCard)
+  if (parsedResponse) {
+    for (const day of Object.keys(parsedResponse)) {
+      for (const timeOfDay of ['Morning', 'Afternoon', 'Evening']) {
+        const activities = parsedResponse[day][timeOfDay];
+        if (activities && activities.length > 0) {
+          if (!groupedItinerary[day]) {
+            groupedItinerary[day] = [];
+          }
+          groupedItinerary[day].push({
+            timeOfDay,
+            activities,
+          });
+        }
       }
     }
   }
 
-
   return (
     <>
-    <ItineraryContainer>
-      
-      <TripImage>
-        <PexelImg src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg" alt="London Bridge"/>
-      </TripImage>
+      <ItineraryContainer>
+        <TripImage>
+          <PexelImg src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg" alt="London Bridge" />
+        </TripImage>
+        <br />
+        <br />
 
-      <h1>Your next vacation</h1>
-    </ItineraryContainer>
-    
-    <SlideshowContainer>
-        <Slide easing="ease" {...slideshowProperties}>
-          {arrOfItineraryCards}
-        </Slide>
-      </SlideshowContainer>
+        <GptResponseContainer>
+          {Object.keys(groupedItinerary).length === 0 ? (
+            <>
+              <h1>Loading your itinerary...</h1>
+              <CircularProgress />
+            </>
+          ) : (
+            <>
+              {Object.keys(groupedItinerary).map((day) => (
+                <div key={day}>
+                  {groupedItinerary[day].map((data, index) => (
+                    <ItineraryCard
+                      key={`${day}-${data.timeOfDay}-${index}`}
+                      day={index === 0 ? day : ''}
+                      timeOfDay={data.timeOfDay}
+                      activities={data.activities}
+                    />
+                  ))}
+                </div>
+              ))}
+            </>
+          )}
+        </GptResponseContainer>
+      </ItineraryContainer>
     </>
-  )
+  );
 };
 
 export default Itinerary;

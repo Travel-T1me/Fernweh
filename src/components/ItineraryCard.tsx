@@ -1,65 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import NavButton from './NavButton';
 
 const ItineraryCardContainer = styled.div`
   position: relative;
-  background-color: ivory;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  min-height: 300px;
-  min-width: 400px;
-`;
-// border: 1px solid black;  Even out edges on cards
-
-const InnerCardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  background-color: whitesmoke;
+  display: grid;
+  align-items: 1fr 1fr;
   justify-content: center;
-  align-items: flex-start;
-  width: 50%; 
-  padding: 20px;
-  color: black; 
-  
+  width: 100%;
 `;
 
 const CardTitle = styled.h2`
+  font-size: 36px;
   margin-bottom: 10px;
   text-decoration: underline;
-  z-index: 2;
+  text-align: center;
 `;
 
-const InfoParagraph = styled.p`
+const TimeOfDay = styled.p`
+  font-size: 28px;
   margin-bottom: 10px;
-  z-index: 2;
+  text-align: left;
+  font-weight: bold;
 `;
 
-const TextShadow = styled.div`
-  border-radius: 20px;
-  background-color: whitesmoke;
-  z-index: 1;
-  padding: 15px;
+const Activity = styled.div`
+  font-size: 20px;
 `;
 
 interface ItineraryCardProps {
-    day: string,
-    timeOfDay: string,
-    activity: string
+  day: string;
+  timeOfDay: string;
+  activities: string[];
 }
 
+const ItineraryCard: React.FC<ItineraryCardProps> = ({ day, timeOfDay, activities }) => {
+  let renderedTimeOfDay = false; // Track if timeOfDay has been rendered
 
-const ItineraryCard: React.FC<ItineraryCardProps> = ({day, timeOfDay, activity}) => {
-    return (
-        <>
-        <InnerCardContainer >
-            <CardTitle>{day}</CardTitle>
-            <InfoParagraph>
-                {timeOfDay}
-            </InfoParagraph>
-        </InnerCardContainer>
-        </>
-    )
-}
+  return (
+    <>
+      <ItineraryCardContainer>
+        {activities.map((activity, index) => (
+          <div key={`${day}-${timeOfDay}-${index}`}>
+            {index === 0 && <CardTitle>{day}</CardTitle>}
+            {/* Only render timeOfDay once for the group */}
+            {!renderedTimeOfDay && <TimeOfDay>{timeOfDay}</TimeOfDay>}
+            <Activity>{activity}</Activity>
+            {renderedTimeOfDay = true} {/* Mark as rendered */}
+          </div>
+        ))}
+      </ItineraryCardContainer>
+    </>
+  );
+};
 
-export default ItineraryCard
+export default ItineraryCard;
