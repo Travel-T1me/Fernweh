@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios';
 import axiosInstance from '../axiosInstance'
 import Navbar from '../components/Navbar';
@@ -12,21 +12,6 @@ import Footer from '../components/Footer';
 import { useState } from 'react';
 
 const Homepage = () => {
-  // const initialSend = {
-  //   budget: `$$`,
-  //   number: 4,
-  // }
-
-  // const sendWeather = { //send destination as lat long + string
-  //   startDate: '8/31/2023',
-  //   endDate: '9/2/2023',
-  //   destination: 'London',
-  //   latLong: '51.5072, 0.1276'
-  // }
-
-  // const notes = {
-  //   additionalNotes: ''
-  // }
 
   const [mongoID, setMongoId] = useState('');
 
@@ -62,6 +47,10 @@ const Homepage = () => {
 
   const isNavbarVisible = false;
 
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
+
   return (
     <>
       <Navbar visible={isNavbarVisible}/>
@@ -74,7 +63,7 @@ const Homepage = () => {
 
       <Footer />
       {/* <AutoComplete/> */}
-      <button onClick={resend}>RE-SEND</button>
+      {/* <button onClick={resend}>RE-SEND</button> */}
     </>
   )
 }

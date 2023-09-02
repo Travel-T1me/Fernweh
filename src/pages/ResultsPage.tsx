@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import Itinerary from '../components/Itinerary';
 import Restaurants from '../components/Restaurants';
 import MapContainer from '../components/MapContainer';
 import useStore from '../store';
+import { BaseButtonStyle } from '../GlobalStyles';
+import axios from 'axios';
 
+const Button = styled.button`${BaseButtonStyle}`;
 
 const ResultsContainer = styled.section`
   display: grid;
@@ -44,7 +47,36 @@ const SecondColumn = styled.section`
 `;
 
 
+const LogoutButton = styled(Button)`
+  position: fixed;
+  top: 30px;
+  right: 60px;
+  z-index: 20;
+  background-color: white;
+  border-color: darkcyan;
+  color: darkcyan;
+  &:hover {
+    background-color: hsl(180, 50%, 85%);
+  }
+`;
+
+
 const ResultsPage = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/isAuthenticated", { withCredentials: true });
+      setIsLoggedIn(!!response.data);
+    } catch (err) {
+      console.error("Error fetching user data: ", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
 
   
   return (
@@ -57,6 +89,12 @@ const ResultsPage = () => {
       <SecondColumn>
           <MapContainer />
           <Restaurants />
+          {isLoggedIn && 
+          <a href="http://localhost:4000/logout">
+          <LogoutButton>Logout</LogoutButton>
+          </a>
+          
+          }
       </SecondColumn>
       
     </ResultsContainer>

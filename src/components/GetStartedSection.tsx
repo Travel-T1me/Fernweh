@@ -13,59 +13,51 @@ const GetStartedContainer = styled.div`
   height: 100vh;
   width: 100vw;
   background-position: center;
-  background-size: cover;
+  background-size: 70% auto;
 `;
 
-const ParallaxSection = styled.div`
-  position: relative;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+// const ParallaxSection = styled.div`
+//   position: relative;
+//   height: 100vh;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
-const ParallaxContent = styled.div`
+const StartButton = styled(Link)`
   display: flex;
   justify-content: center;
   text-align: center;
   background-color: darkcyan;
   color: white;
-  height: 5rem;
-  width: 20rem;
-  border-radius: 10px;
+  height: 3.5rem;
+  width: 13rem;
+  border-radius: 40px;
   padding: 1rem;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
   transition: background-color 0.3s ease;
   &:hover {
     background-color: hsl(180, 75%, 40%);
   }
-`;
-
-const ContentText = styled.h1`
-  font-size: 1.5rem;
-  line-height: 1.2;
-  margin: 0;
-`;
-
-const StyledLink = styled(Link)`
   text-decoration: none; 
-  color: inherit;
 `;
+
+
+// const StyledLink = styled(Link)`
+  
+//   color: inherit;
+// `;
 
 
 const GetStartedSection = () => {
 
   return(
     <GetStartedContainer>
-      <ParallaxSection >
-        <ParallaxContent>
-          <StyledLink to="/questionnaire">
-            <ContentText>
-              Start your next adventure!
-            </ContentText>
-          </StyledLink>
-        </ParallaxContent>
-      </ParallaxSection>
+      {/* <ParallaxSection > */}
+        <StartButton to="/questionnaire">
+          <h2>Get Started</h2>
+        </StartButton>
+      {/* </ParallaxSection> */}
     </GetStartedContainer>
   );
 };
