@@ -17,7 +17,7 @@ const Footer = () => {
   return (
     <FooterContainer>
       <CopyrightText>
-        &copy; {currentYear} Travel Time. All rights reserved.
+        &copy; {currentYear} fernweh. All rights reserved.
       </CopyrightText>
     </FooterContainer>
   );

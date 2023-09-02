@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { BaseButtonStyle } from '../GlobalStyles';
 import { NavbarContainerProps } from '../../types';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import fernwehBanner from '../assets/fernweh-banner.png';
 
 const Button = styled.button`${BaseButtonStyle}`;
 
@@ -14,6 +16,7 @@ const NavbarContainer = styled.div<NavbarContainerProps>`
   background-color: #FFFFFF;
   color: black;
   border-bottom: 1px solid #ccc;
+  height: 4rem;
   opacity: ${({ visible }) => (visible ? 1 : 0)};
   transition: opacity 0.3s ease;
   position: fixed;
@@ -23,15 +26,12 @@ const NavbarContainer = styled.div<NavbarContainerProps>`
   z-index: 100;
 `;
 
-// save for later
-// const LogOutButton = styled(Button)`
-//   background-color: white;
-//   border-color: darkcyan;
-//   color: darkcyan;
-//   &:hover {
-//     background-color: hsl(180, 50%, 85%);
-//   }
-// `;
+const FernwehBanner = styled.img`
+  width: 13rem;
+  height: auto;
+`;
+
+
 
 const LoginButton = styled(Button)`
   background-color: hsl(180, 100%, 27.3%);;
@@ -39,6 +39,16 @@ const LoginButton = styled(Button)`
   color: white;
   &:hover {
     background-color: hsl(180, 75%, 40%);
+  }
+`;
+
+
+const LogoutButton = styled(Button)`
+  background-color: white;
+  border-color: darkcyan;
+  color: darkcyan;
+  &:hover {
+    background-color: hsl(180, 50%, 85%);
   }
 `;
 
@@ -77,11 +87,14 @@ const Navbar: React.FC<NavbarContainerProps> = ({ visible }) => {
 
   return (
     <NavbarContainer visible={isNavbarVisible}>
-      <h2>Travel Time</h2>
+      <Link to="/">
+        <FernwehBanner src={fernwehBanner} alt="fernweh banner" />
+      </Link>
+      
       <div>
         {Object.keys(userData).length > 0 ? (
           <a href="http://localhost:4000/logout">
-            <LoginButton>Logout</LoginButton>
+            <LogoutButton>Logout</LogoutButton>
           </a>
         ) : (
           <a href="http://localhost:4000/auth/google">

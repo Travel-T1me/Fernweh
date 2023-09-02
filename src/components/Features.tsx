@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import FeatureCard from './FeatureCard';
-import { FeatureCardProps } from '../types';
+import { FeatureCardProps } from '../../types';
 import budgetIcon from '../assets/budget-icon.png';
 import mapsIcon from '../assets/maps-icon.png';
 import menuIcon from '../assets/menu-icon.png';
-import weatherIcon from '../assets/weather-icon.png';
+import ideaIcon from '../assets/idea-icon.png';
 import travelGroupIcon from '../assets/travel-group-icon.png';
 import itineraryIcon from '../assets/itinerary-icon.png';
 
@@ -22,8 +22,6 @@ const FeaturesContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
   min-height: 75vh;
   z-index: 10;
   background-color: white;
@@ -45,7 +43,7 @@ const FeaturesCards: FeatureCardProps[] = [
     description: `Tailor your journey by sharing your budget range; we'll handcraft an itinerary that aligns with your financial preferences.`
   },
   {
-    iconSrc: mapsIcon,
+    iconSrc: ideaIcon,
     title: 'Dream Destination Explorer',
     description: 'Uncover a plethora of activities across any desired location you have in mind, making your travel aspirations a reality.'
   },
@@ -55,9 +53,9 @@ const FeaturesCards: FeatureCardProps[] = [
     description: 'Indulge in exquisite local flavors tailored to your taste, as we present you with the finest culinary recommendations.'
   },
   {
-    iconSrc: weatherIcon,
-    title: 'Weather Insights',
-    description: 'Stay prepared for any climate with real-time weather updates, ensuring your wardrobe matches the conditions.'
+    iconSrc: mapsIcon,
+    title: 'Interactive Map',
+    description: 'Play with out interactive map to pin point all your destinations during your trip.'
   },
   {
     iconSrc: travelGroupIcon,
