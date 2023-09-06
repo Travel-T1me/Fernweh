@@ -23,8 +23,8 @@ export const getRestaurants = async (req: Request, res: Response, next: NextFunc
     const response = await fetch(apiUrl, { method: 'GET', headers });
     const restaurantData = await response.json(); // Parse the JSON response
 
-    //console.log('yelp response:', restaurantData);
-
+    console.log('yelp response:', restaurantData);
+    //@ts-ignore
     res.locals.restaurants = restaurantData;
     return next();
   } catch (error) {

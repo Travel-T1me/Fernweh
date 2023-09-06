@@ -8,6 +8,7 @@ import { PartialStore } from '../../types';
 import axiosInstance from '../axiosInstance';
 import parseGPTResponse from '../../utils/parseGPTresponse';
 import CircularProgress from '@mui/material/CircularProgress';
+import ItineraryCard from './ItineraryCard';
 
 const ItineraryContainer = styled.div`
   display: flex;
@@ -47,6 +48,7 @@ const PexelImg = styled.img`
   height: 100%;
   object-fit: cover;
 `;
+
 const GptResponseContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -80,9 +82,10 @@ const Itinerary = () => {
   }
 
   useEffect(() => {
+    console.log(`Before fetch pexel call`);
     const fetchPexelPics = async () => {
       try{
-        const pexelsResponse = await axiosInstance.get(`/pexels?query=$(useStore.getState().location}`);
+        const pexelsResponse = await axiosInstance.get(`/pexels?query=${useStore.getState().location}`);
         // save response data to store
         setPexelPics(pexelsResponse.data.photos);
   
@@ -132,6 +135,36 @@ const Itinerary = () => {
             <p>Loading images...</p>
           )}
         </Slide>
+        
+        
+        {/* <TripImg src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg" alt="London Bridge" /> */}
+        
+        <br />
+        <br />
+
+        <GptResponseContainer>
+          {Object.keys(groupedItinerary).length === 0 ? (
+            <>
+              <h1>Loading your itinerary...</h1>
+              <CircularProgress />
+            </>
+          ) : (
+            <>
+              {Object.keys(groupedItinerary).map((day) => (
+                <div key={day}>
+                  {groupedItinerary[day].map((data, index) => (
+                    <ItineraryCard
+                      key={`${day}-${data.timeOfDay}-${index}`}
+                      day={index === 0 ? day : ''}
+                      timeOfDay={data.timeOfDay}
+                      activities={data.activities}
+                    />
+                  ))}
+                </div>
+              ))}
+            </>
+          )}
+        </GptResponseContainer>
         
       </TripImagesContainer>
 

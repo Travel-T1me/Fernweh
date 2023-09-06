@@ -169,6 +169,8 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
     const sendToGpt = async (): Promise<void> => {
         setAdditionalNotes(answer)
 
+        console.log(`Checking if restaurants is an array within sendToGpt: ${useStore.getState()}`);
+
         const restaurants = useStore.getState().restaurants.map(restaurant => {
             return {
                 address: restaurant.address,
