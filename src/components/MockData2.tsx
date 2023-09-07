@@ -1,35 +1,27 @@
-const MockItineraryData = {
-  "25.790654,-80.1300455 Travel Itinerary": 
-  {
-    "Duration": "2023-09-08 - 2023-09-10",
-    "Number of Travelers": 1,
-    "Budget": "$$$",
-    "Day 1: 2023-09-08": {
-      "Morning": [
-        "Start your day with a visit to the stunning South Beach. Explore the pristine sandy beach, soak up the sun, and take a refreshing dip in the crystal-clear waters. Capture some amazing photos to cherish the memories.",
-        "Afterward, head to the iconic Art Deco Historic District. Take a leisurely stroll down Ocean Drive, lined with colorful Art Deco buildings. Admire the unique architecture and learn about the rich history of the area."
-      ],
-      "Afternoon": [
-        "Treat yourself to a delicious lunch at OLA Restaurant, a well-known establishment located at 2360 Collins Ave. Indulge in their mouthwatering Latin American cuisine and savor the flavors of the region.",
-        "After lunch, satisfy your shopping desires at Lincoln Road Mall. This vibrant pedestrian street offers a wide range of shops, boutiques, and galleries. Browse through the latest fashion trends, pick up unique souvenirs, or enjoy a coffee at one of the cafes."
-      ],
-      "Evening": [
-        "Get ready to experience the vibrant nightlife Miami Beach has to offer! Start your evening with dinner at La Ventana Colombian Restaurant, situated at 710 Washington Ave. Enjoy authentic Colombian dishes and immerse yourself in the lively atmosphere.",
-        "After dinner, groove your way to Serena Rooftop, located at 915 Collins Ct. This trendy rooftop bar offers stunning views of the Miami skyline. Sip on refreshing cocktails, dance to vibrant music, and enjoy a memorable night out."
-      ],
-      "Additional Notes": [
-        "Don't forget to pack your sunscreen, beach essentials, and comfortable walking shoes.",
-        "It's always a good idea to make dinner reservations in advance, especially for popular restaurants.",
-        "Ensure you have a valid ID to access clubs and bars in the evening."
-      ]
-    },
-    "Special Occasions and Notes": [
-      "If you're interested in Cuban cuisine, consider visiting Havana 1957 Cuban Cuisine - Espanola Way at 405 Española Way. It has a great reputation and offers traditional Cuban dishes.",
-      "For a brunch experience, try Yardbird at 1600 Lenox Ave. They serve delectable Southern-inspired flavors and are known for their famous chicken and waffles.",
-      "If you prefer Italian cuisine, indulge in a delightful dinner at Il Pastaiolo, located at 1130 Collins Ave. Their homemade pasta dishes are exceptional."
-    ],
-  }
-};
+const MockItineraryData = `# Houston, Texas Travel Itinerary
+## Duration: 2023-09-11 - 2023-09-12
+## Number of Travelers: 2
+## Budget: $$
+
+### Day 1: 2023-09-11
+#### Morning:
+- Visit the Space Center Houston to explore the fascinating world of space exploration and learn about NASA's achievements. Take a tour of the Johnson Space Center and discover the history of human spaceflight.
+- Enjoy a leisurely stroll through Hermann Park, a beautiful urban green space. Take a relaxing boat ride on McGovern Lake or visit the Houston Zoo within the park.
+
+#### Afternoon:
+- Indulge in a delicious lunch at Traveler's Table, a highly recommended restaurant located at 520 Westheimer Rd, Houston, TX 77006. With a rating of 4.4 and over 1600 reviews, you can savor international cuisine and experience flavors from around the world.
+- Explore the vibrant arts scene at the Museum District. Visit the Museum of Fine Arts, Houston and appreciate its extensive collection of art from various periods and cultures.
+
+#### Evening:
+- For dinner, head to Lucille's, located at 5512 La Branch St, Houston, TX 77004. With a rating of 3.9 and over 1700 reviews, you can enjoy southern-inspired dishes featuring locally sourced ingredients in a cozy and intimate atmosphere.
+- Fulfill your desire to go dancing by visiting one of the lively dance clubs in Houston. Options include Barbarella Houston, an iconic venue known for its energetic music and vibrant atmosphere.
+
+#### Additional Notes:
+- Houston offers a vibrant nightlife scene with plenty of options for dancing and live music. Explore the different neighborhoods like Downtown, Midtown, and Montrose to find the perfect spot for dancing and entertainment.
+
+### Special Occasions and Notes:
+- To make the most of your trip, consider extending your stay in Houston to explore more attractions such as the Museum of Natural Science, the Buffalo Bayou Park, or take a stroll through the Historic District.
+- If you're interested in trying unique flavors, consider trying Space City Birria located at 415 Milam St, Houston, TX 77002. With a rating of 4.5 and over 100 reviews, this taco spot offers mouth-watering birria tacos and consommé, a savory and delicious treat.`
 
 //"Enjoy your trip to 25.790654,-80.1300455, and make the most of your time exploring the beautiful city of Miami Beach!"
 

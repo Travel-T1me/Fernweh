@@ -11,7 +11,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import ItineraryCard from './ItineraryCard';
 import MockItineraryData from './MockData2';
 
-const data = MockItineraryData;
+
+// const data = MockItineraryData;
 
 const ItineraryContainer = styled.div`
   display: flex;
@@ -34,11 +35,9 @@ const ItineraryContainer = styled.div`
 `;
 
 const TripImagesContainer = styled.div`
-  display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 250px;
   position: relative;
 `;
 
@@ -116,10 +115,11 @@ const Itinerary = () => {
 
   // Adjustment here
   const [parsedResponse, setParsedResponse] = useState<ParsedResponse | null>(null);
-  // Commenting out to use mock data instead of data from store:
-  // const { gptResponse } = useStore();
 
-  const gptResponse = JSON.stringify(data);
+  // Commenting out to use mock data instead of data from store:
+  const { gptResponse } = useStore();
+
+  // const gptResponse = JSON.stringify(data);
 
   React.useEffect(() => {
     setParsedResponse(parseGPTResponse(gptResponse));
@@ -148,8 +148,8 @@ const Itinerary = () => {
 
   return (
     <ItineraryContainer>
-      
       <TripImagesContainer>
+      {/* <TripImagesContainer>
         <Slide easing="ease" {...slideshowProperties}>
           {pexelPics !== null ? (
             pexelPics.map((pexelPic: PexelPic) => (
@@ -158,8 +158,11 @@ const Itinerary = () => {
           ) : (
             <p>Loading images...</p>
           )}
-        </Slide>
-        
+        </Slide> */}
+
+        <div>
+          <h1>Loading Trip Images </h1>
+        </div>
         
         <br />
         <br />
