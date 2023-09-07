@@ -7,6 +7,9 @@ import 'react-slideshow-image/dist/styles.css';
 import { Restaurant } from '../../types';
 import useStore from '../store';
 import { PartialStore } from '../../types';
+import MockData from './MockData';
+
+const data = MockData;
 
 
 const RestaurantContainer = styled.div`
@@ -52,6 +55,7 @@ const Restaurants = () => {
     canSwipe: true,
   };
 
+  // Commented out because we're fetching from yelp within QuestionCard component. Check Case #4
   // useEffect(() => {
   //   const fetchRestaurants = async () => {
   //     try {
@@ -73,13 +77,21 @@ const Restaurants = () => {
         
         <SlideshowContainer>
           <Slide easing="ease" {...slideshowProperties}>
+
+            {/* Using Mock data here to save API calls */}
+            {data.map((restaurant: Restaurant) => (
+              <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+            ))}
+
+            {/* Commented out to use MockData instead
             {restaurants !== null ? (
               restaurants.map((restaurant: Restaurant) => (
                 <RestaurantCard key={restaurant.id} restaurant={restaurant} />
               ))
             ) : (
               <div>Loading restaurants...</div>
-            )}
+            )} */}
+
           </Slide>
         </SlideshowContainer>
           

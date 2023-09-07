@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import "./renderMap.css"
 import useStore from '../store';
+import MockData from './MockData';
+
+const data = MockData;
 
 
 
@@ -62,14 +65,25 @@ export default function Map(): React.ReactElement {
                         }}
                     />
 
+                    {/* Using Mock Data to render map markers */}
+                    {data.map((internalRestaurant) => (
+                        <Marker
+                        key={internalRestaurant.id}
+                        position={{ lat: internalRestaurant.latitude, lng: internalRestaurant.longitude }}
+                        onClick={() => handleMarkerClick(internalRestaurant)}
+                    />
+                    ))}
+
+
+                    {/* Need to comment out to use Mock Data to render markers instead
                     {/* Restaurant markers */}
-                    {restaurants.map((internalRestaurant) => (
+                    {/* {restaurants.map((internalRestaurant) => (
                         <Marker
                             key={internalRestaurant.id}
                             position={{ lat: internalRestaurant.latitude, lng: internalRestaurant.longitude }}
                             onClick={() => handleMarkerClick(internalRestaurant)}
                         />
-                    ))}
+                    ))} */}
 
                     {/* InfoWindow to display selected restaurant details */}
                     {selectedRestaurant && (

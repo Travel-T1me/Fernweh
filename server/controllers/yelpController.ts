@@ -6,7 +6,7 @@ import fetch from 'node-fetch';
 export const getRestaurants = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const location = req.params.location;
 
-  console.log('LOCATION?', location)
+  //console.log('LOCATION?', location)
 
   if (!location) {
     res.status(400).send('Location query parameter is required.');
@@ -23,7 +23,7 @@ export const getRestaurants = async (req: Request, res: Response, next: NextFunc
     const response = await fetch(apiUrl, { method: 'GET', headers });
     const restaurantData = await response.json(); // Parse the JSON response
 
-    console.log('yelp response:', restaurantData);
+    //console.log('yelp response:', restaurantData);
     //@ts-ignore
     res.locals.restaurants = restaurantData;
     return next();

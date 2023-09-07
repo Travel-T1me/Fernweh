@@ -66,7 +66,7 @@ const LogoutButton = styled(Button)`
 
 
 const ResultsPage = () => {
-  console.log('results page is rendered')
+  //console.log('results page is rendered')
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const {restaurants, setRestaurants} : PartialStore = useStore();
 
@@ -92,8 +92,8 @@ const ResultsPage = () => {
     fetchUserData();
     // fetchRestaurants();
 
-    console.log(`Checking restaurants state: ${JSON.stringify(restaurants)}`);
-    console.log(`RESTAURANTS?`, Array.isArray(restaurants))
+    // console.log(`Checking restaurants state: ${JSON.stringify(restaurants)}`);
+    // console.log(`RESTAURANTS?`, Array.isArray(restaurants))
   }, []);
 
 

@@ -13,8 +13,6 @@ const RestaurantCardContainer = styled.div`
   min-width: 400px;
 `;
 
-// border: 1px solid black;  Even out edges on cards
-
 const InnerCardContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -34,8 +32,6 @@ const ImgContainer = styled.div`
   padding-top: calc(100% * 1/2);
   position: relative;
 `;
-//
-// height: 100%;
 
 const RestaurantImg = styled.img`
   position: absolute;
@@ -62,8 +58,6 @@ const TextShadow = styled.div`
   background-color: whitesmoke;
   z-index: 1;
   padding: 15px;
-  
-  
 `;
 
 

@@ -9,6 +9,9 @@ import axiosInstance from '../axiosInstance';
 import parseGPTResponse from '../../utils/parseGPTresponse';
 import CircularProgress from '@mui/material/CircularProgress';
 import ItineraryCard from './ItineraryCard';
+import MockItineraryData from './MockData2';
+
+const data = MockItineraryData;
 
 const ItineraryContainer = styled.div`
   display: flex;
@@ -66,6 +69,21 @@ const GptResponseContainer = styled.div`
   overflow-y: auto;
 `;
 
+// Define interfaces for the expected data structure
+interface ParsedResponse {
+  [day: string]: {
+    Morning?: string[];
+    Afternoon?: string[];
+    Evening?: string[];
+  };
+}
+
+interface GroupedItinerary {
+  [day: string]: {
+    timeOfDay: string;
+    activities: string[];
+  }[];
+}
 
 
 
@@ -82,7 +100,7 @@ const Itinerary = () => {
   }
 
   useEffect(() => {
-    console.log(`Before fetch pexel call`);
+    //console.log(`Before fetch pexel call`);
     const fetchPexelPics = async () => {
       try{
         const pexelsResponse = await axiosInstance.get(`/pexels?query=${useStore.getState().location}`);
@@ -96,19 +114,25 @@ const Itinerary = () => {
     fetchPexelPics();
   }, [])
 
-  const [parsedResponse, setParsedResponse] = useState();
-  const { gptResponse } = useStore();
+  // Adjustment here
+  const [parsedResponse, setParsedResponse] = useState<ParsedResponse | null>(null);
+  // Commenting out to use mock data instead of data from store:
+  // const { gptResponse } = useStore();
+
+  const gptResponse = JSON.stringify(data);
 
   React.useEffect(() => {
     setParsedResponse(parseGPTResponse(gptResponse));
   }, [gptResponse]);
 
-  const groupedItinerary = {};
+  // Adjustment here
+  const groupedItinerary: GroupedItinerary = {};
 
   if (parsedResponse) {
     for (const day of Object.keys(parsedResponse)) {
       for (const timeOfDay of ['Morning', 'Afternoon', 'Evening']) {
-        const activities = parsedResponse[day][timeOfDay];
+        // Adjustment here
+        const activities = (parsedResponse[day] as { [key: string]: string[] })[timeOfDay];
         if (activities && activities.length > 0) {
           if (!groupedItinerary[day]) {
             groupedItinerary[day] = [];
@@ -136,8 +160,6 @@ const Itinerary = () => {
           )}
         </Slide>
         
-        
-        {/* <TripImg src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg" alt="London Bridge" /> */}
         
         <br />
         <br />
@@ -176,3 +198,6 @@ const Itinerary = () => {
 
 
 export default Itinerary;
+
+
+//{/* <TripImg src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg" alt="London Bridge" /> */}

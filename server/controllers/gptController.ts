@@ -37,7 +37,7 @@ interface IRequestText {
 // https://github.com/openai/openai-node/blob/master/README.md
 export const getCompletion = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log("REQBODY?", req.body);
+    //console.log("REQBODY?", req.body);
     // console.log('ID?', req.params.id)
     // if(cacheRead(req.params.id)) {
     //   console.log('READING CACHED RESPONSE')
@@ -95,7 +95,7 @@ ${JSON.stringify(req.body.Restaurants)}
     //   return res.status(400).json({ error: "Prompt is required" });
     // }
 
-    console.log(`PROMPT???`, api_prompt);
+    //console.log(`PROMPT???`, api_prompt);
 
     const completion = await openai.chat.completions.create({
       messages: [{ role: "user", content: api_prompt }],

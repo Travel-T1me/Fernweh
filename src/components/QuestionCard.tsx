@@ -139,11 +139,11 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     // setMongoID(initialResponse.data);
                     break;
                 case 2:
-                    console.log(useStore.getState())
+                    console.log(`Inside case 2 of QuestionCard`,useStore.getState())
                     break;
                 case 3:
                     setArrivalDate(answer);
-                    console.log(useStore.getState())
+                    console.log(`Inside of case 3 of QuestionCard`,useStore.getState())
                     break;
                 case 4:
                     setEndDate(answer);
@@ -151,7 +151,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     // RESTURANT DATA - commented out to save calls
                     const restaurantResponse = await axiosInstance.get(`/yelp/${useStore.getState().location}`) as any
                     setRestaurants(restaurantResponse.data.data);
-                    console.log(useStore.getState())
+                    console.log(`Inside of case 4 of QuestionCard`, useStore.getState())
                     break;
             }
             // reveal the next card by changing the state
@@ -190,7 +190,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
             Restaurants: restaurants,
         }
 
-        console.log('COMPOSEDREQUEST', composedRequest)
+        //console.log('COMPOSEDREQUEST', composedRequest)
 
 
         const gptRes = async () => {
