@@ -6,6 +6,10 @@ import MapContainer from '../components/MapContainer';
 import useStore from '../store';
 import { BaseButtonStyle } from '../GlobalStyles';
 import axios from 'axios';
+import axiosInstance from '../axiosInstance';
+import { Restaurant } from '../../types';
+import { PartialStore } from '../../types';
+
 
 const Button = styled.button`${BaseButtonStyle}`;
 
@@ -62,7 +66,9 @@ const LogoutButton = styled(Button)`
 
 
 const ResultsPage = () => {
+  //console.log('results page is rendered')
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const {restaurants, setRestaurants} : PartialStore = useStore();
 
   const fetchUserData = async () => {
     try {
@@ -73,8 +79,21 @@ const ResultsPage = () => {
     }
   };
 
+  // const fetchRestaurants = async () => {
+  //   try {
+  //     const restaurantRes = await axiosInstance.get(`/yelp/${useStore.getState().location}`);
+  //     setRestaurants(restaurantRes.data);
+  //   } catch (error) {
+  //     console.error('Error fetching restaurants: ', error);
+  //   }
+  // };
+
   useEffect(() => {
     fetchUserData();
+    // fetchRestaurants();
+
+    // console.log(`Checking restaurants state: ${JSON.stringify(restaurants)}`);
+    // console.log(`RESTAURANTS?`, Array.isArray(restaurants))
   }, []);
 
 

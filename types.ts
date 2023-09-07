@@ -24,6 +24,9 @@ export interface PartialStore {
     restaurants: any[],
     setRestaurants: SetRestaurants,
 
+    pexelPics: any[],
+    setPexelPics: SetPexelPics,
+
     initialData: {
         budget: string,
         number: number
@@ -89,6 +92,12 @@ export interface Restaurant {
     country: string;
     }
 
+export interface PexelPic {
+    id: string;
+    url: string;
+    alt?: string;
+}
+
 export interface RestaurantCardProps {
     restaurant: Restaurant;
   }
@@ -110,3 +119,5 @@ export type SetEndDate = (date: string) => void;
 export type SetLatLong = (latLong: string) => void;
 
 export type SetRestaurants = (restaurants: any[]) => void; 
+
+export type SetPexelPics = (pexelPics: any[]) => void;

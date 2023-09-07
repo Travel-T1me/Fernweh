@@ -5,10 +5,8 @@ import { QuestionCardType } from "../../types";
 import { Link } from "react-router-dom";
 import { BaseButtonStyle } from "../GlobalStyles";
 import useStore from '../store';
-import {
-    PartialStore
-} from '../../types';
-import axiosInstance from '../axiosInstance'
+import { PartialStore } from '../../types';
+import axiosInstance from '../axiosInstance';
 import AutoComplete from "./AutoComplete";
 
 
@@ -86,29 +84,13 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
 
     // store and reducers
     const {
-        numOfTravellers,
         setNumberOfTravellers,
-        arrivalDate,
         setArrivalDate,
-        endDate,
         setEndDate,
-        infoForWeather,
-        setInfoForWeather,
-        yelpBudget,
         setYelpBudget,
-        location,
-        setLocationAsString,
-        additionalNotes,
         setAdditionalNotes,
-        initialData,
-        setInitialData,
-        mongoID,
-        setMongoID,
-        gptResponse,
         setGptResponse,
-        responseId,
         setResponseId,
-        restaurants,
         setRestaurants,
     } : PartialStore = useStore();
     
@@ -157,11 +139,11 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     // setMongoID(initialResponse.data);
                     break;
                 case 2:
-                    console.log(useStore.getState())
+                    console.log(`Inside case 2 of QuestionCard`,useStore.getState())
                     break;
                 case 3:
                     setArrivalDate(answer);
-                    console.log(useStore.getState())
+                    console.log(`Inside of case 3 of QuestionCard`,useStore.getState())
                     break;
                 case 4:
                     setEndDate(answer);
@@ -169,7 +151,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     // RESTURANT DATA - commented out to save calls
                     const restaurantResponse = await axiosInstance.get(`/yelp/${useStore.getState().location}`) as any
                     setRestaurants(restaurantResponse.data.data);
-                    console.log(useStore.getState())
+                    console.log(`Inside of case 4 of QuestionCard`, useStore.getState())
                     break;
             }
             // reveal the next card by changing the state
@@ -186,6 +168,8 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
 
     const sendToGpt = async (): Promise<void> => {
         setAdditionalNotes(answer)
+
+        console.log(`Checking if restaurants is an array within sendToGpt: ${useStore.getState()}`);
 
         const restaurants = useStore.getState().restaurants.map(restaurant => {
             return {
@@ -206,7 +190,8 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
             Restaurants: restaurants,
         }
 
-        console.log('COMPOSEDREQUEST', composedRequest)
+        //console.log('COMPOSEDREQUEST', composedRequest)
+
 
         const gptRes = async () => {
             try{

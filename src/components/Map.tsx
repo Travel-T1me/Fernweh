@@ -4,23 +4,11 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import "./renderMap.css"
 import useStore from '../store';
+import MockData from './MockData';
 
-// const MapCont = styled.div`
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     border-radius: 20px;
-//     border: 1px solid black;
-//     width: 100%;
-//     min-height: 300px;
-//     min-width: 300px;
-//     transition: transform 0.3s ease-in-out;
-// `;
+const data = MockData;
 
-// const StyledGoogleMap = styled(GoogleMap)`
-//   width: 100%;
-//   height: 100%;
-// `;
+
 
 export default function Map(): React.ReactElement {
     type PartialStore = {
@@ -43,7 +31,8 @@ export default function Map(): React.ReactElement {
     useEffect(() => {
         const viewportHeight = window.innerHeight;
         document.getElementById("map-container")!.style.height = `${viewportHeight - 140}px`;
-        console.log(`viewport: ${viewportHeight}`);
+        //console.log(`viewport: ${viewportHeight}`);
+        //console.log(`check here:`, restaurants)
     }, []);
 
     const handleMarkerClick = (restaurant: any) => {
@@ -76,14 +65,25 @@ export default function Map(): React.ReactElement {
                         }}
                     />
 
-                    {/* Restaurant markers */}
-                    {restaurants.map((restaurant) => (
+                    {/* Using Mock Data to render map markers */}
+                    {data.map((internalRestaurant) => (
                         <Marker
-                            key={restaurant.id}
-                            position={{ lat: restaurant.latitude, lng: restaurant.longitude }}
-                            onClick={() => handleMarkerClick(restaurant)}
-                        />
+                        key={internalRestaurant.id}
+                        position={{ lat: internalRestaurant.latitude, lng: internalRestaurant.longitude }}
+                        onClick={() => handleMarkerClick(internalRestaurant)}
+                    />
                     ))}
+
+
+                    {/* Need to comment out to use Mock Data to render markers instead
+                    {/* Restaurant markers */}
+                    {/* {restaurants.map((internalRestaurant) => (
+                        <Marker
+                            key={internalRestaurant.id}
+                            position={{ lat: internalRestaurant.latitude, lng: internalRestaurant.longitude }}
+                            onClick={() => handleMarkerClick(internalRestaurant)}
+                        />
+                    ))} */}
 
                     {/* InfoWindow to display selected restaurant details */}
                     {selectedRestaurant && (
@@ -106,3 +106,21 @@ export default function Map(): React.ReactElement {
         </div>
     );
 }
+
+
+// const MapCont = styled.div`
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     border-radius: 20px;
+//     border: 1px solid black;
+//     width: 100%;
+//     min-height: 300px;
+//     min-width: 300px;
+//     transition: transform 0.3s ease-in-out;
+// `;
+
+// const StyledGoogleMap = styled(GoogleMap)`
+//   width: 100%;
+//   height: 100%;
+// `;

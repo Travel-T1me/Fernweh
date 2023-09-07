@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import parseGPTResponse from '../../utils/parseGPTresponse';
-import useStore from '../store';
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 import { Slide } from 'react-slideshow-image';
-import ItineraryCard from './ItineraryCard';
 import 'react-slideshow-image/dist/styles.css';
+import { PexelPic } from '../../types';
+import useStore from '../store';
+import { PartialStore } from '../../types';
+import axiosInstance from '../axiosInstance';
+import parseGPTResponse from '../../utils/parseGPTresponse';
 import CircularProgress from '@mui/material/CircularProgress';
+import ItineraryCard from './ItineraryCard';
+import MockItineraryData from './MockData2';
+
+const data = MockItineraryData;
 
 const ItineraryContainer = styled.div`
   display: flex;
@@ -27,7 +33,7 @@ const ItineraryContainer = styled.div`
   }
 `;
 
-const TripImage = styled.div`
+const TripImagesContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,6 +41,7 @@ const TripImage = styled.div`
   height: 250px;
   position: relative;
 `;
+
 
 const PexelImg = styled.img`
   position: absolute;
@@ -62,20 +69,70 @@ const GptResponseContainer = styled.div`
   overflow-y: auto;
 `;
 
+// Define interfaces for the expected data structure
+interface ParsedResponse {
+  [day: string]: {
+    Morning?: string[];
+    Afternoon?: string[];
+    Evening?: string[];
+  };
+}
+
+interface GroupedItinerary {
+  [day: string]: {
+    timeOfDay: string;
+    activities: string[];
+  }[];
+}
+
+
+
 const Itinerary = () => {
-  const [parsedResponse, setParsedResponse] = useState();
-  const { gptResponse } = useStore();
+  const {pexelPics, setPexelPics} : PartialStore = useStore();
+
+  const slideshowProperties = {
+    autoplay: true, // 
+    duration: 5000, // Set to 0 to turn off auto slide
+    transitionDuration: 500,
+    indicators: true,
+    infinite: true,
+    canSwipe: true,
+  }
+
+  useEffect(() => {
+    //console.log(`Before fetch pexel call`);
+    const fetchPexelPics = async () => {
+      try{
+        const pexelsResponse = await axiosInstance.get(`/pexels?query=${useStore.getState().location}`);
+        // save response data to store
+        setPexelPics(pexelsResponse.data.photos);
+  
+      } catch(error) {
+        console.log(`Error fetching pexel pics: ${error}`);
+      }
+    };
+    fetchPexelPics();
+  }, [])
+
+  // Adjustment here
+  const [parsedResponse, setParsedResponse] = useState<ParsedResponse | null>(null);
+  // Commenting out to use mock data instead of data from store:
+  // const { gptResponse } = useStore();
+
+  const gptResponse = JSON.stringify(data);
 
   React.useEffect(() => {
     setParsedResponse(parseGPTResponse(gptResponse));
   }, [gptResponse]);
 
-  const groupedItinerary = {};
+  // Adjustment here
+  const groupedItinerary: GroupedItinerary = {};
 
   if (parsedResponse) {
     for (const day of Object.keys(parsedResponse)) {
       for (const timeOfDay of ['Morning', 'Afternoon', 'Evening']) {
-        const activities = parsedResponse[day][timeOfDay];
+        // Adjustment here
+        const activities = (parsedResponse[day] as { [key: string]: string[] })[timeOfDay];
         if (activities && activities.length > 0) {
           if (!groupedItinerary[day]) {
             groupedItinerary[day] = [];
@@ -90,11 +147,20 @@ const Itinerary = () => {
   }
 
   return (
-    <>
-      <ItineraryContainer>
-        <TripImage>
-          <PexelImg src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg" alt="London Bridge" />
-        </TripImage>
+    <ItineraryContainer>
+      
+      <TripImagesContainer>
+        <Slide easing="ease" {...slideshowProperties}>
+          {pexelPics !== null ? (
+            pexelPics.map((pexelPic: PexelPic) => (
+              <PexelImg src={pexelPic.url} alt={pexelPic.alt} />
+            ))
+          ) : (
+            <p>Loading images...</p>
+          )}
+        </Slide>
+        
+        
         <br />
         <br />
 
@@ -121,9 +187,17 @@ const Itinerary = () => {
             </>
           )}
         </GptResponseContainer>
-      </ItineraryContainer>
-    </>
-  );
+        
+      </TripImagesContainer>
+
+      
+
+    </ItineraryContainer>
+  )
 };
 
+
 export default Itinerary;
+
+
+//{/* <TripImg src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg" alt="London Bridge" /> */}
