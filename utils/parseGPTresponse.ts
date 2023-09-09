@@ -27,19 +27,19 @@ export default function parseGptResponse(gptResponse: string){
             resultObject[dayNumber]['Morning'] = timeSection
                 .replace('Morning:', '')
                 .trim()
-                .split('\n')
+                .split('\n \n')
                 .map(activity => activity.trim());
             } else if (timeSection.startsWith('Afternoon:')) {
             resultObject[dayNumber]['Afternoon'] = timeSection
                 .replace('Afternoon:', '')
                 .trim()
-                .split('\n')
+                .split('\n \n')
                 .map(activity => activity.trim());
             } else if (timeSection.startsWith('Evening:')) {
             resultObject[dayNumber]['Evening'] = timeSection
                 .replace('Evening:', '')
                 .trim()
-                .split('\n')
+                .split('\n \n')
                 .map(activity => activity.trim());
             }
         }
