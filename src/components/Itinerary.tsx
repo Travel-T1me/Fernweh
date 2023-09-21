@@ -105,7 +105,7 @@ const Itinerary = () => {
         const pexelsResponse = await axiosInstance.get(`/pexels?query=${useStore.getState().location}`);
         // save response data to store
         setPexelPics(pexelsResponse.data.photos);
-  
+        console.log(`Pexel List of images after setting:`, pexelPics);
       } catch(error) {
         console.log(`Error fetching pexel pics: ${error}`);
       }
@@ -146,54 +146,55 @@ const Itinerary = () => {
     }
   }
 
+  useEffect(() => {
+    console.log(`In third useEffect. Pexel List of images updated:`, pexelPics);
+  }, [pexelPics]);
+
+  // Returned data from Pexel was an array with an object within
+  // This was previous logic that was mapping over an object and not accessing data properly..
+  // pexelPics.map((pexelPic: PexelPic) => (
+  //   <PexelImg src={pexelPic.url} alt={pexelPic.alt} />
+  // ))
+
   return (
     <ItineraryContainer>
       <TripImagesContainer>
-      {/* <TripImagesContainer>
+      
         <Slide easing="ease" {...slideshowProperties}>
           {pexelPics !== null ? (
-            pexelPics.map((pexelPic: PexelPic) => (
-              <PexelImg src={pexelPic.url} alt={pexelPic.alt} />
-            ))
+            <PexelImg src={pexelPics[0].url} alt={pexelPics[0].alt} />
           ) : (
             <p>Loading images...</p>
           )}
-        </Slide> */}
+        </Slide>
 
-        <div>
-          <h1>Loading Trip Images </h1>
-        </div>
-        
         <br />
         <br />
-
-        <GptResponseContainer>
-          {Object.keys(groupedItinerary).length === 0 ? (
-            <>
-              <h1>Loading your itinerary...</h1>
-              <CircularProgress />
-            </>
-          ) : (
-            <>
-              {Object.keys(groupedItinerary).map((day) => (
-                <div key={day}>
-                  {groupedItinerary[day].map((data, index) => (
-                    <ItineraryCard
-                      key={`${day}-${data.timeOfDay}-${index}`}
-                      day={index === 0 ? day : ''}
-                      timeOfDay={data.timeOfDay}
-                      activities={data.activities}
-                    />
-                  ))}
-                </div>
-              ))}
-            </>
-          )}
-        </GptResponseContainer>
-        
       </TripImagesContainer>
 
-      
+      <GptResponseContainer>
+        {Object.keys(groupedItinerary).length === 0 ? (
+          <>
+            <h1>Loading your itinerary...</h1>
+            <CircularProgress />
+          </>
+        ) : (
+          <>
+            {Object.keys(groupedItinerary).map((day) => (
+              <div key={day}>
+                {groupedItinerary[day].map((data, index) => (
+                  <ItineraryCard
+                    key={`${day}-${data.timeOfDay}-${index}`}
+                    day={index === 0 ? day : ''}
+                    timeOfDay={data.timeOfDay}
+                    activities={data.activities}
+                  />
+                ))}
+              </div>
+            ))}
+          </>
+        )}
+      </GptResponseContainer>
 
     </ItineraryContainer>
   )

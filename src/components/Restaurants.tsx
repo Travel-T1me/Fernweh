@@ -79,18 +79,18 @@ const Restaurants = () => {
           <Slide easing="ease" {...slideshowProperties}>
 
             {/* Using Mock data here to save API calls */}
-            {data.map((restaurant: Restaurant) => (
+            {/* {data.map((restaurant: Restaurant) => (
               <RestaurantCard key={restaurant.id} restaurant={restaurant} />
-            ))}
+            ))} */}
 
-            {/* Commented out to use MockData instead
+            {/* Commented out to use MockData instead */}
             {restaurants !== null ? (
               restaurants.map((restaurant: Restaurant) => (
                 <RestaurantCard key={restaurant.id} restaurant={restaurant} />
               ))
             ) : (
               <div>Loading restaurants...</div>
-            )} */}
+            )}
 
           </Slide>
         </SlideshowContainer>
