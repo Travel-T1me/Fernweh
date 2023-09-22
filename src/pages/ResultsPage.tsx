@@ -5,9 +5,7 @@ import Restaurants from '../components/Restaurants';
 import MapContainer from '../components/MapContainer';
 import useStore from '../store';
 import { BaseButtonStyle } from '../GlobalStyles';
-import axios from 'axios';
 import axiosInstance from '../axiosInstance';
-import { Restaurant } from '../../types';
 import { PartialStore } from '../../types';
 
 
@@ -68,32 +66,34 @@ const LogoutButton = styled(Button)`
 const ResultsPage = () => {
   //console.log('results page is rendered')
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const {restaurants, setRestaurants} : PartialStore = useStore();
+  //const {pexelPics, setPexelPics } : PartialStore = useStore();
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/isAuthenticated", { withCredentials: true });
+      const response = await axiosInstance.get("http://localhost:4000/isAuthenticated", { withCredentials: true });
       setIsLoggedIn(!!response.data);
     } catch (err) {
       console.error("Error fetching user data: ", err);
     }
   };
 
-  // const fetchRestaurants = async () => {
+  // const fetchPexelPics = async () => {
   //   try {
-  //     const restaurantRes = await axiosInstance.get(`/yelp/${useStore.getState().location}`);
-  //     setRestaurants(restaurantRes.data);
+  //     const pexelsResponse = await axiosInstance.get(`/pexels?query=${useStore.getState().location}`);
+  //     // save response data to store
+  //     setPexelPics(pexelsResponse.data.photos);
+  //     console.log(`Pexel list of images after setting: `, pexelPics)
+
   //   } catch (error) {
-  //     console.error('Error fetching restaurants: ', error);
+  //     console.log(`Error fetching pexep pics: ${error}`);
   //   }
   // };
 
-  useEffect(() => {
-    fetchUserData();
-    // fetchRestaurants();
 
-    // console.log(`Checking restaurants state: ${JSON.stringify(restaurants)}`);
-    // console.log(`RESTAURANTS?`, Array.isArray(restaurants))
+  useEffect(() => {
+    console.log('ResultsPage component re-rendered');
+    fetchUserData();
+    // fetchPexelPics();
   }, []);
 
 
@@ -121,3 +121,20 @@ const ResultsPage = () => {
 }
 
 export default ResultsPage;
+
+/* Moving the restaurant fetch request to here since it's currently not being used within this component
+
+  // const fetchRestaurants = async () => {
+  //   try {
+  //     const restaurantRes = await axiosInstance.get(`/yelp/${useStore.getState().location}`);
+  //     setRestaurants(restaurantRes.data);
+  //   } catch (error) {
+  //     console.error('Error fetching restaurants: ', error);
+  //   }
+  // };
+
+  // fetchRestaurants();
+
+    // console.log(`Checking restaurants state: ${JSON.stringify(restaurants)}`);
+    // console.log(`RESTAURANTS?`, Array.isArray(restaurants))
+*/
