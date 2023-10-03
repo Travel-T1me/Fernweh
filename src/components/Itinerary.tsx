@@ -36,18 +36,15 @@ const ItineraryContainer = styled.div`
 
 const TripImagesContainer = styled.div`
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   width: 100%;
   position: relative;
 `;
 
 
 const PexelImg = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
+  height: 25vh;
   object-fit: cover;
 `;
 
@@ -57,15 +54,14 @@ const GptResponseContainer = styled.div`
   align-items: center;
   max-width: 100%;
   max-height: 500px;
-  min-width: 300px;
   margin: 1rem;
   padding: 2rem;
   border: 1px solid black;
   border-radius: 20px;
   background-color: whitesmoke;
-  padding: 15px;
   overflow-x: hidden;
   overflow-y: auto;
+  flex: 1;
 `;
 
 // Define interfaces for the expected data structure
@@ -85,9 +81,9 @@ interface GroupedItinerary {
 }
 
 
-
 const Itinerary = () => {
-  const {pexelPics, setPexelPics} : PartialStore = useStore();
+  //const {pexelPics, setPexelPics} : PartialStore = useStore();
+  const pexelPics = useStore((state) => state.pexelPics);
 
   const slideshowProperties = {
     autoplay: true, // 
@@ -98,21 +94,6 @@ const Itinerary = () => {
     canSwipe: true,
   }
 
-  useEffect(() => {
-    //console.log(`Before fetch pexel call`);
-    const fetchPexelPics = async () => {
-      try{
-        const pexelsResponse = await axiosInstance.get(`/pexels?query=${useStore.getState().location}`);
-        // save response data to store
-        setPexelPics(pexelsResponse.data.photos);
-  
-      } catch(error) {
-        console.log(`Error fetching pexel pics: ${error}`);
-      }
-    };
-    fetchPexelPics();
-  }, [])
-
   // Adjustment here
   const [parsedResponse, setParsedResponse] = useState<ParsedResponse | null>(null);
 
@@ -122,6 +103,7 @@ const Itinerary = () => {
   // const gptResponse = JSON.stringify(data);
 
   React.useEffect(() => {
+    console.log('Itinerary component re-rendered');
     setParsedResponse(parseGPTResponse(gptResponse));
   }, [gptResponse]);
 
@@ -146,54 +128,50 @@ const Itinerary = () => {
     }
   }
 
+  useEffect(() => {
+    console.log(`In third useEffect. Pexel List of images updated:`, pexelPics);
+  }, [pexelPics]);
+
+  // Returned data from Pexel was an array with an object within
+  // This was previous logic that was mapping over an object and not accessing data properly..
+  // pexelPics.map((pexelPic: PexelPic) => (
+  //   <PexelImg src={pexelPic.url} alt={pexelPic.alt} />
+  // ))
+
   return (
     <ItineraryContainer>
       <TripImagesContainer>
-      {/* <TripImagesContainer>
-        <Slide easing="ease" {...slideshowProperties}>
-          {pexelPics !== null ? (
-            pexelPics.map((pexelPic: PexelPic) => (
-              <PexelImg src={pexelPic.url} alt={pexelPic.alt} />
-            ))
-          ) : (
-            <p>Loading images...</p>
-          )}
-        </Slide> */}
-
-        <div>
-          <h1>Loading Trip Images </h1>
-        </div>
-        
-        <br />
-        <br />
-
-        <GptResponseContainer>
-          {Object.keys(groupedItinerary).length === 0 ? (
-            <>
-              <h1>Loading your itinerary...</h1>
-              <CircularProgress />
-            </>
-          ) : (
-            <>
-              {Object.keys(groupedItinerary).map((day) => (
-                <div key={day}>
-                  {groupedItinerary[day].map((data, index) => (
-                    <ItineraryCard
-                      key={`${day}-${data.timeOfDay}-${index}`}
-                      day={index === 0 ? day : ''}
-                      timeOfDay={data.timeOfDay}
-                      activities={data.activities}
-                    />
-                  ))}
-                </div>
-              ))}
-            </>
-          )}
-        </GptResponseContainer>
-        
+        {/* <PexelImg src="https://images.pexels.com/photos/3180136/pexels-photo-3180136.jpeg" alt="Scenic Photo Of Mountains During Dawn " /> */}
+        {pexelPics !== null ? (
+          <PexelImg src={pexelPics[0].src.original} alt={pexelPics[0].alt} />
+        ) : (
+          <p>Loading images...</p>
+        )}
       </TripImagesContainer>
 
-      
+      <GptResponseContainer>
+        {Object.keys(groupedItinerary).length === 0 ? (
+          <>
+            <h1>Loading your itinerary...</h1>
+            <CircularProgress />
+          </>
+        ) : (
+          <>
+            {Object.keys(groupedItinerary).map((day) => (
+              <div key={day}>
+                {groupedItinerary[day].map((data, index) => (
+                  <ItineraryCard
+                    key={`${day}-${data.timeOfDay}-${index}`}
+                    day={index === 0 ? day : ''}
+                    timeOfDay={data.timeOfDay}
+                    activities={data.activities}
+                  />
+                ))}
+              </div>
+            ))}
+          </>
+        )}
+      </GptResponseContainer>
 
     </ItineraryContainer>
   )
@@ -203,4 +181,28 @@ const Itinerary = () => {
 export default Itinerary;
 
 
-//{/* <TripImg src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg" alt="London Bridge" /> */}
+/* Moving slide presentation of pexel images down to here */
+{/* <Slide easing="ease" {...slideshowProperties}> */}
+          
+          {/*</Slide> */}
+
+/* Moving data fetching for pexel pics to here 
+// useEffect(() => {
+  //   //console.log(`Before fetch pexel call`);
+  //   const fetchPexelPics = async () => {
+  //     try{
+  //       const pexelsResponse = await axiosInstance.get(`/pexels?query=${useStore.getState().location}`);
+  //       // save response data to store
+  //       setPexelPics(pexelsResponse.data.photos);
+  //       console.log(`Pexel List of images after setting:`, pexelPics);
+  //     } catch(error) {
+  //       console.log(`Error fetching pexel pics: ${error}`);
+  //     }
+  //   };
+  //   fetchPexelPics();
+  // }, [])
+
+*/
+
+{/* <TripImg src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg" alt="London Bridge" />  */}
+
