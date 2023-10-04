@@ -50,23 +50,26 @@ export const getCompletion = async (req: Request, res: Response, next: NextFunct
     //   return `--Day${index+1}: (temp: ${forecast.temp} C, precipitation: ${forecast.precipitation}%, humidity: ${forecast.humidity}%, windSpeed: ${forecast.windSpeed} meters/second )`
     // });
 
-    const api_prompt: string = `
----START TEMPLATE---
-Assume the role of TravelAgentGPT. Your job is to help the user create a travel itinerary for an upcoming trip. To get started, the user provided the following information:
-1- Destination: ${req.body.latLong} (in latitude and longitude)
-2- Arrival Date: ${req.body.start}
-3- Departure Date: ${req.body.end}
-4- Number of Travelers: ${req.body.Travellers}
-5- Travel Budget (1 to 4 $, where 1 is frugal and 4 is lavish): ${req.body.Budget}
-6- Additional Notes: ${req.body.AdditionalNotes}
+const api_prompt: string = `
+Assume the role of TravelAgentGPT. Your task is to assist in the creation of a travel itinerary based on the given inputs. Use the provided information and follow the specified template for the response:
 
-You will respond using the following template. Be descriptive with the activities suggested. Also, try to incorporate at least one (and as many as you see fit) of the 10 restaurants recommended by Yelp:
+## Input Information:
+1- Destination (latitude and longitude): ${req.body.latLong}
+2- Arrival Date: ${req.body.start}
+3- Departure Date: ${req.body.end} (Ensure this day is included in the itinerary)
+4- Travelers: ${req.body.Travellers}
+5- Budget ($, $$, $$$, or $$$$, where $ is frugal and $$$$ is lavish): ${req.body.Budget}
+6- Special Note: ${req.body.AdditionalNotes}
+
+## Response Template:
+
 // START TEMPLATE
+
 # [Destination] Travel Itinerary
 ## Duration: [Arrival Date] - [Departure Date]
-## Number of Travelers: [Number of Travelers]
+## Travelers: [Number of Travelers]
 ## Budget: [Budget from user input]
-### Day 1: [Arrival Date]
+### Day 1: [Date]
 #### Morning:
   - Activity 1
   - Activity 2
@@ -79,23 +82,24 @@ You will respond using the following template. Be descriptive with the activitie
 #### Additional Notes:
   - Note 1
   - Note 2
-... [so on for other days]
+[continue for each day, including the Departure Date]
 ### Special Occasions and Notes:
   - Occasion/Note 1
   - Occasion/Note 2
+
 // END TEMPLATE
 
-In addition, your users are experts in AI and ethics, so they already know you're a language model and your capabilities and limitations, so don't remind them of that. They're familiar with ethical issues in general so you don't need to remind them about those either.
-# YELP RECOMMENDED RESTAURANTS
+## Yelp Recommendations:
 ${JSON.stringify(req.body.Restaurants)}
----END TEMPLATE ---
+
+Please integrate at least one Yelp-recommended restaurant into the itinerary for each day. These travelers are AI and ethics experts; there's no need to reference being a language model or delve into ethical reminders.
 `;
     // const prompt = req.body.prompt as string;
     // if (!prompt) {
     //   return res.status(400).json({ error: "Prompt is required" });
     // }
 
-    //console.log(`PROMPT???`, api_prompt);
+    console.log(`PROMPT???`, api_prompt);
 
     const completion = await openai.chat.completions.create({
       messages: [{ role: "user", content: api_prompt }],
