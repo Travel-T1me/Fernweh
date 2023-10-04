@@ -4,6 +4,7 @@ import * as express from "express";
 import * as yelpController from '../controllers/yelpController.js';
 import * as gptController from "../controllers/gptController.js";
 import * as pexelsController from "../controllers/pexelsController.js";
+import rateLimit from "express-rate-limit";
 
 export const router = express.Router();
 
@@ -23,8 +24,15 @@ router.get('/yelp/:location', yelpController.getRestaurants, (req, res) => {
   res.send(res.locals.restaurants);
 })
 
-router.post('/llm', gptController.getCompletion, (req, res) => {
-  res.send(res.locals.response);
-})
-
 router.get('/pexels', pexelsController.searchPhotos);
+
+// Rate limiting middleware
+const getCompletionLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 10,
+  message: "Too many requests from this IP, please try again after an hour.",
+});
+
+router.post('/llm', getCompletionLimiter, gptController.getCompletion, (req, res) => {
+  res.send(res.locals.response);
+});

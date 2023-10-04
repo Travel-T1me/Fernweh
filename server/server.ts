@@ -10,6 +10,11 @@ import * as googleAuthController from './controllers/googleAuthController.js';
 
 const app: Application = express();
 
+// Enable trust proxy setting to ensure Express correctly recognizes the client's IP address.
+// This is necessary when the application is deployed on Azure, as Azure's Application Gateway or Load Balancer
+// sets the X-Forwarded-For header to forward the original IP address of the client.
+app.set('trust proxy', 1);
+
 app.use(express.json());
 const corsOptions = { credentials: true, origin: 'http://localhost:3000' };
 app.use(cors(corsOptions));
