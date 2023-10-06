@@ -17,6 +17,7 @@
   },
   "include": [
     "./src/**/*",
-    "./server/*"
+    "./server/*",
+    "cypress/**/*.ts",
   ]
 }

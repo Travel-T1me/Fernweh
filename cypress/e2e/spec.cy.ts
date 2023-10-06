@@ -14,11 +14,11 @@
 
 describe('Landing Page', () => {
   it('should visit the landing page and fill out the questionnaire', function() {
-    cy.intercept('GET', 'http://localhost:4000/api/yelp/*', {
+    cy.intercept('GET', 'http://localhost:4000/api/yelp/Los%20Angeles,%20CA,%20USA', {
       fixture: 'losangeles-yelp.json'
     }).as('getYelp');
     
-    cy.visit('/');
+    cy.visit('http://localhost:3000/');
     cy.contains('Get ready to plan your next adventure');
     cy.contains('Get Started').click();
     cy.url().should('eq', 'http://localhost:3000/questionnaire');
@@ -48,7 +48,9 @@ describe('Landing Page', () => {
     cy.contains('Submit').scrollIntoView();
 
     cy.get('input[type="date"]').eq(1).type('2023-10-11');
-    // cy.contains('Submit').click()
-    // cy.wait('@getYelp');
+    cy.contains('Submit').click()
+
+    cy.wait(6000);
+    cy.wait('@getYelp', { timeout: 10000 });
   });
 });
