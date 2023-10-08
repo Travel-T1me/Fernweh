@@ -1,5 +1,5 @@
 {
-  "name": "travel-t1me",
+  "name": "Fernweh",
   "version": "1.0.0",
   "description": "",
   "type": "module",
@@ -19,14 +19,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Travel-T1me/travel-t1me.git"
+    "url": "git+https://github.com/Travel-T1me/Fernweh.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Travel-T1me/travel-t1me/issues"
+    "url": "https://github.com/Travel-T1me/Fernweh/issues"
   },
-  "homepage": "https://github.com/Travel-T1me/travel-t1me#readme",
+  "homepage": "https://github.com/Travel-T1me/Fernweh#readme",
   "dependencies": {
     "@apollo/server": "^4.9.1",
     "@emotion/react": "^11.11.1",
