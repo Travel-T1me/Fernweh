@@ -149,16 +149,19 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                 case 4:
                     setEndDate(answer);
 
-                    // RESTURANT DATA - commented out to save calls
-                    const restaurantResponse = await axiosInstance.get(`/yelp/${useStore.getState().location}`) as any
-                    setRestaurants(restaurantResponse.data.data);
+                    try {
+                        // RESTURANT DATA - commented out to save calls
+                        const restaurantResponse = await axiosInstance.get(`/yelp/${useStore.getState().location}`) as any
+                        setRestaurants(restaurantResponse.data.data);
 
-                    // Pexel Image Data 
-                    const pexelsResponse = await axiosInstance.get(`/pexels?query=${useStore.getState().location}`);
-                    setPexelPics(pexelsResponse.data.photos);
+                        // Pexel Image Data 
+                        const pexelsResponse = await axiosInstance.get(`/pexels?query=${useStore.getState().location}`);
+                        setPexelPics(pexelsResponse.data.photos);
 
-                    console.log(`Inside of case 4 of QuestionCard`, useStore.getState())
-
+                        console.log(`Inside of case 4 of QuestionCard`, useStore.getState())
+                    } catch(error) {
+                        console.error(`An error occurred during Axios requests in case 4, QuestionCard component.`, error);
+                    }
                     break;
             }
             // reveal the next card by changing the state
