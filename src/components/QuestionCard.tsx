@@ -12,19 +12,20 @@ import AutoComplete from "./AutoComplete";
 
 const Button = styled.button`${BaseButtonStyle}`;
 
-const Wrapper = styled.div`
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height: 100vh;
-`
+// This wrapper component commented out has no change in the display. Commenting out for now, ready for deletion.
+// const Wrapper = styled.div`
+//     display:flex;
+//     justify-content:center;
+//     align-items:center;
+//     height: 100vh;
+// `
 
-const CardContainer = styled.div`
-    display: flex;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
-`
+// const CardContainer = styled.div`
+//     display: flex;
+//     height: 100vh;
+//     align-items: center;
+//     justify-content: center;
+// `
 
 const Card = styled.div`
     border:solid;
@@ -127,17 +128,6 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     const usersYelpBudget = useStore.getState().yelpBudget
                     const travellers = Number(useStore.getState().numOfTravellers)
                     
-                    //don't need to set this or mongoId anymore 
-                    // setInitialData(usersYelpBudget, travellers);
-                    // const initialRes = async () => {
-                    //     try {
-                    //         const data = await axiosInstance.post('/initial', initialData);
-                    //         return data
-                    //     } catch (err) {
-                    //         console.error('Err:', err)
-                    //     }}
-                    // const initialResponse = await initialRes()
-                    // setMongoID(initialResponse.data);
                     break;
                 case 2:
                     console.log(`Inside case 2 of QuestionCard`,useStore.getState())
@@ -236,8 +226,8 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
     }
 
     return (
-        <Wrapper>
-            <CardContainer>
+        <>
+            {/* <CardContainer> */}
                 <Card>
                     <Question>{question}</Question>
                     <InputField>{inputField}</InputField>
@@ -258,12 +248,13 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                             Go Back
                         </BackButton>
                         }
- 
+
                     </Buttons>
                 </Card>
-            </CardContainer>
+            {/* </CardContainer> */}
+        </>
         
-        </Wrapper>
+        
     )
 }
 
