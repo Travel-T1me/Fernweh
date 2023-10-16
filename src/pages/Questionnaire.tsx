@@ -12,13 +12,13 @@ interface WrapperProps {
 
 
 // This component controls the visibility of the question card:
-// const Wrapper = styled.div<WrapperProps>`
-//   background-color: transparent;
-//   opacity: ${props => (props.$show ? 1 : 0)};
-//   transition: color 1s, opacity 1s;
-//   color: ${props => (props.$focus ? "black": "transparent")};
-//   text-shadow: ${props => (props.$focus ? "0 0 0px" : "0 0 5px rgba(0,0,0,0.5)")};
-// `;
+const Wrapper = styled.div<WrapperProps>`
+  background-color: transparent;
+  opacity: ${props => (props.$show ? 1 : 0)};
+  transition: color 1s, opacity 1s;
+  color: ${props => (props.$focus ? "black": "transparent")};
+  text-shadow: ${props => (props.$focus ? "0 0 0px" : "0 0 5px rgba(0,0,0,0.5)")};
+`;
 
 
 const Questionnaire = () => {
@@ -51,49 +51,52 @@ const Questionnaire = () => {
   ];
 
   // Initialize questionStates so that only the first QuestionCard is initially displayed
-  const initialQuestionStates = questionList.map((_, index) => index === 0);
+  //const initialQuestionStates = questionList.map((_, index) => index === 0);
 
-  // dates come back as string in yyyy-mm-dd format
+  // Hook to verify when question cards have been answered
   const [questionStates, setQuestionStates] = useState([true, false, false, false, false, false])
 
+  const currentQuestionIndex = questionStates.findIndex((state) => state);
 
-  // useEffect(() => {
-  //   window.scroll(0, 0);
-  // }, []);
+  const currentQuestion = questionList[currentQuestionIndex];
 
-  // const refsArray = questionList.map(() => useRef(0));
 
-  const questionComponents = questionList.map((obj, index) => (
+  
+  // Check why this property was needed within NavBar component: key={`${index}` + 'NavBar'}
+
+  const currentQuestionsComponent = (
     <>
-      <NavBar key={`${index}` + 'NavBar'} visible={true}/>
+      <NavBar visible={true}/>
 
       <div style={{ display: 'flex', justifyContent: 'center' }}>
 
-        {/* <Wrapper key={`${index}` + 'Wrapper'} $show={questionStates[index]} $focus={!questionStates[index+1] || index === questionStates.length - 1}> */}
+        <Wrapper 
+          key={`${currentQuestionIndex}` + 'Wrapper'} 
+          $show={questionStates[currentQuestionIndex]} 
+          $focus={!questionStates[currentQuestionIndex + 1] || currentQuestionIndex === questionStates.length - 1}
+        >
           
           <QuestionCard
-          // ref={refsArray[index]}
-          key={index} 
-          el={index} 
-          question={obj.question} 
-          type={obj.type} 
-          setQuestionStates={setQuestionStates}
-          questionStates={questionStates}
+            key={currentQuestionIndex} 
+            el={currentQuestionIndex} 
+            question={currentQuestion.question} 
+            type={currentQuestion.type} 
+            setQuestionStates={setQuestionStates}
+            questionStates={questionStates}
           />
           
-        {/* </Wrapper> */}
+        </Wrapper>
 
       </div>
     </>
 
-  ))
-
+  );
 
   return (
     <>
-      {questionComponents}
+      {currentQuestionsComponent}
     </>
-  )
+  );
 }
 
 
