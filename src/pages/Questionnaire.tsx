@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import QuestionCard from '../components/QuestionCard';
 import { QuestionCardType } from '../../types'
 import { styled } from 'styled-components'
-import NavBar from '../components/Navbar'
+import Navbar from '../components/Navbar'
 import axiosInstance from '../axiosInstance'
 
 interface WrapperProps {
@@ -50,13 +50,15 @@ const Questionnaire = () => {
     }
   ];
 
+  // const isNavbarVisible = false;
+
   // Initialize questionStates so that only the first QuestionCard is initially displayed
   //const initialQuestionStates = questionList.map((_, index) => index === 0);
 
   // Hook to verify when question cards have been answered
   const [questionStates, setQuestionStates] = useState([true, false, false, false, false, false])
 
-  const currentQuestionIndex = questionStates.findIndex((state) => state);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); 
 
   const currentQuestion = questionList[currentQuestionIndex];
 
@@ -66,7 +68,9 @@ const Questionnaire = () => {
 
   const currentQuestionsComponent = (
     <>
-      <NavBar visible={true}/>
+      {/* <NavBar key={`${currentQuestionIndex}` + 'NavBar'} visible={true}/> */}
+      {/* <Navbar visible={isNavbarVisible}/> */}
+      
 
       <div style={{ display: 'flex', justifyContent: 'center' }}>
 
@@ -83,6 +87,8 @@ const Questionnaire = () => {
             type={currentQuestion.type} 
             setQuestionStates={setQuestionStates}
             questionStates={questionStates}
+            setCurrentQuestionIndex={setCurrentQuestionIndex}
+            currentQuestionIndex={currentQuestionIndex}
           />
           
         </Wrapper>
@@ -91,7 +97,10 @@ const Questionnaire = () => {
     </>
 
   );
-
+  
+  console.log(`Testing in Questionnaire component. questionStates: ${questionStates}`);
+  console.log(`Testing currentQuestionIndex: ${currentQuestionIndex}`);
+  console.log(`ALSO Testing currentQuestion: ${JSON.stringify(currentQuestion)}`);
   return (
     <>
       {currentQuestionsComponent}

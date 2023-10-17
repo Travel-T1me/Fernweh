@@ -12,20 +12,6 @@ import AutoComplete from "./AutoComplete";
 
 const Button = styled.button`${BaseButtonStyle}`;
 
-// This wrapper component commented out has no change in the display. Commenting out for now, ready for deletion.
-// const Wrapper = styled.div`
-//     display:flex;
-//     justify-content:center;
-//     align-items:center;
-//     height: 100vh;
-// `
-
-// const CardContainer = styled.div`
-//     display: flex;
-//     height: 100vh;
-//     align-items: center;
-//     justify-content: center;
-// `
 
 const Card = styled.div`
     border:solid;
@@ -81,7 +67,7 @@ const InputField = styled.section`
     border: black;
 `
 
-const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: QuestionCardType) => {
+const QuestionCard = ({question, type, el, setQuestionStates, questionStates, setCurrentQuestionIndex, currentQuestionIndex}: QuestionCardType) => {
 
     // store and reducers
     const {
@@ -125,8 +111,8 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     break;
                 case 1:
                     setYelpBudget(answer);
-                    const usersYelpBudget = useStore.getState().yelpBudget
-                    const travellers = Number(useStore.getState().numOfTravellers)
+                    //const usersYelpBudget = useStore.getState().yelpBudget
+                    //const travellers = Number(useStore.getState().numOfTravellers)
                     
                     break;
                 case 2:
@@ -155,14 +141,18 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
                     break;
             }
             // reveal the next card by changing the state
+            console.log(`Check questionStates of question: ${question}`)
+            console.log(`Updated state for QuestionCard, newState: ${newState}`);
+            console.log(`Transitioning to next card.`);
             newState[el + 1] = true;
             setQuestionStates(newState);
+            console.log(`State after setQuestionStates: ${newState}`);
 
-            // scroll to the new card (TODO)
-                // THIS IS WHERE I LEFT OFF
-                // ref.current.scrollIntoView({
-                //     behavior: 'smooth'
-                // })
+            // Upddate the current question index
+            if (currentQuestionIndex < questionStates.length - 1) {
+                setCurrentQuestionIndex(currentQuestionIndex + 1);
+            }
+            
         }
     })
 
@@ -225,6 +215,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
         inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0' }} type={type} onChange={handleChange}/>
     }
 
+    console.log(`Check check....need to check questionState of QuestionCard: ${questionStates}`)
     return (
         <>
             {/* <CardContainer> */}
@@ -259,3 +250,28 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
 }
 
 export default QuestionCard
+
+
+// This wrapper component commented out has no change in the display. Commenting out for now, ready for deletion.
+// const Wrapper = styled.div`
+//     display:flex;
+//     justify-content:center;
+//     align-items:center;
+//     height: 100vh;
+// `
+
+// const CardContainer = styled.div`
+//     display: flex;
+//     height: 100vh;
+//     align-items: center;
+//     justify-content: center;
+// `
+
+
+
+// took out of the handleClick function right before the sendToGpt function:
+// scroll to the new card (TODO)
+                // THIS IS WHERE I LEFT OFF
+                // ref.current.scrollIntoView({
+                //     behavior: 'smooth'
+                // })
