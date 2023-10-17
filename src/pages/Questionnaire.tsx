@@ -10,6 +10,11 @@ interface WrapperProps {
   $focus?: boolean;
 }
 
+const QuestionnairePage = styled.div`
+  background-color: hsl(180, 47%, 80%);
+  height: 100vh;
+`;
+
 
 // This component controls the visibility of the question card:
 const Wrapper = styled.div<WrapperProps>`
@@ -100,10 +105,12 @@ const Questionnaire = () => {
   
   console.log(`Testing in Questionnaire component. questionStates: ${questionStates}`);
   console.log(`Testing currentQuestionIndex: ${currentQuestionIndex}`);
-  console.log(`ALSO Testing currentQuestion: ${JSON.stringify(currentQuestion)}`);
+  console.log(`ALSO Testing currentQuestion: ${JSON.stringify(currentQuestion.question)}`);
   return (
     <>
-      {currentQuestionsComponent}
+      <QuestionnairePage>
+        {currentQuestionsComponent}
+      </QuestionnairePage>
     </>
   );
 }

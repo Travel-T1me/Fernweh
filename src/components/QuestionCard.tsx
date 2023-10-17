@@ -9,13 +9,17 @@ import { PartialStore } from '../../types';
 import axiosInstance from '../axiosInstance';
 import AutoComplete from "./AutoComplete";
 
+interface CardProps {
+    $show?: boolean;
+}
+
 
 const Button = styled.button`${BaseButtonStyle}`;
 
 
-const Card = styled.div`
-    border:solid;
-    border-color: darkcyan;
+const Card = styled.div<CardProps>`
+    border: 2px solid;
+    border-color: black;
     border-radius:25px;
     background-color: ivory;
     width:650px;
@@ -24,6 +28,8 @@ const Card = styled.div`
     margin:100px;
     text-align: center;
     justify-content: center;
+    // opacity: ${props => (props.$show ? 1 : 0)};
+    transition: opacity 0.5s ease-in-out;
 `
 
 const Buttons = styled.section`
@@ -103,6 +109,11 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, se
         if (!boo && el !== 0){
             newState[el] = false;
             setQuestionStates(newState);
+
+            // Update to the prev question index
+            if (currentQuestionIndex < questionStates.length - 1) {
+                setCurrentQuestionIndex(currentQuestionIndex - 1);
+            }
         } 
         else if (boo){
             switch (index) {
@@ -148,7 +159,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, se
             setQuestionStates(newState);
             console.log(`State after setQuestionStates: ${newState}`);
 
-            // Upddate the current question index
+            // Update to the next question index
             if (currentQuestionIndex < questionStates.length - 1) {
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             }
@@ -202,7 +213,19 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, se
 
     if (type === 'select'){
         inputField = 
-        <select name='budget' style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0' }} onChange={handleSelectChange}>
+        <select name='budget' 
+            style={{    
+                width: '75%', 
+                height: '40px', 
+                border: 'solid', 
+                borderRadius: '20px', 
+                margin:'50px 0', 
+                fontSize: '20px', 
+                textAlign: 'center', 
+                padding: '0 10px 0 0',
+                backgroundColor: 'hsl(180, 47%, 80%)',
+                }} 
+            onChange={handleSelectChange}>
             <option value='none' selected disabled hidden>Select a budget</option>
             <option value='$'>1</option>
             <option value='$$'>2</option>
@@ -212,7 +235,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, se
     } else if (type === 'location'){
         inputField = <AutoComplete />
     } else {
-        inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0' }} type={type} onChange={handleChange}/>
+        inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0', backgroundColor: 'hsl(180, 47%, 80%)', }} type={type} onChange={handleChange}/>
     }
 
     console.log(`Check check....need to check questionState of QuestionCard: ${questionStates}`)
