@@ -39,6 +39,21 @@ export default function AutoComplete(): React.ReactElement {
 
 
   return (
-    <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0', backgroundColor: 'hsl(180, 47%, 80%)', }} ref={ref} placeholder='Enter location' />
+    <input 
+      style={{
+        width: '75%', 
+        height: '40px', 
+        border: 'solid',
+        borderColor: 'darkcyan',
+        borderRadius: '20px', 
+        margin:'50px 0', 
+        fontSize: '20px', 
+        textAlign: 'center', 
+        padding: '0 10px 0 0', 
+        backgroundColor: 'rgb(242, 242, 242)', 
+      }} 
+      ref={ref} 
+      placeholder='Enter location' 
+    />
   );
 }

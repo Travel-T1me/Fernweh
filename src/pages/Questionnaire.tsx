@@ -5,24 +5,12 @@ import { styled } from 'styled-components'
 import Navbar from '../components/Navbar'
 import axiosInstance from '../axiosInstance'
 
-interface WrapperProps {
-  $show?: boolean;
-  $focus?: boolean;
-}
 
 const QuestionnairePage = styled.div`
+  display: flex;
+  justify-content: center;
   background-color: hsl(180, 47%, 80%);
   height: 100vh;
-`;
-
-
-// This component controls the visibility of the question card:
-const Wrapper = styled.div<WrapperProps>`
-  background-color: transparent;
-  opacity: ${props => (props.$show ? 1 : 0)};
-  transition: color 1s, opacity 1s;
-  color: ${props => (props.$focus ? "black": "transparent")};
-  text-shadow: ${props => (props.$focus ? "0 0 0px" : "0 0 5px rgba(0,0,0,0.5)")};
 `;
 
 
@@ -55,10 +43,6 @@ const Questionnaire = () => {
     }
   ];
 
-  // const isNavbarVisible = false;
-
-  // Initialize questionStates so that only the first QuestionCard is initially displayed
-  //const initialQuestionStates = questionList.map((_, index) => index === 0);
 
   // Hook to verify when question cards have been answered
   const [questionStates, setQuestionStates] = useState([true, false, false, false, false, false])
@@ -67,25 +51,17 @@ const Questionnaire = () => {
 
   const currentQuestion = questionList[currentQuestionIndex];
 
-
   
-  // Check why this property was needed within NavBar component: key={`${index}` + 'NavBar'}
-
-  const currentQuestionsComponent = (
+ 
+  
+  // console.log(`Testing in Questionnaire component. questionStates: ${questionStates}`);
+  // console.log(`Testing currentQuestionIndex: ${currentQuestionIndex}`);
+  // console.log(`ALSO Testing currentQuestion: ${JSON.stringify(currentQuestion.question)}`);
+  return (
     <>
-      {/* <NavBar key={`${currentQuestionIndex}` + 'NavBar'} visible={true}/> */}
-      {/* <Navbar visible={isNavbarVisible}/> */}
-      
-
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-
-        <Wrapper 
-          key={`${currentQuestionIndex}` + 'Wrapper'} 
-          $show={questionStates[currentQuestionIndex]} 
-          $focus={!questionStates[currentQuestionIndex + 1] || currentQuestionIndex === questionStates.length - 1}
-        >
-          
-          <QuestionCard
+      <QuestionnairePage>
+        {/* {currentQuestionsComponent} */}
+        <QuestionCard
             key={currentQuestionIndex} 
             el={currentQuestionIndex} 
             question={currentQuestion.question} 
@@ -95,21 +71,6 @@ const Questionnaire = () => {
             setCurrentQuestionIndex={setCurrentQuestionIndex}
             currentQuestionIndex={currentQuestionIndex}
           />
-          
-        </Wrapper>
-
-      </div>
-    </>
-
-  );
-  
-  console.log(`Testing in Questionnaire component. questionStates: ${questionStates}`);
-  console.log(`Testing currentQuestionIndex: ${currentQuestionIndex}`);
-  console.log(`ALSO Testing currentQuestion: ${JSON.stringify(currentQuestion.question)}`);
-  return (
-    <>
-      <QuestionnairePage>
-        {currentQuestionsComponent}
       </QuestionnairePage>
     </>
   );
@@ -118,7 +79,27 @@ const Questionnaire = () => {
 
 export default Questionnaire;
 
+//opacity: ${props => (props.$show ? 1 : 0)};
+    //transition: color 1s, opacity 1s ease-in-out;
 
+
+// const isNavbarVisible = false;
+ // Check why this property was needed within NavBar component: key={`${index}` + 'NavBar'}
+  {/* <NavBar key={`${currentQuestionIndex}` + 'NavBar'} visible={true}/> */}
+  {/* <Navbar visible={isNavbarVisible}/> */}
+
+// interface WrapperProps {
+//   $show?: boolean;
+//   $focus?: boolean;
+// }
+
+// This component controls the visibility of the question card:
+// const Wrapper = styled.div<WrapperProps>`
+//   //opacity: ${props => (props.$show ? 1 : 0)};
+//   //transition: color 1s, opacity 1s;
+//   //color: ${props => (props.$focus ? "black": "transparent")};
+//   //text-shadow: ${props => (props.$focus ? "0 0 0px" : "0 0 5px rgba(0,0,0,0.5)")};
+// `;
 
 
 // Commenting out card shadow for now since we won't need it. Needing to test other functionality first

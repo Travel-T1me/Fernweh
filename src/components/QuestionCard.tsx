@@ -19,7 +19,7 @@ const Button = styled.button`${BaseButtonStyle}`;
 
 const Card = styled.div<CardProps>`
     border: 2px solid;
-    border-color: black;
+    border-color: darkcyan;
     border-radius:25px;
     background-color: ivory;
     width:650px;
@@ -28,8 +28,8 @@ const Card = styled.div<CardProps>`
     margin:100px;
     text-align: center;
     justify-content: center;
-    // opacity: ${props => (props.$show ? 1 : 0)};
-    transition: opacity 0.5s ease-in-out;
+    opacity: ${props => (props.$show ? 1 : 0)};
+    transition: color 1s, opacity 1s ease-in-out;
 `
 
 const Buttons = styled.section`
@@ -109,11 +109,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, se
         if (!boo && el !== 0){
             newState[el] = false;
             setQuestionStates(newState);
-
-            // Update to the prev question index
-            if (currentQuestionIndex < questionStates.length - 1) {
-                setCurrentQuestionIndex(currentQuestionIndex - 1);
-            }
+            setCurrentQuestionIndex(currentQuestionIndex - 1);
         } 
         else if (boo){
             switch (index) {
@@ -213,18 +209,19 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, se
 
     if (type === 'select'){
         inputField = 
-        <select name='budget' 
-            style={{    
-                width: '75%', 
-                height: '40px', 
-                border: 'solid', 
-                borderRadius: '20px', 
-                margin:'50px 0', 
-                fontSize: '20px', 
-                textAlign: 'center', 
-                padding: '0 10px 0 0',
-                backgroundColor: 'hsl(180, 47%, 80%)',
-                }} 
+            <select name='budget' 
+                style={{    
+                    width: '75%', 
+                    height: '40px', 
+                    border: 'solid',
+                    borderColor: 'darkcyan', 
+                    borderRadius: '20px', 
+                    margin:'50px 0', 
+                    fontSize: '20px', 
+                    textAlign: 'center', 
+                    padding: '0 10px 0 0',
+                    backgroundColor: 'rgb(242, 242, 242)',
+                    }} 
             onChange={handleSelectChange}>
             <option value='none' selected disabled hidden>Select a budget</option>
             <option value='$'>1</option>
@@ -235,44 +232,54 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, se
     } else if (type === 'location'){
         inputField = <AutoComplete />
     } else {
-        inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0', backgroundColor: 'hsl(180, 47%, 80%)', }} type={type} onChange={handleChange}/>
+        inputField = 
+            <input 
+                style={{
+                    width: '75%', 
+                    height: '40px', 
+                    border: 'solid',
+                    borderColor: 'darkcyan', 
+                    borderRadius: '20px', 
+                    margin:'50px 0', 
+                    fontSize: '20px', 
+                    textAlign: 'center', 
+                    padding: '0 10px 0 0', 
+                    backgroundColor: 'rgb(242, 242, 242)', 
+                }} type={type} 
+            onChange={handleChange}/>
     }
 
     console.log(`Check check....need to check questionState of QuestionCard: ${questionStates}`)
     return (
         <>
-            {/* <CardContainer> */}
-                <Card>
-                    <Question>{question}</Question>
-                    <InputField>{inputField}</InputField>
-                    <br />
-                    <Buttons>
-                        {
-                        el === questionStates.length - 1 && <Link to={`/results`}><SubmitButton onClick={() => sendToGpt()}>
-                            Get your itinerary
-                        </SubmitButton></Link>
-                        } 
-                        {       
-                        !questionStates[el+1] && el < questionStates.length - 1 && <SubmitButton onClick={() => handleClick(true, el)}>
-                            Submit
-                        </SubmitButton>
-                        }
-                        {
-                        el !== 0 && !questionStates[el + 1] && <BackButton onClick={() => handleClick(false, el)}>
-                            Go Back
-                        </BackButton>
-                        }
-
-                    </Buttons>
-                </Card>
-            {/* </CardContainer> */}
+            <Card $show={questionStates[currentQuestionIndex]}>
+                <Question>{question}</Question>
+                <InputField>{inputField}</InputField>
+                <br />
+                <Buttons>
+                    {
+                    el === questionStates.length - 1 && <Link to={`/results`}><SubmitButton onClick={() => sendToGpt()}>
+                        Get your itinerary
+                    </SubmitButton></Link>
+                    } 
+                    {       
+                    !questionStates[el+1] && el < questionStates.length - 1 && <SubmitButton onClick={() => handleClick(true, el)}>
+                        Submit
+                    </SubmitButton>
+                    }
+                    {
+                    (el !== 0 || el === questionStates.length - 1) && !questionStates[el + 1] && <BackButton onClick={() => handleClick(false, el)}>
+                        Go Back
+                    </BackButton>
+                    }
+                </Buttons>
+            </Card>
         </>
-        
         
     )
 }
 
-export default QuestionCard
+export default QuestionCard;
 
 
 // This wrapper component commented out has no change in the display. Commenting out for now, ready for deletion.
