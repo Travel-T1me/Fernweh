@@ -28,8 +28,12 @@ const Card = styled.div<CardProps>`
     margin:100px;
     text-align: center;
     justify-content: center;
+    // These transitions are currently not working
     opacity: ${props => (props.$show ? 1 : 0)};
-    transition: color 1s, opacity 1s ease-in-out;
+    transition: opacity 0.5s ease;
+    // transform: scaleY(${props => (props.$show ? 1 : 0)});
+    // transform-origin: top;
+    // transition: transform 1s ease-in-out;
 `
 
 const Buttons = styled.section`
@@ -109,9 +113,22 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, se
         if (!boo && el !== 0){
             newState[el] = false;
             setQuestionStates(newState);
+
+            // Set the previous card to true to show previous card
+            newState[el - 1] = true;
+            setQuestionStates(newState);
+
+            // transition to the previous card
             setCurrentQuestionIndex(currentQuestionIndex - 1);
+            console.log(`Checking currentQuestionIndex, back button: ${currentQuestionIndex}`);
         } 
         else if (boo){
+            // Transition the current card to false if it's not the last one
+            if (el < questionStates.length - 1) {
+                newState[el] = false;
+                setQuestionStates(newState);
+            }
+
             switch (index) {
                 case 0:
                     setNumberOfTravellers(answer);
@@ -123,11 +140,11 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, se
                     
                     break;
                 case 2:
-                    console.log(`Inside case 2 of QuestionCard`,useStore.getState())
+                    //console.log(`Inside case 2 of QuestionCard`,useStore.getState())
                     break;
                 case 3:
                     setArrivalDate(answer);
-                    console.log(`Inside of case 3 of QuestionCard`,useStore.getState())
+                    //console.log(`Inside of case 3 of QuestionCard`,useStore.getState())
                     break;
                 case 4:
                     setEndDate(answer);
@@ -141,24 +158,30 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, se
                         const pexelsResponse = await axiosInstance.get(`/pexels?query=${useStore.getState().location}`);
                         setPexelPics(pexelsResponse.data.photos);
 
-                        console.log(`Inside of case 4 of QuestionCard`, useStore.getState())
+                        //console.log(`Inside of case 4 of QuestionCard`, useStore.getState())
                     } catch(error) {
                         console.error(`An error occurred during Axios requests in case 4, QuestionCard component.`, error);
                     }
                     break;
             }
             // reveal the next card by changing the state
-            console.log(`Check questionStates of question: ${question}`)
-            console.log(`Updated state for QuestionCard, newState: ${newState}`);
-            console.log(`Transitioning to next card.`);
-            newState[el + 1] = true;
-            setQuestionStates(newState);
-            console.log(`State after setQuestionStates: ${newState}`);
+            //console.log(`Check questionStates of question: ${question}`)
+            //console.log(`Updated state for QuestionCard, newState: ${newState}`);
+            //console.log(`Transitioning to next card.`);
+
+            if (el < questionStates.length - 1) {
+                // transition to next card
+                newState[el + 1] = true;
+                setQuestionStates(newState);
+                //console.log(`State after setQuestionStates: ${newState}`);
+            }
+            
 
             // Update to the next question index
             if (currentQuestionIndex < questionStates.length - 1) {
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             }
+            console.log(`Checking currentQuestionIndex, forward button: ${currentQuestionIndex}`);
             
         }
     })
@@ -166,7 +189,7 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, se
     const sendToGpt = async (): Promise<void> => {
         setAdditionalNotes(answer)
 
-        console.log(`Checking if restaurants is an array within sendToGpt: ${useStore.getState()}`);
+        //console.log(`Checking if restaurants is an array within sendToGpt: ${useStore.getState()}`);
 
         const restaurants = useStore.getState().restaurants.map(restaurant => {
             return {
@@ -199,10 +222,10 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, se
             }};
         const gptResponse = await gptRes()
 
-        console.log(`gptResponse`, gptResponse.data.response)
+        //console.log(`gptResponse`, gptResponse.data.response)
         setGptResponse(gptResponse.data.response);
         setResponseId(gptResponse.data.id)
-        console.log('final state', useStore.getState())
+        //console.log('final state', useStore.getState())
     }
 
     let inputField;
@@ -250,6 +273,9 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, se
     }
 
     console.log(`Check check....need to check questionState of QuestionCard: ${questionStates}`)
+    //console.log(`Checking currentQuestionIndex, back button, above return statement: ${currentQuestionIndex}`);
+    //console.log(`Checking currentQuestionIndex, forward button, above return statement: ${currentQuestionIndex}`);
+
     return (
         <>
             <Card $show={questionStates[currentQuestionIndex]}>
@@ -258,20 +284,20 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates, se
                 <br />
                 <Buttons>
                     {
-                    el === questionStates.length - 1 && <Link to={`/results`}><SubmitButton onClick={() => sendToGpt()}>
-                        Get your itinerary
-                    </SubmitButton></Link>
-                    } 
+                    (el !== 0 || el === questionStates.length - 1) && !questionStates[el + 1] && <BackButton onClick={() => handleClick(false, el)}>
+                        Go Back
+                    </BackButton>
+                    }
                     {       
                     !questionStates[el+1] && el < questionStates.length - 1 && <SubmitButton onClick={() => handleClick(true, el)}>
                         Submit
                     </SubmitButton>
                     }
                     {
-                    (el !== 0 || el === questionStates.length - 1) && !questionStates[el + 1] && <BackButton onClick={() => handleClick(false, el)}>
-                        Go Back
-                    </BackButton>
-                    }
+                    el === questionStates.length - 1 && <Link to={`/results`}><SubmitButton onClick={() => sendToGpt()}>
+                        Get your itinerary
+                    </SubmitButton></Link>
+                    } 
                 </Buttons>
             </Card>
         </>

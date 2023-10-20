@@ -51,7 +51,9 @@ describe('Landing Page', () => {
     cy.wait(500);
     cy.contains('Submit').scrollIntoView();
 
-    cy.get('input[type="date"]').eq(1).type('2023-10-11');
+    // Question: Why do we need the eq(1) here? 
+    //cy.get('input[type="date"]').eq(1).type('2023-10-11');
+    cy.get('input[type="date"]').type('2023-10-11');
     cy.contains('Submit').click()
 
     cy.wait(500);

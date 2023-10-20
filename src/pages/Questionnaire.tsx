@@ -60,17 +60,31 @@ const Questionnaire = () => {
   return (
     <>
       <QuestionnairePage>
-        {/* {currentQuestionsComponent} */}
+        {/* This block of code will currently render two cards a time...Need to sync el prop with "currentQuestionIndex" or merge with key somehow. */}
+        {/* {questionList.map((currentQuestion, index) => (
+          <QuestionCard
+          key={index} 
+          el={index} 
+          question={currentQuestion.question} 
+          type={currentQuestion.type} 
+          setQuestionStates={setQuestionStates}
+          questionStates={questionStates}
+          setCurrentQuestionIndex={setCurrentQuestionIndex}
+          currentQuestionIndex={currentQuestionIndex}
+        />
+        ))} */}
+
         <QuestionCard
-            key={currentQuestionIndex} 
-            el={currentQuestionIndex} 
-            question={currentQuestion.question} 
-            type={currentQuestion.type} 
-            setQuestionStates={setQuestionStates}
-            questionStates={questionStates}
-            setCurrentQuestionIndex={setCurrentQuestionIndex}
-            currentQuestionIndex={currentQuestionIndex}
-          />
+          key={currentQuestionIndex} 
+          el={currentQuestionIndex} 
+          question={currentQuestion.question} 
+          type={currentQuestion.type} 
+          setQuestionStates={setQuestionStates}
+          questionStates={questionStates}
+          setCurrentQuestionIndex={setCurrentQuestionIndex}
+          currentQuestionIndex={currentQuestionIndex}
+        />
+        
       </QuestionnairePage>
     </>
   );
