@@ -142,7 +142,7 @@ const Itinerary = () => {
     <ItineraryContainer>
       <TripImagesContainer>
         {/* <PexelImg src="https://images.pexels.com/photos/3180136/pexels-photo-3180136.jpeg" alt="Scenic Photo Of Mountains During Dawn " /> */}
-        {pexelPics !== null ? (
+        {pexelPics && pexelPics.length > 0 ? (
           <PexelImg src={pexelPics[0].src.original} alt={pexelPics[0].alt} />
         ) : (
           <p>Loading images...</p>

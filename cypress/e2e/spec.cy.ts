@@ -10,15 +10,19 @@
 //   it('Does not do much!', () => {
 //     expect(true).to.equal(false)
 //   })
-// })
+//})
+
+//http://localhost:4000/api/yelp/Los%20Angeles,%20CA,%20USA
+// {
+//   fixture: 'losangeles-yelp.json'
+// }
+//http://localhost:4000/api/yelp/
 
 describe('Landing Page', () => {
   it('should visit the landing page and fill out the questionnaire', function() {
-    cy.intercept('GET', 'http://localhost:4000/api/yelp/*', {
-      fixture: 'losangeles-yelp.json'
-    }).as('getYelp');
+    cy.intercept('GET', '*').as('getYelp');
     
-    cy.visit('/');
+    cy.visit('http://localhost:3000/');
     cy.contains('Get ready to plan your next adventure');
     cy.contains('Get Started').click();
     cy.url().should('eq', 'http://localhost:3000/questionnaire');
@@ -47,8 +51,12 @@ describe('Landing Page', () => {
     cy.wait(500);
     cy.contains('Submit').scrollIntoView();
 
-    cy.get('input[type="date"]').eq(1).type('2023-10-11');
-    // cy.contains('Submit').click()
-    // cy.wait('@getYelp');
+    // Question: Why do we need the eq(1) here? 
+    //cy.get('input[type="date"]').eq(1).type('2023-10-11');
+    cy.get('input[type="date"]').type('2023-10-11');
+    cy.contains('Submit').click()
+
+    cy.wait(500);
+    cy.wait('@getYelp').its('response.statusCode').should('eq', 200);
   });
 });

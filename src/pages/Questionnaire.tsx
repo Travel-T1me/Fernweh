@@ -2,47 +2,15 @@ import React, { useRef, useState, useEffect } from 'react';
 import QuestionCard from '../components/QuestionCard';
 import { QuestionCardType } from '../../types'
 import { styled } from 'styled-components'
-import NavBar from '../components/Navbar'
+import Navbar from '../components/Navbar'
 import axiosInstance from '../axiosInstance'
 
-interface WrapperProps {
-  $show?: boolean;
-  $focus?: boolean;
-}
 
-const CardShadow = styled.div`
-  display: inline-block;
-  position: relative;
-  height: 80%;
-
-  &::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(
-      to right,
-      rgb(102, 255, 255),
-      rgb(0, 153, 153)
-    );
-    transform: translateY(120px) scale(0.75);
-    filter: blur(16px);
-  }
-  transition: transform 0.2s ease-in-out;
-  &:hover {
-    transform: translateY(-5px) scale(1.02);
-  }
-`;
-
-const Wrapper = styled.div<WrapperProps>`
-  background-color: transparent;
-  opacity: ${props => (props.$show ? 1 : 0)};
-  transition: color 1s, opacity 1s;
-  color: ${props => (props.$focus ? "black": "transparent")};
-  text-shadow: ${props => (props.$focus ? "0 0 0px" : "0 0 5px rgba(0,0,0,0.5)")};
+const QuestionnairePage = styled.div`
+  display: flex;
+  justify-content: center;
+  background-color: hsl(180, 47%, 80%);
+  height: 100vh;
 `;
 
 
@@ -75,53 +43,103 @@ const Questionnaire = () => {
     }
   ];
 
-  // Initialize questionStates so that only the first QuestionCard is initially displayed
-  const initialQuestionStates = questionList.map((_, index) => index === 0);
 
-  // dates come back as string in yyyy-mm-dd format
+  // Hook to verify when question cards have been answered
   const [questionStates, setQuestionStates] = useState([true, false, false, false, false, false])
 
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); 
 
-  useEffect(() => {
-    window.scroll(0, 0);
-  }, []);
+  const currentQuestion = questionList[currentQuestionIndex];
 
-  // const refsArray = questionList.map(() => useRef(0));
-
-  const questionComponents = questionList.map((obj, index) => (
-    <>
-      <NavBar key={`${index}` + 'NavBar'} visible={true}/>
-
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-
-        <Wrapper key={`${index}` + 'Wrapper'} $show={questionStates[index]} $focus={!questionStates[index+1] || index === questionStates.length - 1}>
-          <CardShadow>
-            <QuestionCard
-            // ref={refsArray[index]}
-            key={index} 
-            el={index} 
-            question={obj.question} 
-            type={obj.type} 
-            setQuestionStates={setQuestionStates}
-            questionStates={questionStates}
-            />
-          </CardShadow>
-        </Wrapper>
-
-      </div>
-    </>
-
-
-
-  ))
-
-
+  
+ 
+  
+  // console.log(`Testing in Questionnaire component. questionStates: ${questionStates}`);
+  // console.log(`Testing currentQuestionIndex: ${currentQuestionIndex}`);
+  // console.log(`ALSO Testing currentQuestion: ${JSON.stringify(currentQuestion.question)}`);
   return (
     <>
-      {questionComponents}
+      <QuestionnairePage>
+        {/* This block of code will currently render two cards a time...Need to sync el prop with "currentQuestionIndex" or merge with key somehow. */}
+        {/* {questionList.map((currentQuestion, index) => (
+          <QuestionCard
+          key={index} 
+          el={index} 
+          question={currentQuestion.question} 
+          type={currentQuestion.type} 
+          setQuestionStates={setQuestionStates}
+          questionStates={questionStates}
+          setCurrentQuestionIndex={setCurrentQuestionIndex}
+          currentQuestionIndex={currentQuestionIndex}
+        />
+        ))} */}
+
+        <QuestionCard
+          key={currentQuestionIndex} 
+          el={currentQuestionIndex} 
+          question={currentQuestion.question} 
+          type={currentQuestion.type} 
+          setQuestionStates={setQuestionStates}
+          questionStates={questionStates}
+          setCurrentQuestionIndex={setCurrentQuestionIndex}
+          currentQuestionIndex={currentQuestionIndex}
+        />
+        
+      </QuestionnairePage>
     </>
-  )
+  );
 }
 
 
 export default Questionnaire;
+
+//opacity: ${props => (props.$show ? 1 : 0)};
+    //transition: color 1s, opacity 1s ease-in-out;
+
+
+// const isNavbarVisible = false;
+ // Check why this property was needed within NavBar component: key={`${index}` + 'NavBar'}
+  {/* <NavBar key={`${currentQuestionIndex}` + 'NavBar'} visible={true}/> */}
+  {/* <Navbar visible={isNavbarVisible}/> */}
+
+// interface WrapperProps {
+//   $show?: boolean;
+//   $focus?: boolean;
+// }
+
+// This component controls the visibility of the question card:
+// const Wrapper = styled.div<WrapperProps>`
+//   //opacity: ${props => (props.$show ? 1 : 0)};
+//   //transition: color 1s, opacity 1s;
+//   //color: ${props => (props.$focus ? "black": "transparent")};
+//   //text-shadow: ${props => (props.$focus ? "0 0 0px" : "0 0 5px rgba(0,0,0,0.5)")};
+// `;
+
+
+// Commenting out card shadow for now since we won't need it. Needing to test other functionality first
+// const CardShadow = styled.div`
+//   display: inline-block;
+//   position: relative;
+//   height: 80%;
+
+//   &::before {
+//     content: "";
+//     position: absolute;
+//     z-index: -1;
+//     top: 0;
+//     bottom: 0;
+//     left: 0;
+//     right: 0;
+//     background: linear-gradient(
+//       to right,
+//       rgb(102, 255, 255),
+//       rgb(0, 153, 153)
+//     );
+//     transform: translateY(120px) scale(0.75);
+//     filter: blur(16px);
+//   }
+//   transition: transform 0.2s ease-in-out;
+//   &:hover {
+//     transform: translateY(-5px) scale(1.02);
+//   }
+// `;

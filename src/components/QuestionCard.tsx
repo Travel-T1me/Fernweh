@@ -9,25 +9,16 @@ import { PartialStore } from '../../types';
 import axiosInstance from '../axiosInstance';
 import AutoComplete from "./AutoComplete";
 
+interface CardProps {
+    $show?: boolean;
+}
+
 
 const Button = styled.button`${BaseButtonStyle}`;
 
-const Wrapper = styled.div`
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height: 100vh;
-`
 
-const CardContainer = styled.div`
-    display: flex;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
-`
-
-const Card = styled.div`
-    border:solid;
+const Card = styled.div<CardProps>`
+    border: 2px solid;
     border-color: darkcyan;
     border-radius:25px;
     background-color: ivory;
@@ -37,6 +28,12 @@ const Card = styled.div`
     margin:100px;
     text-align: center;
     justify-content: center;
+    // These transitions are currently not working
+    opacity: ${props => (props.$show ? 1 : 0)};
+    transition: opacity 0.5s ease;
+    // transform: scaleY(${props => (props.$show ? 1 : 0)});
+    // transform-origin: top;
+    // transition: transform 1s ease-in-out;
 `
 
 const Buttons = styled.section`
@@ -80,7 +77,7 @@ const InputField = styled.section`
     border: black;
 `
 
-const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: QuestionCardType) => {
+const QuestionCard = ({question, type, el, setQuestionStates, questionStates, setCurrentQuestionIndex, currentQuestionIndex}: QuestionCardType) => {
 
     // store and reducers
     const {
@@ -116,67 +113,83 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
         if (!boo && el !== 0){
             newState[el] = false;
             setQuestionStates(newState);
+
+            // Set the previous card to true to show previous card
+            newState[el - 1] = true;
+            setQuestionStates(newState);
+
+            // transition to the previous card
+            setCurrentQuestionIndex(currentQuestionIndex - 1);
+            console.log(`Checking currentQuestionIndex, back button: ${currentQuestionIndex}`);
         } 
         else if (boo){
+            // Transition the current card to false if it's not the last one
+            if (el < questionStates.length - 1) {
+                newState[el] = false;
+                setQuestionStates(newState);
+            }
+
             switch (index) {
                 case 0:
                     setNumberOfTravellers(answer);
                     break;
                 case 1:
                     setYelpBudget(answer);
-                    const usersYelpBudget = useStore.getState().yelpBudget
-                    const travellers = Number(useStore.getState().numOfTravellers)
+                    //const usersYelpBudget = useStore.getState().yelpBudget
+                    //const travellers = Number(useStore.getState().numOfTravellers)
                     
-                    //don't need to set this or mongoId anymore 
-                    // setInitialData(usersYelpBudget, travellers);
-                    // const initialRes = async () => {
-                    //     try {
-                    //         const data = await axiosInstance.post('/initial', initialData);
-                    //         return data
-                    //     } catch (err) {
-                    //         console.error('Err:', err)
-                    //     }}
-                    // const initialResponse = await initialRes()
-                    // setMongoID(initialResponse.data);
                     break;
                 case 2:
-                    console.log(`Inside case 2 of QuestionCard`,useStore.getState())
+                    //console.log(`Inside case 2 of QuestionCard`,useStore.getState())
                     break;
                 case 3:
                     setArrivalDate(answer);
-                    console.log(`Inside of case 3 of QuestionCard`,useStore.getState())
+                    //console.log(`Inside of case 3 of QuestionCard`,useStore.getState())
                     break;
                 case 4:
                     setEndDate(answer);
 
-                    // RESTURANT DATA - commented out to save calls
-                    const restaurantResponse = await axiosInstance.get(`/yelp/${useStore.getState().location}`) as any
-                    setRestaurants(restaurantResponse.data.data);
+                    try {
+                        // RESTURANT DATA - commented out to save calls
+                        const restaurantResponse = await axiosInstance.get(`/yelp/${useStore.getState().location}`) as any
+                        setRestaurants(restaurantResponse.data.data);
 
-                    // Pexel Image Data 
-                    const pexelsResponse = await axiosInstance.get(`/pexels?query=${useStore.getState().location}`);
-                    setPexelPics(pexelsResponse.data.photos);
+                        // Pexel Image Data 
+                        const pexelsResponse = await axiosInstance.get(`/pexels?query=${useStore.getState().location}`);
+                        setPexelPics(pexelsResponse.data.photos);
 
-                    console.log(`Inside of case 4 of QuestionCard`, useStore.getState())
-
+                        //console.log(`Inside of case 4 of QuestionCard`, useStore.getState())
+                    } catch(error) {
+                        console.error(`An error occurred during Axios requests in case 4, QuestionCard component.`, error);
+                    }
                     break;
             }
             // reveal the next card by changing the state
-            newState[el + 1] = true;
-            setQuestionStates(newState);
+            //console.log(`Check questionStates of question: ${question}`)
+            //console.log(`Updated state for QuestionCard, newState: ${newState}`);
+            //console.log(`Transitioning to next card.`);
 
-            // scroll to the new card (TODO)
-                // THIS IS WHERE I LEFT OFF
-                // ref.current.scrollIntoView({
-                //     behavior: 'smooth'
-                // })
+            if (el < questionStates.length - 1) {
+                // transition to next card
+                newState[el + 1] = true;
+                setQuestionStates(newState);
+                //console.log(`State after setQuestionStates: ${newState}`);
+            }
+            
+
+            // Update to the next question index
+            if (currentQuestionIndex < questionStates.length - 1) {
+                setCurrentQuestionIndex(currentQuestionIndex + 1);
+            }
+            console.log(`Checking currentQuestionIndex, forward button: ${currentQuestionIndex}`);
+            
         }
     })
 
     const sendToGpt = async (): Promise<void> => {
         setAdditionalNotes(answer)
 
-        console.log(`Checking if restaurants is an array within sendToGpt: ${useStore.getState()}`);
+        //console.log(`Checking if restaurants is an array within sendToGpt: ${useStore.getState()}`);
 
         const restaurants = useStore.getState().restaurants.map(restaurant => {
             return {
@@ -209,17 +222,30 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
             }};
         const gptResponse = await gptRes()
 
-        console.log(`gptResponse`, gptResponse.data.response)
+        //console.log(`gptResponse`, gptResponse.data.response)
         setGptResponse(gptResponse.data.response);
         setResponseId(gptResponse.data.id)
-        console.log('final state', useStore.getState())
+        //console.log('final state', useStore.getState())
     }
 
     let inputField;
 
     if (type === 'select'){
         inputField = 
-        <select name='budget' style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0' }} onChange={handleSelectChange}>
+            <select name='budget' 
+                style={{    
+                    width: '75%', 
+                    height: '40px', 
+                    border: 'solid',
+                    borderColor: 'darkcyan', 
+                    borderRadius: '20px', 
+                    margin:'50px 0', 
+                    fontSize: '20px', 
+                    textAlign: 'center', 
+                    padding: '0 10px 0 0',
+                    backgroundColor: 'rgb(242, 242, 242)',
+                    }} 
+            onChange={handleSelectChange}>
             <option value='none' selected disabled hidden>Select a budget</option>
             <option value='$'>1</option>
             <option value='$$'>2</option>
@@ -229,39 +255,79 @@ const QuestionCard = ({question, type, el, setQuestionStates, questionStates}: Q
     } else if (type === 'location'){
         inputField = <AutoComplete />
     } else {
-        inputField = <input style={{width: '75%', height: '40px', border: 'solid', borderRadius: '20px', margin:'50px 0', fontSize: '20px', textAlign: 'center', padding: '0 10px 0 0' }} type={type} onChange={handleChange}/>
+        inputField = 
+            <input 
+                style={{
+                    width: '75%', 
+                    height: '40px', 
+                    border: 'solid',
+                    borderColor: 'darkcyan', 
+                    borderRadius: '20px', 
+                    margin:'50px 0', 
+                    fontSize: '20px', 
+                    textAlign: 'center', 
+                    padding: '0 10px 0 0', 
+                    backgroundColor: 'rgb(242, 242, 242)', 
+                }} type={type} 
+            onChange={handleChange}/>
     }
 
+    console.log(`Check check....need to check questionState of QuestionCard: ${questionStates}`)
+    //console.log(`Checking currentQuestionIndex, back button, above return statement: ${currentQuestionIndex}`);
+    //console.log(`Checking currentQuestionIndex, forward button, above return statement: ${currentQuestionIndex}`);
+
     return (
-        <Wrapper>
-            <CardContainer>
-                <Card>
-                    <Question>{question}</Question>
-                    <InputField>{inputField}</InputField>
-                    <br />
-                    <Buttons>
-                        {
-                        el === questionStates.length - 1 && <Link to={`/results`}><SubmitButton onClick={() => sendToGpt()}>
-                            Get your itinerary
-                        </SubmitButton></Link>
-                        } 
-                        {       
-                        !questionStates[el+1] && el < questionStates.length - 1 && <SubmitButton onClick={() => handleClick(true, el)}>
-                            Submit
-                        </SubmitButton>
-                        }
-                        {
-                        el !== 0 && !questionStates[el + 1] && <BackButton onClick={() => handleClick(false, el)}>
-                            Go Back
-                        </BackButton>
-                        }
- 
-                    </Buttons>
-                </Card>
-            </CardContainer>
+        <>
+            <Card $show={questionStates[currentQuestionIndex]}>
+                <Question>{question}</Question>
+                <InputField>{inputField}</InputField>
+                <br />
+                <Buttons>
+                    {
+                    (el !== 0 || el === questionStates.length - 1) && !questionStates[el + 1] && <BackButton onClick={() => handleClick(false, el)}>
+                        Go Back
+                    </BackButton>
+                    }
+                    {       
+                    !questionStates[el+1] && el < questionStates.length - 1 && <SubmitButton onClick={() => handleClick(true, el)}>
+                        Submit
+                    </SubmitButton>
+                    }
+                    {
+                    el === questionStates.length - 1 && <Link to={`/results`}><SubmitButton onClick={() => sendToGpt()}>
+                        Get your itinerary
+                    </SubmitButton></Link>
+                    } 
+                </Buttons>
+            </Card>
+        </>
         
-        </Wrapper>
     )
 }
 
-export default QuestionCard
+export default QuestionCard;
+
+
+// This wrapper component commented out has no change in the display. Commenting out for now, ready for deletion.
+// const Wrapper = styled.div`
+//     display:flex;
+//     justify-content:center;
+//     align-items:center;
+//     height: 100vh;
+// `
+
+// const CardContainer = styled.div`
+//     display: flex;
+//     height: 100vh;
+//     align-items: center;
+//     justify-content: center;
+// `
+
+
+
+// took out of the handleClick function right before the sendToGpt function:
+// scroll to the new card (TODO)
+                // THIS IS WHERE I LEFT OFF
+                // ref.current.scrollIntoView({
+                //     behavior: 'smooth'
+                // })

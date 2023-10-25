@@ -50,6 +50,8 @@ export type QuestionCardType = {
     type: string,
     setQuestionStates: React.Dispatch<React.SetStateAction<boolean[]>>,
     questionStates: boolean[],
+    setCurrentQuestionIndex: React.Dispatch<React.SetStateAction<number>>,
+    currentQuestionIndex: number,
     // ref: any
 };
 
