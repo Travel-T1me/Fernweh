@@ -93,7 +93,7 @@
     "babel-plugin-styled-components": "^2.1.4",
     "concurrently": "^8.2.1",
     "css-loader": "^6.8.1",
-    "cypress": "^13.3.0",
+    "cypress": "^13.3.3",
     "file-loader": "^6.2.0",
     "graphql": "^16.8.0",
     "html-webpack-plugin": "^5.5.3",
