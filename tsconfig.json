@@ -1,17 +1,23 @@
 {
-    "compilerOptions": {
-      "sourceMap": true,
-      "jsx": "react",
-      "target": "ES6",
-    //   "allowJs": true,
-      "esModuleInterop": true,
-      "outDir": "./dist"
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "./dist",
+    "noImplicitAny": true,
+    "module": "ESNext",
+    "target": "ESNext",
+    "jsx": "preserve",
+    "allowJs": false,
+    "moduleResolution": "node",
+    "lib": ["DOM"],
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["*", "src/*"]
     },
-    "include": [
-        "src/**/*",
-        "server/**/*"
-      ],
-    "exclude": [
-        "node_modules"
-    ]
+  },
+  "include": [
+    "./src/**/*",
+    "./server/*",
+    "cypress/**/*.ts",
+  ]
 }

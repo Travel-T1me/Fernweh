@@ -1,0 +1,208 @@
+{
+  "status": "OK",
+  "request_id": "ed61ca99-81ca-43df-a58e-f7dd1a861f11",
+  "data": [
+      {
+          "id": "cal0Wpupxj9c_AV7WzDXsw",
+          "alias": "granville-west-hollywood-2",
+          "name": "GRANVILLE",
+          "address": "8701 Beverly Blvd, West Hollywood, CA 90048",
+          "latitude": 34.0770378,
+          "longitude": -118.3807541,
+          "business_page_link": "https://www.yelp.com/biz/granville-west-hollywood-2",
+          "rating": 4.4,
+          "review_count": 2694,
+          "price_range": "$$",
+          "photo": "https://s3-media0.fl.yelpcdn.com/bphoto/znY6Wq1711cPvOtfKxWZZg/348s.jpg",
+          "photos_page_link": "https://www.yelp.com/biz_photos/cal0Wpupxj9c_AV7WzDXsw",
+          "phone": "+14245225161",
+          "country": "US",
+          "business_highlights": [
+              "Locally owned & operated",
+              "Locally sourced ingredients",
+              "Full bar",
+              "Takes reservations",
+              "Vegan friendly",
+              "LGBTQ friendly"
+          ]
+      },
+      {
+          "id": "RVbZaawgEGmto6TxOoVBdQ",
+          "alias": "running-goose-los-angeles",
+          "name": "Running Goose",
+          "address": "1620 N Cahuenga Blvd, Los Angeles, CA 90028",
+          "latitude": 34.1005236,
+          "longitude": -118.3292895,
+          "business_page_link": "https://www.yelp.com/biz/running-goose-los-angeles",
+          "rating": 4.3,
+          "review_count": 1708,
+          "price_range": "$$",
+          "photo": "https://s3-media0.fl.yelpcdn.com/bphoto/Q-IG5LRfrr9sJXz-jx8XVQ/348s.jpg",
+          "photos_page_link": "https://www.yelp.com/biz_photos/RVbZaawgEGmto6TxOoVBdQ",
+          "phone": "+13234691080",
+          "country": "US",
+          "neighborhoods": [
+              "Hollywood"
+          ]
+      },
+      {
+          "id": "WO12S4gvOYkYF8_70RWrQA",
+          "alias": "haneuem-los-angeles-3",
+          "name": "HanEuem",
+          "address": "539 S Western Ave, Los Angeles, CA 90020",
+          "latitude": 34.0641786,
+          "longitude": -118.3094986,
+          "business_page_link": "https://www.yelp.com/biz/haneuem-los-angeles-3",
+          "rating": 4.4,
+          "review_count": 235,
+          "price_range": "$$$",
+          "photo": "https://s3-media0.fl.yelpcdn.com/bphoto/5foxtb5kQfA2e-HPPgvUIw/348s.jpg",
+          "photos_page_link": "https://www.yelp.com/biz_photos/WO12S4gvOYkYF8_70RWrQA",
+          "phone": "+12133888988",
+          "country": "US",
+          "neighborhoods": [
+              "Koreatown"
+          ]
+      },
+      {
+          "id": "h1R2iKYdm2lwukzMJvJqDw",
+          "alias": "hangari-kalguksu-los-angeles-4",
+          "name": "Hangari Kalguksu",
+          "address": "3470 W 6th St, Los Angeles, CA 90020",
+          "latitude": 34.0628602582049,
+          "longitude": -118.297570301258,
+          "business_page_link": "https://www.yelp.com/biz/hangari-kalguksu-los-angeles-4",
+          "rating": 4.4,
+          "review_count": 2568,
+          "price_range": "$$",
+          "photo": "https://s3-media0.fl.yelpcdn.com/bphoto/X_U65O9YnvMyb42h1BZ0JQ/348s.jpg",
+          "photos_page_link": "https://www.yelp.com/biz_photos/h1R2iKYdm2lwukzMJvJqDw",
+          "phone": "+12136522381",
+          "country": "US",
+          "business_highlights": [
+              "Women-owned & operated",
+              "10 years in business",
+              "Large group friendly",
+              "Casual dining",
+              "Locally owned & operated"
+          ],
+          "neighborhoods": [
+              "Wilshire Center"
+          ]
+      },
+      {
+          "id": "88kri8FhXy8b3DQ_QjSMmQ",
+          "alias": "l-antica-pizzeria-da-michele-los-angeles-2",
+          "name": "L’Antica Pizzeria Da Michele",
+          "address": "1534 N Mccadden Pl, Los Angeles, CA 90028",
+          "latitude": 34.09907097431642,
+          "longitude": -118.33730936120139,
+          "business_page_link": "https://www.yelp.com/biz/l-antica-pizzeria-da-michele-los-angeles-2",
+          "rating": 4.3,
+          "review_count": 1982,
+          "price_range": "$$$",
+          "photo": "https://s3-media0.fl.yelpcdn.com/bphoto/SCuuHjFSwNpuYxpncVDs9w/348s.jpg",
+          "photos_page_link": "https://www.yelp.com/biz_photos/88kri8FhXy8b3DQ_QjSMmQ",
+          "phone": "+13233662408",
+          "country": "US",
+          "neighborhoods": [
+              "Hollywood"
+          ]
+      },
+      {
+          "id": "z0zaCVA-p_5xTsyUZrmR0g",
+          "alias": "republique-los-angeles-6",
+          "name": "Republique",
+          "address": "624 S La Brea Ave, Los Angeles, CA 90036",
+          "latitude": 34.0641419,
+          "longitude": -118.3437075,
+          "business_page_link": "https://www.yelp.com/biz/republique-los-angeles-6",
+          "rating": 4.2,
+          "review_count": 7061,
+          "price_range": "$$",
+          "photo": "https://s3-media0.fl.yelpcdn.com/bphoto/Xy6oJ25E2QUzw_zsBD-dhA/348s.jpg",
+          "photos_page_link": "https://www.yelp.com/biz_photos/z0zaCVA-p_5xTsyUZrmR0g",
+          "phone": "+13103626115",
+          "country": "US",
+          "neighborhoods": [
+              "Hancock Park"
+          ]
+      },
+      {
+          "id": "1RJCu-0D5ZEnVRBKwqodGQ",
+          "alias": "great-white-los-angeles-2",
+          "name": "Great White",
+          "address": "244 N Larchmont Blvd, Los Angeles, CA 90004",
+          "latitude": 34.07587723057971,
+          "longitude": -118.3233931,
+          "business_page_link": "https://www.yelp.com/biz/great-white-los-angeles-2",
+          "rating": 4.1,
+          "review_count": 447,
+          "price_range": "$$",
+          "photo": "https://s3-media0.fl.yelpcdn.com/bphoto/m-kQ-sslvEi0krtosT6jog/348s.jpg",
+          "photos_page_link": "https://www.yelp.com/biz_photos/1RJCu-0D5ZEnVRBKwqodGQ",
+          "phone": "+13237455059",
+          "country": "US",
+          "neighborhoods": [
+              "Windsor Square"
+          ]
+      },
+      {
+          "id": "HuQtriV_ApipXfM8xax33w",
+          "alias": "met-him-at-a-bar-los-angeles-3",
+          "name": "Met Him At A Bar",
+          "address": "801 S La Brea, Los Angeles, CA 90036",
+          "latitude": 34.0604192,
+          "longitude": -118.3449173,
+          "business_page_link": "https://www.yelp.com/biz/met-him-at-a-bar-los-angeles-3",
+          "rating": 4.3,
+          "review_count": 662,
+          "price_range": "$$",
+          "photo": "https://s3-media0.fl.yelpcdn.com/bphoto/hKkhb5t7RN8oRUIkVbrooA/348s.jpg",
+          "photos_page_link": "https://www.yelp.com/biz_photos/HuQtriV_ApipXfM8xax33w",
+          "phone": "+13238523321",
+          "country": "US",
+          "neighborhoods": [
+              "Mid-Wilshire"
+          ]
+      },
+      {
+          "id": "h2u-coGd8WWClyU3b7jf8w",
+          "alias": "met-her-at-a-bar-los-angeles-2",
+          "name": "Met Her At A Bar",
+          "address": "759 S La Brea Ave, Los Angeles, CA 90036",
+          "latitude": 34.0606769,
+          "longitude": -118.3448803,
+          "business_page_link": "https://www.yelp.com/biz/met-her-at-a-bar-los-angeles-2",
+          "rating": 4.4,
+          "review_count": 2495,
+          "price_range": "$$",
+          "photo": "https://s3-media0.fl.yelpcdn.com/bphoto/pAzx5GDMh8IdYrOi-1Te6A/348s.jpg",
+          "photos_page_link": "https://www.yelp.com/biz_photos/h2u-coGd8WWClyU3b7jf8w",
+          "phone": "+13238475013",
+          "country": "US",
+          "neighborhoods": [
+              "Mid-Wilshire"
+          ]
+      },
+      {
+          "id": "T4eGk9bvqtHS_M3IVlv72g",
+          "alias": "enchant-los-angeles",
+          "name": "Enchant",
+          "address": "681 S Western Ave, Los Angeles, CA 90005",
+          "latitude": 34.060420911180366,
+          "longitude": -118.309614,
+          "business_page_link": "https://www.yelp.com/biz/enchant-los-angeles",
+          "rating": 3.8,
+          "review_count": 44,
+          "price_range": "",
+          "photo": "https://s3-media0.fl.yelpcdn.com/bphoto/YowRCKBiPP3j6d__DfNDyA/348s.jpg",
+          "photos_page_link": "https://www.yelp.com/biz_photos/T4eGk9bvqtHS_M3IVlv72g",
+          "phone": "+12135683195",
+          "country": "US",
+          "neighborhoods": [
+              "Koreatown"
+          ]
+      }
+  ]
+}
