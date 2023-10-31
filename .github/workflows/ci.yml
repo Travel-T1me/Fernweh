@@ -9,9 +9,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.0
       
-      - name: Cypress run
+      - name: Cypress E2E tests run in Development
         uses: cypress-io/github-action@v6.5.0
         with:
+          config-file: cypress.config.ts
           start: npm run start-all
         env:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}

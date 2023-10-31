@@ -18,14 +18,16 @@
 // }
 //http://localhost:4000/api/yelp/
 
+const baseURL = Cypress.env('CYPRESS_ENV') === 'development' ? 'http://localhost:3000' : 'https://fernweh.vercel.app';
+
 describe('Landing Page', () => {
   it('should visit the landing page and fill out the questionnaire', function() {
     cy.intercept('GET', '*').as('getYelp');
     
-    cy.visit('http://localhost:3000/');
+    cy.visit(baseURL);
     cy.contains('Get ready to plan your next adventure');
     cy.contains('Get Started').click();
-    cy.url().should('eq', 'http://localhost:3000/questionnaire');
+    cy.url().should('eq', `${baseURL}/questionnaire`);
 
     cy.get('input:visible').type('2'); 
     cy.contains('Submit').click(); 

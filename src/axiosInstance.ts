@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: 'https://fernweh-git-main-giovannivibe.vercel.app/',
 });
 
 export default instance;
