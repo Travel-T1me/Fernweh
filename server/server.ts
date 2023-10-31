@@ -18,14 +18,23 @@ app.set('trust proxy', 1);
 app.use(express.json());
 
 const allowedOrigins: string[] = ['http://localhost:3000', 'http://localhost:54507'];
-const corsOptions = {
-  origin: (origin: string | undefined, callback: (error: Error | null, allow?: boolean) => void) => {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+
+const isProduction = process.env.NODE_ENV === 'production';
+
+
+const corsOptions = isProduction
+  ? {
+      origin: 'https://fernweh-git-main-giovannivibe.vercel.app', 
+      credentials: true,
+  }
+  : {
+      origin: (origin: string | undefined, callback: (error: Error | null, allow?: boolean) => void) => {
+      if (allowedOrigins.includes(origin) || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
   credentials: true,
 };
 app.use(cors(corsOptions));
