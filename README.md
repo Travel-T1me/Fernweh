@@ -1,6 +1,13 @@
+![fernweh_readme_banner](https://github.com/Travel-T1me/Fernweh/assets/112226540/3e92092e-f85f-4d6f-afe2-d8d13e216559)
+
 # Fernweh
 
 Fernweh simplifies the often-complicated process of travel planning and generates a personalized itinerary for your next adventure.
+
+![Screenshot 2023-09-02 at 3 25 20 AM](https://github.com/Travel-T1me/Fernweh/assets/112226540/4af27699-cb4f-4afb-8619-6f83ccc73f27)
+
+![QuestionCardUpdate](https://github.com/Travel-T1me/Fernweh/assets/112226540/07821216-b7c0-4b97-a01e-4ac39ed476c0)
+
 
 ## Tech Stack
 
